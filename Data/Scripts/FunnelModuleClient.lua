@@ -40,7 +40,7 @@ local function GetAmountStepCompletedTable()
     end
 end
 
-local function GetAllPlayerStepsTable()
+local function GetAllPlayerStepsString()
     if Leaderboards.HasLeaderboards() then
         local tempTbl = {}
         for entryIndex, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
@@ -51,12 +51,30 @@ local function GetAllPlayerStepsTable()
                     if step == nil then
                         step = 0
                     end
-                    playerStepsStr = tostring(step).."   "..playerStepsStr
+                    playerStepsStr = tostring(step) .. " " .. playerStepsStr
                 end
             end
             tempTbl[entry] = playerStepsStr
         end
         return tempTbl
+    end
+end
+
+local function GetD1RetentionCount()
+    if Leaderboards.HasLeaderboards() then
+        local retentionCount = 0
+        local D1ID = FunnelData.D1_ID
+        for entryIndex, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
+            for stepIndex, step in ipairs(BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))) do
+                if BTC.BIT_LIMIT - D1ID + 1  == stepIndex then
+                    if step == nil then
+                        step = 0
+                    end
+                    retentionCount = retentionCount + step
+                end
+            end
+        end
+        return retentionCount * 100
     end
 end
 
@@ -127,6 +145,10 @@ function _G.Funnel.GetAmountStepCompletedTable()
     return GetAmountStepCompletedTable()
 end
 
-function _G.Funnel.GetAllPlayerStepsTable()
-    return GetAllPlayerStepsTable()
+function _G.Funnel.GetAllPlayerStepsString()
+    return GetAllPlayerStepsString() 
+end
+
+function _G.Funnel.GetD1Retention()
+    return GetD1RetentionCount()
 end

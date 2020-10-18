@@ -22,6 +22,7 @@ local StepsStats = script:GetCustomProperty("StepsStats"):WaitForObject()
 local PlayerParentPanel = script:GetCustomProperty("PlayerParentPanel"):WaitForObject()
 local StepsParentPanel = script:GetCustomProperty("StepsParentPanel"):WaitForObject()
 local PlayerScrollPanel = script:GetCustomProperty("PlayerScrollPanel"):WaitForObject()
+local D1Retention = script:GetCustomProperty("D1Retention"):WaitForObject()
 -------------------------------------------------------------------------------
 -- Custom Properties
 -------------------------------------------------------------------------------
@@ -111,7 +112,7 @@ end
 
 local function BuildPlayerStatsPanel()
     local panelCount = 1
-    for entry, stepString in pairs(_G.Funnel.GetAllPlayerStepsTable()) do
+    for entry, stepString in pairs(_G.Funnel.GetAllPlayerStepsString()) do
         spawnedPlayersPanel[panelCount] = World.SpawnAsset(PlayerStatsPanelTemp, {parent = PlayerScrollPanel})
         spawnedPlayersPanel[panelCount].y = 40 * (panelCount - 1)
         for _, child in ipairs(spawnedPlayersPanel[panelCount]:GetChildren()) do
@@ -161,7 +162,8 @@ local function BuildStepsPanel()
                 for i, step in ipairs(stepCompleteTbl) do
                     if index == i then
                         if previousStep then
-                            local delta = CoreMath.Round((step / sampleSetSize * 100) - (previousStep / sampleSetSize) * 100)
+                            local delta =
+                                CoreMath.Round((step / sampleSetSize * 100) - (previousStep / sampleSetSize) * 100)
                             if delta > 0 and delta ~= math.huge then
                                 child.text = tostring(delta) .. "%"
                                 child:SetColor(Color.GREEN)
@@ -194,10 +196,23 @@ local function BuildStepsPanel()
     end
 end
 
+local function GetD1RetentionColor(dec)
+    if dec < 10 then
+        return Color.RED
+    elseif dec > 10 and dec < 15 then
+        return Color.YELLOW
+    elseif dec > 20 then
+        return Color.GREEN
+    end
+end
+
 local function BuildPanels()
     BuildStepsPanel()
     BuildPlayerStatsPanel()
     SampleSetSize.text = tostring(_G.Funnel.GetSampleSetCount())
+    local D1RetentionDec = CoreMath.Round(_G.Funnel.GetD1Retention() / _G.Funnel.GetSampleSetCount(), 2)
+    D1Retention.text = tostring(D1RetentionDec) .. "%"
+    D1Retention:SetColor(GetD1RetentionColor(D1RetentionDec))
     events[#events + 1] = PlayerStats.clickedEvent:Connect(OnPanelToggle)
     events[#events + 1] = StepsStats.clickedEvent:Connect(OnPanelToggle)
 end
