@@ -6,6 +6,7 @@
 -------------------------------------------------------------------------------
 -- Component that registers itself to the _G table and can be accessed by: _G.Funnel
 -------------------------------------------------------------------------------
+local NAMESPACE = "FunnelModule."
 _G.Funnel = {}
 -------------------------------------------------------------------------------
 -- Requires
@@ -179,6 +180,8 @@ function _G.Funnel.GetPlayerSteps(Player)
 end
 
 function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
+    print(Player)
+    print(stepIndex)
     local tempTbl = {}
     for i, v in ipairs(playerStats[Player]) do
         if i == (BTC.BIT_LIMIT - stepIndex + 1) then
@@ -191,7 +194,11 @@ function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
     SavePlayerFunnelData(Player)
 end
 -------------------------------------------------------------------------------
--- Events
+-- Listeners
 -------------------------------------------------------------------------------
 Game.playerJoinedEvent:Connect(OnPlayerJoined)
 Game.playerLeftEvent:Connect(OnPlayerLeft)
+-------------------------------------------------------------------------------
+-- Used to take care of client side events
+-------------------------------------------------------------------------------
+Events.ConnectForPlayer(NAMESPACE.."SetPlayerStepComplete", _G.Funnel.SetPlayerStepComplete, stepIndex)

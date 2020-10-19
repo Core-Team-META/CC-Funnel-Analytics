@@ -6,6 +6,7 @@
 -------------------------------------------------------------------------------
 -- Component that registers itself to the _G table and can be accessed by: _G.Funnel
 -------------------------------------------------------------------------------
+local NAMESPACE = "FunnelModule."
 _G.Funnel = {}
 local playerStats = {}
 -------------------------------------------------------------------------------
@@ -151,4 +152,8 @@ end
 
 function _G.Funnel.GetD1Retention()
     return GetD1RetentionCount()
+end
+
+function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
+repeat Events.BroadcastToServer(NAMESPACE.."SetPlayerStepComplete", stepIndex) Task.Wait(0.1) until "BroadcastEventResultCode.SUCCESS"
 end
