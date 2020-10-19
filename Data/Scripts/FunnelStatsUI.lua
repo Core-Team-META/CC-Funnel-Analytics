@@ -1,17 +1,17 @@
-﻿-------------------------------------------------------------------------------
+﻿------------------------------------------------------------------------------------------------------------------------
 -- FunnelStatsUI
 -- Author Morticai - Team Meta
 -- Date: 10/15/2020
 -- Version 1.0
--------------------------------------------------------------------------------
---
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+-- UI Manager for Funnel Stats
+------------------------------------------------------------------------------------------------------------------------
 -- Require
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 local FunnelData = require(script:GetCustomProperty("FunnelStepsData"))
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Objects
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 local LocalPlayer = Game.GetLocalPlayer()
 local ROOT = script:GetCustomProperty("FunnelStatTracker"):WaitForObject()
 local ParentPanel = script:GetCustomProperty("ParentPanel"):WaitForObject()
@@ -23,66 +23,30 @@ local PlayerParentPanel = script:GetCustomProperty("PlayerParentPanel"):WaitForO
 local StepsParentPanel = script:GetCustomProperty("StepsParentPanel"):WaitForObject()
 local PlayerScrollPanel = script:GetCustomProperty("PlayerScrollPanel"):WaitForObject()
 local D1Retention = script:GetCustomProperty("D1Retention"):WaitForObject()
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Custom Properties
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 local KEYBIND = ROOT:GetCustomProperty("PanelToggleKeybind")
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Templates
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 local StepsPanelTemp = script:GetCustomProperty("StepsPanel")
 local PlayerStatsPanelTemp = script:GetCustomProperty("PlayerStatsPanel")
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Constants
--------------------------------------------------------------------------------
-local DEV_MODE = true
+------------------------------------------------------------------------------------------------------------------------
+local DEV_MODE = true -- Setting to true allows everyone to access funnel UI, false only allows Players in ADMIN_TABLE
 local ADMIN_TABLE = {"b4c6e32137e54571814b5e8f27aa2fcd", "d1073dbcc404405cbef8ce728e53d380"}
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Variables
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 local isMenuOpen = false
 local spawnedStepsPanel = {}
 local spawnedPlayersPanel = {}
 local events = {}
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Local Functions
--------------------------------------------------------------------------------
-local function TablePrint(tbl, indent)
-    local formatting, lua_type
-    if tbl == nil then
-        print("Table was nil")
-        return
-    end
-    if type(tbl) ~= "table" then
-        print("Table is not a table, it is a " .. type(tbl))
-        return
-    end
-    if next(tbl) == nil then
-        print("Table is empty")
-        return
-    end
-    if not indent then
-        indent = 0
-    end
-    -- type(v) returns nil, number, string, function, CFunction, userdata, and table.
-    -- type(v) returns string, number, function, boolean, table or nil
-    for k, v in pairs(tbl) do
-        formatting = string.rep("  ", indent) .. k .. ": "
-        lua_type = type(v)
-        if lua_type == "table" then
-            print(formatting)
-            TablePrint(v, indent + 1)
-        elseif lua_type == "boolean" then
-            print(formatting .. tostring(v))
-        elseif lua_type == "function" then
-            print(formatting .. "function")
-        elseif lua_type == "userdata" then
-            print(formatting .. "userdata")
-        else
-            print(formatting .. v)
-        end
-    end
-end
+------------------------------------------------------------------------------------------------------------------------
 
 local function OnStepHover(button)
     for _, child in ipairs(button.clientUserData.panel:GetChildren()) do
@@ -134,7 +98,6 @@ end
 
 --#TODO Starting to be a massive function, needs a refactor
 local function BuildStepsPanel()
-    --Loop through steps table to create panels
     local panelCount = 0
     local previousStep
     local stepCompleteTbl = _G.Funnel.GetAmountStepCompletedTable()
@@ -233,7 +196,7 @@ local function DestroyPanels()
             Event:Disconnect()
         end
     end
-    spawnedStepsPanel, spawnedPlayersPanel = {}, {}
+    spawnedStepsPanel, spawnedPlayersPanel, events = {}, {}, {}
 end
 
 local function ToggleUI(bool)
@@ -251,9 +214,25 @@ local function ToggleUI(bool)
         DestroyPanels()
     end
 end
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Global Functions
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+function Int()
+    repeat
+        Leaderboards.HasLeaderboards()
+        Task.Wait(0.1)
+    until true
+    if not DEV_MODE then
+        for _, id in ipairs(ADMIN_TABLE) do
+            if id == LocalPlayer.id then
+                LocalPlayer.bindingPressedEvent:Connect(OnBindingPressed)
+            end
+        end
+    else
+        LocalPlayer.bindingPressedEvent:Connect(OnBindingPressed)
+    end
+end
+
 function OnBindingPressed(Player, keyPressed)
     if Player == LocalPlayer then
         if keyPressed == KEYBIND and not isMenuOpen then
@@ -263,17 +242,7 @@ function OnBindingPressed(Player, keyPressed)
         end
     end
 end
-
-repeat
-    Leaderboards.HasLeaderboards()
-    Task.Wait(0.1)
-until true
-if not DEV_MODE then
-    for _, id in ipairs(ADMIN_TABLE) do
-        if id == LocalPlayer.id then
-            LocalPlayer.bindingPressedEvent:Connect(OnBindingPressed)
-        end
-    end
-else
-    LocalPlayer.bindingPressedEvent:Connect(OnBindingPressed)
-end
+------------------------------------------------------------------------------------------------------------------------
+-- Initialize
+------------------------------------------------------------------------------------------------------------------------
+Int()

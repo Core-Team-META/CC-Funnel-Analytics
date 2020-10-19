@@ -1,31 +1,40 @@
-﻿-------------------------------------------------------------------------------
--- Funnel Module Server
+﻿------------------------------------------------------------------------------------------------------------------------
+-- Funnel Module Client
 -- Author Morticai - Team Meta
 -- Date: 10/15/2020
 -- Version 1.0
--------------------------------------------------------------------------------
--- Component that registers itself to the _G table and can be accessed by: _G.Funnel
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+-- Component that registers itself to the _G table and can be accessed by: _G.Funnel on client side scripts
+------------------------------------------------------------------------------------------------------------------------
 local NAMESPACE = "FunnelModule."
+------------------------------------------------------------------------------------------------------------------------
 _G.Funnel = {}
-local playerStats = {}
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Requires
--------------------------------------------------------------------------------
-local FunnelData = require(script:GetCustomProperty("FunnelStepsData"))
+------------------------------------------------------------------------------------------------------------------------
+local FUNNEL_DATA = require(script:GetCustomProperty("FunnelStepsData"))
 local BTC = require(script:GetCustomProperty("BinaryTableConverter"))
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Script Custom Properties
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 local FunnelLeaderBoard = script:GetCustomProperty("FunnelLeaderBoard")
--------------------------------------------------------------------------------
--- Public API
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+-- Local Variables
+------------------------------------------------------------------------------------------------------------------------
+local playerStats = {}
+------------------------------------------------------------------------------------------------------------------------
+-- Local Functions
+------------------------------------------------------------------------------------------------------------------------
+local function isPlayerValid(Player)
+    return Object.IsValid(Player) and Player:IsA("Player") and Player.id == Game.GetLocalPlayer().id
+end
 
+
+-- @return a table of all steps as the index, and the total number of Players that complted the step as the value.
 local function GetAmountStepCompletedTable()
     if Leaderboards.HasLeaderboards() then
         local tempTbl = {}
-        for i, step in ipairs(FunnelData.GetTbl()) do
+        for i, step in ipairs(FUNNEL_DATA.GetTbl()) do
             -- Step 1
             tempTbl[i] = 0
             for entryIndex, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
@@ -41,14 +50,14 @@ local function GetAmountStepCompletedTable()
     end
 end
 
+-- @return a table with Player as the index and a string with the steps status for the Player as the value.
 local function GetAllPlayerStepsString()
     if Leaderboards.HasLeaderboards() then
         local tempTbl = {}
         for entryIndex, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
             local playerStepsStr = ""
-            local count = 20
             for stepIndex, step in ipairs(BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))) do
-                if stepIndex <= BTC.BIT_LIMIT and count > 0 then
+                if stepIndex <= BTC.BIT_LIMIT then
                     if step == nil then
                         step = 0
                     end
@@ -61,13 +70,14 @@ local function GetAllPlayerStepsString()
     end
 end
 
+-- @return current D1 retention %
 local function GetD1RetentionCount()
     if Leaderboards.HasLeaderboards() then
         local retentionCount = 0
-        local D1ID = FunnelData.D1_ID
+        local D1ID = FUNNEL_DATA.D1_ID
         for entryIndex, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
             for stepIndex, step in ipairs(BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))) do
-                if BTC.BIT_LIMIT - D1ID + 1  == stepIndex then
+                if BTC.BIT_LIMIT - D1ID + 1 == stepIndex then
                     if step == nil then
                         step = 0
                     end
@@ -79,6 +89,7 @@ local function GetD1RetentionCount()
     end
 end
 
+-- @return table of each step as the index and total completed as the value.
 local function GetTotalCompletedEachStepTable()
     if Leaderboards.HasLeaderboards() then
         local tempTbl = {}
@@ -95,25 +106,11 @@ local function GetTotalCompletedEachStepTable()
     end
 end
 
-local function GetDecmialStepCompleteTable(tbl)
-    local tempTbl = {}
-    for i, step in ipairs(tbl) do
-        tempTbl[i]["Stats"] = step / #tempTbl
-    end
-    return tempTbl
-end
-
-local function GetAggregiateStepCompleteTable(tbl)
-    local tempTbl = {}
-    for i, step in ipairs(tbl) do
-        tempTbl[i]["Stats"] = step / #tempTbl
-    end
-    return tempTbl
-end
-
+-- @param object - Player
+-- @return Players first login timestamp
 local function GetLastPlayedDate(Player)
-    if Leaderboards.HasLeaderboards() then
-        for i, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
+    if Leaderboards.HasLeaderboards() and isPlayerValid(Player) then
+        for _, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
             if entry.id == Player.id then
                 return entry.additionalData
             end
@@ -121,6 +118,7 @@ local function GetLastPlayedDate(Player)
     end
 end
 
+-- Get the current test sample set size
 local function GetFunnelSize()
     if Leaderboards.HasLeaderboards() then
         local count = 0
@@ -131,13 +129,9 @@ local function GetFunnelSize()
     end
 end
 
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Public Functions
--------------------------------------------------------------------------------
-function _G.Funnel.GetAggregate()
-    return GetDecmialStepCompleteTable(GetAmountStepCompletedTable())
-end
-
+------------------------------------------------------------------------------------------------------------------------
 function _G.Funnel.GetSampleSetCount()
     return GetFunnelSize()
 end
@@ -147,13 +141,23 @@ function _G.Funnel.GetAmountStepCompletedTable()
 end
 
 function _G.Funnel.GetAllPlayerStepsString()
-    return GetAllPlayerStepsString() 
+    return GetAllPlayerStepsString()
 end
 
 function _G.Funnel.GetD1Retention()
     return GetD1RetentionCount()
 end
 
+function _G.Funnel.GetLastPlayedDate(Player)
+    return GetLastPlayedDate(Player)
+end
+
+-- Used to allow client side scripts to send step complete calls.
 function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
-repeat Events.BroadcastToServer(NAMESPACE.."SetPlayerStepComplete", stepIndex) Task.Wait(0.2) until "BroadcastEventResultCode.SUCCESS"
+    if isPlayerValid(Player) and stepIndex ~= nil then
+        repeat
+            Events.BroadcastToServer(NAMESPACE .. "SetPlayerStepComplete", stepIndex)
+            Task.Wait(0.2)
+        until "BroadcastEventResultCode.SUCCESS"
+    end
 end

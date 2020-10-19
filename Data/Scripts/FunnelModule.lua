@@ -1,41 +1,38 @@
-﻿-------------------------------------------------------------------------------
+﻿------------------------------------------------------------------------------------------------------------------------
 -- Funnel Module Server
 -- Author Morticai - Team Meta
 -- Date: 10/15/2020
 -- Version 1.0
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Component that registers itself to the _G table and can be accessed by: _G.Funnel
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 local NAMESPACE = "FunnelModule."
+------------------------------------------------------------------------------------------------------------------------
 _G.Funnel = {}
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Requires
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 local BTC = require(script:GetCustomProperty("BinaryTableConverter"))
 local DATE_API = require(script:GetCustomProperty("DateTimeTrackingModule"))
--------------------------------------------------------------------------------
+local FUNNEL_DATA = script:GetCustomProperty("FunnelStepsData")
+------------------------------------------------------------------------------------------------------------------------
 -- Script Custom Properties
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 local FunnelLeaderBoard = script:GetCustomProperty("FunnelLeaderBoard")
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Local Variables
--------------------------------------------------------------------------------
-local playerStats = {}
+------------------------------------------------------------------------------------------------------------------------
+local playerSteps = {}
 local playerLoginDate = {}
--------------------------------------------------------------------------------
--- Local Constat
--------------------------------------------------------------------------------
-local D0_LOGIN_STEP_ID = 1
-local D1_LOGIN_STEP_ID = 29
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Local Functions
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 
 -- @param object Player
 -- Saves Player Score from Binary
 local function SavePlayerFunnelData(Player)
-    if playerStats[Player] and DATE_API.IsFirstLoginDay(playerLoginDate[Player]) then
-        local bin = BTC.ConvertBinaryToStr(Player, playerStats)
+    if playerSteps[Player] and DATE_API.IsFirstLoginDay(playerLoginDate[Player]) then
+        local bin = BTC.ConvertBinaryToStr(Player, playerSteps)
         if bin then
             print(BTC.ConvertBinaryToNumber(bin))
             if (Leaderboards.HasLeaderboards()) then
@@ -54,15 +51,15 @@ end
 -- Used to save Player data on D1 login
 local function SaveD1FunnelData(Player)
     local tempTbl = {}
-    for i, v in ipairs(playerStats[Player]) do
-        if i == (BTC.BIT_LIMIT - D1_LOGIN_STEP_ID + 1) then
+    for i, v in ipairs(playerSteps[Player]) do
+        if i == (BTC.BIT_LIMIT - FUNNEL_DATA.D1_ID + 1) then
             tempTbl[i] = 1
         else
             tempTbl[i] = v
         end
     end
-    playerStats[Player] = tempTbl
-    local bin = BTC.ConvertBinaryToStr(Player, playerStats)
+    playerSteps[Player] = tempTbl
+    local bin = BTC.ConvertBinaryToStr(Player, playerSteps)
     if bin then
         print(BTC.ConvertBinaryToNumber(bin))
         if (Leaderboards.HasLeaderboards()) then
@@ -83,7 +80,7 @@ local function SetNewPlayerData(Player)
     for i = 1, BTC.BIT_LIMIT do
         tempTable[i] = 0
     end
-    playerStats[Player] = tempTable
+    playerSteps[Player] = tempTable
     playerLoginDate[Player] = DATE_API.GetInitialLoginDate()
     if (Leaderboards.HasLeaderboards()) then
         Leaderboards.SubmitPlayerScore(FunnelLeaderBoard, Player, 0, DATE_API.GetInitialLoginDate())
@@ -96,7 +93,7 @@ local function IsANewPlayer(Player)
     if (Leaderboards.HasLeaderboards()) then
         for i, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
             if entry.id == Player.id then
-                playerStats[Player] = BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))
+                playerSteps[Player] = BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))
                 playerLoginDate[Player] = entry.additionalData
                 return false
             end
@@ -117,10 +114,43 @@ local function HasRoomInSampleSet()
     end
 end
 
+-- Report a Players step status in the funnel
+-- @param object - Player
+-- @param in - stepIndex -- index ID of step in FunnelStepsData
+-- @return true/false if step has been completed by the Player
+local function ReportPlayerStep(Player, stepIndex)
+    for i, step in ipairs(playerSteps[Player]) do
+        if i == (BTC.BIT_LIMIT - stepIndex + 1) then
+            if step == 0 then
+                return false
+            elseif step == 1 then
+                return true
+            end
+        end
+    end
+    warn("Couldn't find Player FunnelStats")
+end
+
+-- Update a Players step status in the funnel
+-- @param object - Player
+-- @param in - stepIndex -- index ID of step in FunnelStepsData
+local function SetPlayerStepComplete(Player, stepIndex)
+    local tempTbl = {}
+    for i, step in ipairs(playerSteps[Player]) do
+        if i == (BTC.BIT_LIMIT - stepIndex + 1) then
+            tempTbl[i] = 1
+        else
+            tempTbl[i] = step
+        end
+    end
+    playerSteps[Player] = tempTbl
+    SavePlayerFunnelData(Player)
+end
+
 -- Called on playerJoinedEvent
 -- @param object - Player
 local function OnPlayerJoined(Player)
-    playerStats[Player] = {}
+    playerSteps[Player] = {}
     repeat
         Leaderboards.HasLeaderboards()
     until true
@@ -136,66 +166,30 @@ end
 -- @param object - Player
 local function OnPlayerLeft(Player)
     SavePlayerFunnelData(Player)
-    playerStats[Player] = nil
+    playerSteps[Player] = nil
     playerLoginDate[Player] = nil
 end
 
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Public Functions
--------------------------------------------------------------------------------
---#TODO Not sure how to clear this currently
-function _G.Funnel.ClearAll()
-    --Not sure how to clear this currently
-    if (Leaderboards.HasLeaderboards()) then
-        warn("Leaderboard Found")
-        for i, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
-            warn(tostring(entry.score))
-        end
-    end
-end
---#TODO Cant nil out leaderboard
--- Make this 0
-function _G.Funnel.ClearPlayer(Player)
-    if (Leaderboards.HasLeaderboards()) then
-        Leaderboards.SubmitPlayerScore(FunnelLeaderBoard, Player, 0, "")
-    end
-end
-
+------------------------------------------------------------------------------------------------------------------------
 function _G.Funnel.ReportStep(Player, stepIndex)
-    for i, step in ipairs(playerStats[Player]) do
-        if i == (BTC.BIT_LIMIT - stepIndex + 1) then
-            if step == 0 then
-                return false
-            elseif step == 1 then
-                return true
-            end
-        end
-    end
-    warn("Couldn't find Player FunnelStats")
+    return ReportPlayerStep(Player, stepIndex)
 end
 
-function _G.Funnel.GetPlayerSteps(Player)
-    return playerStats[Player]
+function _G.Funnel.GetPlayerStepsTable(Player)
+    return playerSteps[Player]
 end
 
 function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
-    local tempTbl = {}
-    for i, v in ipairs(playerStats[Player]) do
-        if i == (BTC.BIT_LIMIT - stepIndex + 1) then
-            tempTbl[i] = 1
-        else
-            tempTbl[i] = v
-        end
-    end
-    playerStats[Player] = tempTbl
-    SavePlayerFunnelData(Player)
+    SetPlayerStepComplete(Player, stepIndex)
 end
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Listeners
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 Game.playerJoinedEvent:Connect(OnPlayerJoined)
 Game.playerLeftEvent:Connect(OnPlayerLeft)
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Used to take care of client side events
--------------------------------------------------------------------------------
-Events.ConnectForPlayer(NAMESPACE.."SetPlayerStepComplete", _G.Funnel.SetPlayerStepComplete, stepIndex)
+------------------------------------------------------------------------------------------------------------------------
+Events.ConnectForPlayer(NAMESPACE .. "SetPlayerStepComplete", _G.Funnel.SetPlayerStepComplete, stepIndex)

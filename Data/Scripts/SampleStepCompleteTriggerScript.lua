@@ -1,4 +1,7 @@
-﻿local Trigger = script.parent
+﻿------------------------------------------------------------------------------------------------------------------------
+-- Simple script used to test step tracking, shouldn't be used in live environment
+------------------------------------------------------------------------------------------------------------------------
+local Trigger = script.parent
 local ROOT = script:GetCustomProperty("ROOT"):WaitForObject()
 local stepID = ROOT:GetCustomProperty("StepID")
 

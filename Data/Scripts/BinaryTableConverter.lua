@@ -1,49 +1,50 @@
-﻿-------------------------------------------------------------------------------
+﻿------------------------------------------------------------------------------------------------------------------------
 -- Binary Table Convert
 -- Author Morticai - Team Meta
 -- Date: 10/15/2020
 -- Version 1.0
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Helpful resource: https://www.rapidtables.com/convert/number/binary-to-decimal.html
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 local Api = {}
--------------------------------------------------------------------------------
--- Constants
--------------------------------------------------------------------------------
-Api.BIT_LIMIT = 32 --Set no higher than 24, breaks at 25 if storing in leadboard
+------------------------------------------------------------------------------------------------------------------------
+-- Public Constants
+------------------------------------------------------------------------------------------------------------------------
+Api.BIT_LIMIT = 24 --Set no higher than 24, breaks at 25 if storing in leaderboard
 Api.FUNNEL_SAMPLE_SET = 200
--------------------------------------------------------------------------------
--- Public Functions
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+-- Public API
+------------------------------------------------------------------------------------------------------------------------
 -- @param int
 -- @return tbl binary EX => {1, 0, 1, 0, 0}
-function Api.ConvertNumberToBinaryTable(num)
-    local t = {}
+function Api.ConvertNumberToBinaryTable(int)
+    local tempTbl = {}
     for b = Api.BIT_LIMIT, 1, -1 do
-        local rest = math.fmod(num, 2)
-        t[b] = CoreMath.Round(rest)
-        num = (num - rest) / 2
+        local rest = math.fmod(int, 2)
+        tempTbl[b] = CoreMath.Round(rest)
+        int = (int - rest) / 2
     end
-    if num == 0 then
-        return t
+    if int == 0 then
+        return tempTbl
     else
         warn("Not enough bits to represent this number")
     end
 end
 
--- @param int - Index of Step
+-- @param int stepIndex - Index of Step
 -- @return int EX => 256
-function Api.ConvertIndexToBinaryDec(num)
-    return (2 ^ num) - 1
+function Api.ConvertIndexToBinaryDec(stepIndex)
+    return (2 ^ stepIndex) - 1
 end
 
 -- @param string - binary
 -- @return int EX => 256
-function Api.ConvertBinaryToNumber(bin)
-    return tonumber(bin, 2)
+function Api.ConvertBinaryToNumber(str)
+    return tonumber(str, 2)
 end
 
 -- @param object Player
+-- @param table tbl - playerStats table
 -- @return str -- Player Steps data
 function Api.ConvertBinaryToStr(Player, tbl)
     if tbl[Player] then
@@ -56,4 +57,5 @@ function Api.ConvertBinaryToStr(Player, tbl)
     return nil
 end
 
+------------------------------------------------------------------------------------------------------------------------
 return Api

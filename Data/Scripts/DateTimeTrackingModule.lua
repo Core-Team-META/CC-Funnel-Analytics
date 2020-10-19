@@ -1,14 +1,17 @@
-﻿-------------------------------------------------------------------------------
+﻿------------------------------------------------------------------------------------------------------------------------
 -- Date & Time Module
 -- Author Morticai - Team Meta
 -- Date: 10/15/2020
 -- Version 1.0
--------------------------------------------------------------------------------
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+-- Compresses dates to 6 characters EX => 20.292 = October 18th 2020
+------------------------------------------------------------------------------------------------------------------------
 local Api = {}
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Local Functions
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+--#TODO Currently using 1 extra char by adding . inbetween year and yearDay, can be compressed EX=> 20290
 local function GetDateStr(year, yearDay)
     local year = year - 2000
     return string.format("%s.%s", year, yearDay)
@@ -36,16 +39,18 @@ local function ConvertDateData(date)
     local currentDate = ((currentYear - 2000) + (currentDay / 1000))
     local loginYear, loginDay = tonumber(date:match("(%d+)")), tonumber(date:match(".(%d+)$"))
     local loginDate = (loginYear + (loginDay / 1000))
-    return currentYear, currentDate, loginYear,  loginDate
+    return currentYear, currentDate, loginYear, loginDate
 end
 
 local function HasBeenOneDaySinceInitalLogin(date)
-   local currentYear, currentDate, loginYear, loginDate = ConvertDateData(date)
+    local currentYear, currentDate, loginYear, loginDate = ConvertDateData(date)
     if math.tointeger((loginYear) / 4) and (currentYear - 2000) > loginYear then
-        if loginDate + 0.735 == currentDate then
+        if tostring(loginDate + 0.734) == tostring(currentDate) then
             return true
         end
-    elseif tostring(loginDate + 0.001) == tostring(currentDate) then -- LUA doesn't like compairing floats
+    elseif currentYear > loginYear and tostring(loginDate + 0.735) == tostring(currentDate) then
+        return true
+    elseif tostring(loginDate + 0.001) == tostring(currentDate) then
         return true
     end
     return false
@@ -59,9 +64,9 @@ local function IsFirstLoginDay(date)
     return false
 end
 
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- Global functions
--------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 function Api.GetInitialLoginDate()
     return GetDateStrFromTimestamp(os.time())
 end
@@ -74,4 +79,5 @@ function Api.IsFirstLoginDay(date)
     return IsFirstLoginDay(date)
 end
 
+------------------------------------------------------------------------------------------------------------------------
 return Api
