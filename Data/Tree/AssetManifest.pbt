@@ -8,15 +8,6 @@
   }
 }
 Assets {
-  Id: 14570474633607836217
-  Name: "BG Gradient 001"
-  PlatformAssetType: 9
-  PrimaryAsset {
-    AssetType: "PlatformBrushAssetRef"
-    AssetId: "BackgroundFlat_020"
-  }
-}
-Assets {
   Id: 11515840070784317904
   Name: "Skylight"
   PlatformAssetType: 6

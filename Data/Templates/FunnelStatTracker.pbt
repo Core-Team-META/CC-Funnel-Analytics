@@ -195,6 +195,8 @@
         ChildIds: 1084313680192180547
         ChildIds: 10249690847190590130
         ChildIds: 8628443189099257921
+        ChildIds: 11995365597314098700
+        ChildIds: 16207525358804978118
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"
         }
@@ -988,15 +990,15 @@
         Control {
           Width: 46
           Height: 60
-          UIX: 62.6254654
-          UIY: 20.7331734
+          UIX: 203.910019
+          UIY: 20
           RenderTransformPivot {
             Anchor {
               Value: "mc:euianchor:middlecenter"
             }
           }
           Text {
-            Label: "345"
+            Label: "3"
             Color {
               R: 1
               G: 1
@@ -1005,7 +1007,7 @@
             }
             Size: 20
             Justification {
-              Value: "mc:etextjustify:right"
+              Value: "mc:etextjustify:left"
             }
             AutoWrapText: true
           }
@@ -1047,8 +1049,8 @@
         Control {
           Width: 187
           Height: 60
-          UIX: -50.4289398
-          UIY: 20.7331734
+          UIX: 79.025528
+          UIY: 20
           RenderTransformPivot {
             Anchor {
               Value: "mc:euianchor:middlecenter"
@@ -1478,6 +1480,124 @@
         }
       }
       Objects {
+        Id: 11995365597314098700
+        Name: "D1Retention"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 16978777325827056456
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        Control {
+          Width: 114
+          Height: 60
+          UIX: -100.344246
+          UIY: 20
+          RenderTransformPivot {
+            Anchor {
+              Value: "mc:euianchor:middlecenter"
+            }
+          }
+          Text {
+            Label: "3"
+            Color {
+              R: 1
+              G: 1
+              B: 1
+              A: 1
+            }
+            Size: 20
+            Justification {
+              Value: "mc:etextjustify:left"
+            }
+            AutoWrapText: true
+          }
+          AnchorLayout {
+            SelfAnchor {
+              Anchor {
+                Value: "mc:euianchor:bottomcenter"
+              }
+            }
+            TargetAnchor {
+              Anchor {
+                Value: "mc:euianchor:bottomcenter"
+              }
+            }
+          }
+        }
+      }
+      Objects {
+        Id: 16207525358804978118
+        Name: "D1RetentionStatic"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 16978777325827056456
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        Control {
+          Width: 35
+          Height: 60
+          UIX: -181.511795
+          UIY: 20
+          RenderTransformPivot {
+            Anchor {
+              Value: "mc:euianchor:middlecenter"
+            }
+          }
+          Text {
+            Label: "D1:"
+            Color {
+              R: 1
+              G: 1
+              B: 1
+              A: 1
+            }
+            Size: 20
+            Justification {
+              Value: "mc:etextjustify:right"
+            }
+            AutoWrapText: true
+          }
+          AnchorLayout {
+            SelfAnchor {
+              Anchor {
+                Value: "mc:euianchor:bottomcenter"
+              }
+            }
+            TargetAnchor {
+              Anchor {
+                Value: "mc:euianchor:bottomcenter"
+              }
+            }
+          }
+        }
+      }
+      Objects {
         Id: 9113516402886429506
         Name: "FunnelModuleClient"
         Transform {
@@ -1595,6 +1715,18 @@
             Name: "cs:PlayerScrollPanel"
             ObjectReference {
               SubObjectId: 15056117898895227929
+            }
+          }
+          Overrides {
+            Name: "cs:D1RetentionStatic"
+            ObjectReference {
+              SubObjectId: 16207525358804978118
+            }
+          }
+          Overrides {
+            Name: "cs:D1Retention"
+            ObjectReference {
+              SubObjectId: 11995365597314098700
             }
           }
         }

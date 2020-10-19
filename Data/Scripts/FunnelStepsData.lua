@@ -12,153 +12,128 @@ local Api = {}
 -------------------------------------------------------------------------------
 -- Constants
 -------------------------------------------------------------------------------
-Api.D0_ID = 1
-Api.D1_ID = 29
+--Api.D0_ID = 1 Not used
+Api.D1_ID = 24
 -------------------------------------------------------------------------------
 -- Steps Data
 -------------------------------------------------------------------------------
 local tbl = {
     [1] = {
-        name = "D0 - Player joins",
-        desc = "Some Information About Step",
-        value = 1 
-    },
-    [2] = {
         name = "See Tutorial UI",
         desc = "Some Information About Step",
         value = 1 
     },
-    [3] = {
+    [2] = {
         name = "Plant crop",
         desc = "Some Information About Step",
         value = 1 
     },
-    [4] = {
+    [3] = {
         name = "See Switch Crop UI",
         desc = "Some Information About Step",
         value = 1 
     },
-    [5] = {
+    [4] = {
         name = "Buy plot",
         desc = "Some Information About Step",
         value = 1 
     },
-    [6] = {
+    [5] = {
         name = "Collect crop",
         desc = "Some Information About Step",
         value = 1 
     },
-    [7] = {
-        name = "See Market UI at day time",
-        desc = "Some Information About Step",
-        value = 1 
-    },
-    [8] = {
-        name = "See Market UI at night time",
-        desc = "Some Information About Step",
-        value = 1 
-    },
-    [9] = {
+    [6] = {
         name = "Sell crops", 
         desc = "Some Information About Step",
         value = 1 
     },
-    [10] = {
+    [7] = {
         name = "See Barn Storage UI",
         desc = "Some Information About Step",
         value = 1 
     },
-    [11] = {
+    [8] = {
         name = "Expand Storage",
         desc = "Some Information About Step",
         value = 1 
     },
-    [12] = {
-        name = "See Achievements UI",
-        desc = "Some Information About Step",
-        value = 1 
-    },
-    [13] = {
+    [9] = {
         name = "Collect Achievement",
         desc = "Some Information About Step",
         value = 1 
     },
-    [14] = {
+    [10] = {
         name = "See shovel upgrade UI",
         desc = "Some Information About Step",
         value = 1 
     },
-    [15] = {
+    [11] = {
         name = "Upgrade shovel",
         desc = "Some Information About Step",
         value = 1 
     },
-    [16] = {
+    [12] = {
         name = "Equip metal detector",
         desc = "Some Information About Step",
         value = 1 
     },
-    [17] = {
+    [13] = {
         name = "Equip fishing rod",
         desc = "Some Information About Step",
         value = 1 
     },
-    [18] = {
+    [14] = {
         name = "See Collectibles UI",
         desc = "Some Information About Step",
         value = 1 
     },
-    [19] = {
+    [15] = {
         name = "Find junk",
         desc = "Some Information About Step",
         value = 1 
     },
-    [20] = {
+    [16] = {
         name = "Sell junk",
         desc = "Some Information About Step",
         value = 1 
     },
-    [21] = {
+    [17] = {
         name = "Use fishing rod in water",
         desc = "Some Information About Step",
         value = 1 
     },
-    [22] = {
+    [18] = {
         name = "Fishing mini-game begins",
         desc = "Some Information About Step",
         value = 1 
     },
-    [23] = {
+    [19] = {
         name = "Fail to catch fish (or caught junk)",
         desc = "Some Information About Step",
         value = 1 
     },
-    [24] = {
+    [20] = {
         name = "Catch fish",
         desc = "Some Information About Step",
         value = 1 
     },
-    [25] = {
+    [21] = {
         name = "Sell fish",
         desc = "Some Information About Step",
         value = 1 
     },
-    [26] = {
+    [22] = {
         name = "Upgrade metal detector",
         desc = "Some Information About Step",
         value = 1 
     },
-    [27] = {
+    [23] = {
         name = "Upgrade fishing rod",
         desc = "Some Information About Step",
         value = 1 
     },
-    [28] = {
-        name = "Upgrade horse",
-        desc = "Some Information About Step",
-        value = 1 
-    },
-    [29] = {
+    [24] = {
         name = "D1 - Player returns",
         desc = "Some Information About Step",
         value = 1 

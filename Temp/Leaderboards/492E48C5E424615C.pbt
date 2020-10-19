@@ -1,9 +1,9 @@
 ﻿GlobalEntries {
   Id: "BOT_Bot1"
   Name: "Bot1"
-  ScoreFormatted: "10000014.0"
+  ScoreFormatted: "1.0"
   AdditionalData: "20.292"
-  DateTime: "2020-10-19T00:16:12.956Z"
+  DateTime: "2020-10-19T00:23:58.490Z"
 }
 Config {
   SortType {

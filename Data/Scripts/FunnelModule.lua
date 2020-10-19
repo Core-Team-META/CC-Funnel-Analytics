@@ -127,7 +127,6 @@ local function OnPlayerJoined(Player)
     local isNewPlayer = IsANewPlayer(Player)
     if isNewPlayer and HasRoomInSampleSet() then
         SetNewPlayerData(Player)
-        _G.Funnel.SetPlayerStepComplete(Player, D0_LOGIN_STEP_ID)
     elseif not isNewPlayer and DATE_API.HasBeenOneDaySinceLogin(playerLoginDate[Player]) then
         SaveD1FunnelData(Player)
     end
@@ -180,8 +179,6 @@ function _G.Funnel.GetPlayerSteps(Player)
 end
 
 function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
-    print(Player)
-    print(stepIndex)
     local tempTbl = {}
     for i, v in ipairs(playerStats[Player]) do
         if i == (BTC.BIT_LIMIT - stepIndex + 1) then

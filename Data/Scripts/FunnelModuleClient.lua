@@ -155,5 +155,5 @@ function _G.Funnel.GetD1Retention()
 end
 
 function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
-repeat Events.BroadcastToServer(NAMESPACE.."SetPlayerStepComplete", stepIndex) Task.Wait(0.1) until "BroadcastEventResultCode.SUCCESS"
+repeat Events.BroadcastToServer(NAMESPACE.."SetPlayerStepComplete", stepIndex) Task.Wait(0.2) until "BroadcastEventResultCode.SUCCESS"
 end
