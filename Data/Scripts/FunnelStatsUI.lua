@@ -1,6 +1,6 @@
-﻿------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
 -- FunnelStatsUI
--- Author Morticai - Team Meta
+-- Author Morticai - Team Meta (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 -- Date: 10/15/2020
 -- Version 1.0
 ------------------------------------------------------------------------------------------------------------------------
@@ -23,10 +23,11 @@ local PlayerParentPanel = script:GetCustomProperty("PlayerParentPanel"):WaitForO
 local StepsParentPanel = script:GetCustomProperty("StepsParentPanel"):WaitForObject()
 local PlayerScrollPanel = script:GetCustomProperty("PlayerScrollPanel"):WaitForObject()
 local D1Retention = script:GetCustomProperty("D1Retention"):WaitForObject()
+local NoDataText = script:GetCustomProperty("NoData"):WaitForObject()
 ------------------------------------------------------------------------------------------------------------------------
 -- Custom Properties
 ------------------------------------------------------------------------------------------------------------------------
-local KEYBIND = ROOT:GetCustomProperty("PanelToggleKeybind")
+local KEYBIND = ROOT:GetCustomProperty("AnalyticsPanelKeybind")
 ------------------------------------------------------------------------------------------------------------------------
 -- Templates
 ------------------------------------------------------------------------------------------------------------------------
@@ -76,23 +77,27 @@ end
 
 local function BuildPlayerStatsPanel()
     local panelCount = 1
-    for entry, stepString in pairs(_G.Funnel.GetAllPlayerStepsString()) do
-        spawnedPlayersPanel[panelCount] = World.SpawnAsset(PlayerStatsPanelTemp, {parent = PlayerScrollPanel})
-        spawnedPlayersPanel[panelCount].y = 40 * (panelCount - 1)
-        for _, child in ipairs(spawnedPlayersPanel[panelCount]:GetChildren()) do
-            if child.name == "ID" then
-                child.text = tostring(panelCount) .. ")"
-            elseif child.name == "PlayerName" then
-                child.text = tostring(entry.name)
-            elseif child.name == "Steps" then
-                child.text = stepString
-            elseif child.name == "Hover" then
-                events[#events + 1] = child.hoveredEvent:Connect(OnStepHover)
-                events[#events + 1] = child.unhoveredEvent:Connect(OnStepUnhover)
-                child.clientUserData.panel = spawnedPlayersPanel[panelCount]
+    local playerTable = _G.Funnel.GetAllPlayerStepsString()
+    if playerTable ~= nil then
+        NoDataText.visibility = Visibility.FORCE_OFF
+        for entry, stepString in pairs(playerTable) do
+            spawnedPlayersPanel[panelCount] = World.SpawnAsset(PlayerStatsPanelTemp, {parent = PlayerScrollPanel})
+            spawnedPlayersPanel[panelCount].y = 40 * (panelCount - 1)
+            for _, child in ipairs(spawnedPlayersPanel[panelCount]:GetChildren()) do
+                if child.name == "ID" then
+                    child.text = tostring(panelCount) .. ")"
+                elseif child.name == "PlayerName" then
+                    child.text = tostring(entry.name)
+                elseif child.name == "Steps" then
+                    child.text = stepString
+                elseif child.name == "Hover" then
+                    events[#events + 1] = child.hoveredEvent:Connect(OnStepHover)
+                    events[#events + 1] = child.unhoveredEvent:Connect(OnStepUnhover)
+                    child.clientUserData.panel = spawnedPlayersPanel[panelCount]
+                end
             end
+            panelCount = panelCount + 1
         end
-        panelCount = panelCount + 1
     end
 end
 
@@ -102,56 +107,59 @@ local function BuildStepsPanel()
     local previousStep
     local stepCompleteTbl = _G.Funnel.GetAmountStepCompletedTable()
     local sampleSetSize = _G.Funnel.GetSampleSetCount()
-    for index, step in ipairs(FunnelData.GetTbl()) do
-        spawnedStepsPanel[index] = World.SpawnAsset(StepsPanelTemp, {parent = StatsScrollPanel})
-        spawnedStepsPanel[index].y = 40 * panelCount
-        panelCount = panelCount + 1
-        for _, child in ipairs(spawnedStepsPanel[index]:GetChildren()) do
-            if child.name == "ID" then
-                child.text = tostring(index) .. ")"
-            elseif child.name == "StepName" then
-                child.text = step.name
-            elseif child.name == "Hover" then
-                events[#events + 1] = child.hoveredEvent:Connect(OnStepHover)
-                events[#events + 1] = child.unhoveredEvent:Connect(OnStepUnhover)
-                child.clientUserData.panel = spawnedStepsPanel[index]
-            elseif child.name == "PrecentComplete" then
-                for i, step in ipairs(stepCompleteTbl) do
-                    if index == i then
-                        child.text = tostring(CoreMath.Round(step / sampleSetSize, 2) * 100) .. "%"
+    if stepCompleteTbl ~= nil and sampleSetSize ~= nil then
+        NoDataText.visibility = Visibility.FORCE_OFF
+        for index, step in ipairs(FunnelData.GetTbl()) do
+            spawnedStepsPanel[index] = World.SpawnAsset(StepsPanelTemp, {parent = StatsScrollPanel})
+            spawnedStepsPanel[index].y = 40 * panelCount
+            panelCount = panelCount + 1
+            for _, child in ipairs(spawnedStepsPanel[index]:GetChildren()) do
+                if child.name == "ID" then
+                    child.text = tostring(index) .. ")"
+                elseif child.name == "StepName" then
+                    child.text = step.name
+                elseif child.name == "Hover" then
+                    events[#events + 1] = child.hoveredEvent:Connect(OnStepHover)
+                    events[#events + 1] = child.unhoveredEvent:Connect(OnStepUnhover)
+                    child.clientUserData.panel = spawnedStepsPanel[index]
+                elseif child.name == "PrecentComplete" then
+                    for i, step in ipairs(stepCompleteTbl) do
+                        if index == i then
+                            child.text = tostring(CoreMath.Round(step / sampleSetSize, 2) * 100) .. "%"
+                        end
                     end
-                end
-            elseif child.name == "Delta" then
-                for i, step in ipairs(stepCompleteTbl) do
-                    if index == i then
-                        if previousStep then
-                            local delta =
-                                CoreMath.Round((step / sampleSetSize * 100) - (previousStep / sampleSetSize) * 100)
-                            if delta > 0 and delta ~= math.huge then
-                                child.text = tostring(delta) .. "%"
-                                child:SetColor(Color.GREEN)
-                            elseif delta < 0 and delta ~= math.huge then
-                                child.text = tostring(delta) .. "%"
-                                child:SetColor(Color.RED)
+                elseif child.name == "Delta" then
+                    for i, step in ipairs(stepCompleteTbl) do
+                        if index == i then
+                            if previousStep then
+                                local delta =
+                                    CoreMath.Round((step / sampleSetSize * 100) - (previousStep / sampleSetSize) * 100)
+                                if delta > 0 and delta ~= math.huge then
+                                    child.text = tostring(delta) .. "%"
+                                    child:SetColor(Color.GREEN)
+                                elseif delta < 0 and delta ~= math.huge then
+                                    child.text = tostring(delta) .. "%"
+                                    child:SetColor(Color.RED)
+                                else
+                                    child.text = ""
+                                end
                             else
                                 child.text = ""
                             end
-                        else
-                            child.text = ""
+                            previousStep = step
                         end
-                        previousStep = step
                     end
-                end
-            elseif child.name == "NotCompleted" then
-                for i, step in ipairs(stepCompleteTbl) do
-                    if index == i then
-                        child.text = tostring(sampleSetSize - step)
+                elseif child.name == "NotCompleted" then
+                    for i, step in ipairs(stepCompleteTbl) do
+                        if index == i then
+                            child.text = tostring(sampleSetSize - step)
+                        end
                     end
-                end
-            elseif child.name == "Total Completed" then
-                for i, step in ipairs(stepCompleteTbl) do
-                    if index == i then
-                        child.text = tostring(step)
+                elseif child.name == "Total Completed" then
+                    for i, step in ipairs(stepCompleteTbl) do
+                        if index == i then
+                            child.text = tostring(step)
+                        end
                     end
                 end
             end
@@ -170,12 +178,16 @@ local function GetD1RetentionColor(dec)
 end
 
 local function BuildPanels()
+    NoDataText.visibility = Visibility.FORCE_ON
     BuildStepsPanel()
     BuildPlayerStatsPanel()
-    SampleSetSize.text = tostring(_G.Funnel.GetSampleSetCount())
-    local D1RetentionDec = CoreMath.Round(_G.Funnel.GetD1Retention() / _G.Funnel.GetSampleSetCount(), 2)
-    D1Retention.text = tostring(D1RetentionDec) .. "%"
-    D1Retention:SetColor(GetD1RetentionColor(D1RetentionDec))
+    local sampleSize = _G.Funnel.GetSampleSetCount()
+    if sampleSize ~= nil then
+        SampleSetSize.text = tostring(sampleSize)
+        local D1RetentionDec = CoreMath.Round(_G.Funnel.GetD1Retention() / sampleSize, 2)
+        D1Retention.text = tostring(D1RetentionDec) .. "%"
+        D1Retention:SetColor(GetD1RetentionColor(D1RetentionDec))
+    end
     events[#events + 1] = PlayerStats.clickedEvent:Connect(OnPanelToggle)
     events[#events + 1] = StepsStats.clickedEvent:Connect(OnPanelToggle)
 end

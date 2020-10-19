@@ -1,6 +1,6 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Funnel Module Client
--- Author Morticai - Team Meta
+-- Author Morticai - Team Meta (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 -- Date: 10/15/2020
 -- Version 1.0
 ------------------------------------------------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ local FunnelLeaderBoard = script:GetCustomProperty("FunnelLeaderBoard")
 ------------------------------------------------------------------------------------------------------------------------
 -- Local Variables
 ------------------------------------------------------------------------------------------------------------------------
-local playerStats = {}
+local playerSteps = {}
 ------------------------------------------------------------------------------------------------------------------------
 -- Local Functions
 ------------------------------------------------------------------------------------------------------------------------
@@ -29,15 +29,33 @@ local function isPlayerValid(Player)
     return Object.IsValid(Player) and Player:IsA("Player") and Player.id == Game.GetLocalPlayer().id
 end
 
+-- returns Leaderboard used for funnel tracking.
+local function GetLeaderBoard()
+    return Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)
+end
+
+-- @param object LeaderBoard
+-- @return true if has Leaderboards and FunnelLeaderboard not nil
+local function HasLeaderBoard(LeaderBoard)
+  return (Leaderboards.HasLeaderboards()) and LeaderBoard ~= nil
+end
+
+-- @param object Player
+-- Returns true if Player tracking should continue, uses Player resource as a flag.
+local function ShouldTrackPlayerSteps(Player)
+    return Player:GetResource(FUNNEL_DATA.SHOULD_TRACK_RES_NAME) == FUNNEL_DATA.SHOULD_TRACK_TRUE
+end
 
 -- @return a table of all steps as the index, and the total number of Players that complted the step as the value.
 local function GetAmountStepCompletedTable()
-    if Leaderboards.HasLeaderboards() then
+    local leaderBoard = Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)
+    print(leaderBoard)
+    if Leaderboards.HasLeaderboards() and leaderBoard ~= nil then
         local tempTbl = {}
         for i, step in ipairs(FUNNEL_DATA.GetTbl()) do
             -- Step 1
             tempTbl[i] = 0
-            for entryIndex, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
+            for entryIndex, entry in ipairs(leaderBoard) do
                 --Loop through entries
                 for stepIndex, step in ipairs(BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))) do
                     if stepIndex == (BTC.BIT_LIMIT + 1) - i then
@@ -52,9 +70,11 @@ end
 
 -- @return a table with Player as the index and a string with the steps status for the Player as the value.
 local function GetAllPlayerStepsString()
-    if Leaderboards.HasLeaderboards() then
+    local leaderBoard = GetLeaderBoard()
+    print(leaderBoard)
+    if HasLeaderBoard(leaderBoard) then
         local tempTbl = {}
-        for entryIndex, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
+        for entryIndex, entry in ipairs(leaderBoard) do
             local playerStepsStr = ""
             for stepIndex, step in ipairs(BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))) do
                 if stepIndex <= BTC.BIT_LIMIT then
@@ -70,12 +90,31 @@ local function GetAllPlayerStepsString()
     end
 end
 
+-- Update Player Steps Table Locally used for a spam prevent of events
+local function UpdatePlayerStepsTable()
+    local leaderBoard = GetLeaderBoard()
+    print(leaderBoard)
+    if HasLeaderBoard(leaderBoard) then
+        local count = BTC.BIT_LIMIT
+        for entryIndex, entry in ipairs(leaderBoard) do
+            if entry.id == Game.GetLocalPlayer().id then
+                for stepIndex, step in ipairs(BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))) do
+                    playerSteps[count] = step
+                    count = count - 1
+                end
+            end
+        end
+    end
+end
+
 -- @return current D1 retention %
 local function GetD1RetentionCount()
-    if Leaderboards.HasLeaderboards() then
+    local leaderBoard = GetLeaderBoard()
+    print(leaderBoard)
+    if HasLeaderBoard(leaderBoard) then
         local retentionCount = 0
         local D1ID = FUNNEL_DATA.D1_ID
-        for entryIndex, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
+        for entryIndex, entry in ipairs(leaderBoard) do
             for stepIndex, step in ipairs(BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))) do
                 if BTC.BIT_LIMIT - D1ID + 1 == stepIndex then
                     if step == nil then
@@ -91,9 +130,10 @@ end
 
 -- @return table of each step as the index and total completed as the value.
 local function GetTotalCompletedEachStepTable()
-    if Leaderboards.HasLeaderboards() then
+    local leaderBoard = GetLeaderBoard()
+    if HasLeaderBoard(leaderBoard) then
         local tempTbl = {}
-        for i, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
+        for i, entry in ipairs(leaderBoard) do
             local stepsCompleted = 0
             tempTbl[i] = {}
             tempTbl[i]["Entry"] = entry
@@ -109,8 +149,9 @@ end
 -- @param object - Player
 -- @return Players first login timestamp
 local function GetLastPlayedDate(Player)
-    if Leaderboards.HasLeaderboards() and isPlayerValid(Player) then
-        for _, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
+    local leaderBoard = GetLeaderBoard()
+    if HasLeaderBoard(leaderBoard) then
+        for _, entry in ipairs(leaderBoard) do
             if entry.id == Player.id then
                 return entry.additionalData
             end
@@ -120,9 +161,10 @@ end
 
 -- Get the current test sample set size
 local function GetFunnelSize()
-    if Leaderboards.HasLeaderboards() then
+    local leaderBoard = GetLeaderBoard()
+    if HasLeaderBoard(leaderBoard) then
         local count = 0
-        for i, _ in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
+        for i, _ in ipairs(leaderBoard) do
             count = count + 1
         end
         return count
@@ -154,10 +196,13 @@ end
 
 -- Used to allow client side scripts to send step complete calls.
 function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
-    if isPlayerValid(Player) and stepIndex ~= nil then
-        repeat
-            Events.BroadcastToServer(NAMESPACE .. "SetPlayerStepComplete", stepIndex)
-            Task.Wait(0.2)
-        until "BroadcastEventResultCode.SUCCESS"
+    if ShouldTrackPlayerSteps(Player) then
+        UpdatePlayerStepsTable()
+        if isPlayerValid(Player) and stepIndex ~= nil and playerSteps[stepIndex] == 0 then
+            repeat
+                Events.BroadcastToServer(NAMESPACE .. "SetPlayerStepComplete", stepIndex)
+                Task.Wait(0.2)
+            until "BroadcastEventResultCode.SUCCESS"
+        end
     end
 end

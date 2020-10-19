@@ -1,6 +1,6 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Funnel Module Server
--- Author Morticai - Team Meta
+-- Author Morticai - Team Meta (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 -- Date: 10/15/2020
 -- Version 1.0
 ------------------------------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ _G.Funnel = {}
 ------------------------------------------------------------------------------------------------------------------------
 local BTC = require(script:GetCustomProperty("BinaryTableConverter"))
 local DATE_API = require(script:GetCustomProperty("DateTimeTrackingModule"))
-local FUNNEL_DATA = script:GetCustomProperty("FunnelStepsData")
+local FUNNEL_DATA = require(script:GetCustomProperty("FunnelStepsData"))
 ------------------------------------------------------------------------------------------------------------------------
 -- Script Custom Properties
 ------------------------------------------------------------------------------------------------------------------------
@@ -27,11 +27,42 @@ local playerLoginDate = {}
 ------------------------------------------------------------------------------------------------------------------------
 -- Local Functions
 ------------------------------------------------------------------------------------------------------------------------
+-- @param object Player
+-- Returns true if Player tracking should continue, uses Player resource as a flag.
+local function ShouldTrackPlayerSteps(Player)
+    return Player:GetResource(FUNNEL_DATA.SHOULD_TRACK_RES_NAME) == FUNNEL_DATA.SHOULD_TRACK_TRUE
+end
+
+-- CHANGE: Dependant on game. Only works on games where the creator has previously used presistant storage.
+-- @param object Player
+-- Returns false if Player hasn't played prior to analytics being installed. Used to filter old Players that can scew tracking.
+local function OldPlayerCheck(Player)
+    return false
+    --return Player:GetResource("MoneyAccumulated") ~= 0
+end
+
+-- @param object Player
+-- @param int int -- Found in FunnelStepsData SHOULD_TRACK_TRUE = 1 / SHOULD_TRACK_FALSE = 2
+-- Uses resources, so the client side can access it without extra broadcasting.
+local function SetPlayerStepsTracking(Player, int)
+    Player:SetResource(FUNNEL_DATA.SHOULD_TRACK_RES_NAME, int)
+end
+
+-- returns Leaderboard used for funnel tracking.
+local function GetLeaderBoard()
+    return Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)
+end
+
+-- @param object LeaderBoard
+-- @return true if has Leaderboards and FunnelLeaderboard not nil
+local function HasLeaderBoard(LeaderBoard)
+  return (Leaderboards.HasLeaderboards()) and LeaderBoard ~= nil
+end
 
 -- @param object Player
 -- Saves Player Score from Binary
 local function SavePlayerFunnelData(Player)
-    if playerSteps[Player] and DATE_API.IsFirstLoginDay(playerLoginDate[Player]) then
+    if playerSteps[Player] and playerLoginDate[Player] ~= nil and DATE_API.IsFirstLoginDay(playerLoginDate[Player]) then
         local bin = BTC.ConvertBinaryToStr(Player, playerSteps)
         if bin then
             print(BTC.ConvertBinaryToNumber(bin))
@@ -90,8 +121,9 @@ end
 -- @param object - Player
 -- Checks if Player already exsists or if there is room in the sample set
 local function IsANewPlayer(Player)
-    if (Leaderboards.HasLeaderboards()) then
-        for i, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
+    local leaderBoard = GetLeaderBoard()
+    if HasLeaderBoard(leaderBoard) then
+        for i, entry in ipairs(leaderBoard) do
             if entry.id == Player.id then
                 playerSteps[Player] = BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))
                 playerLoginDate[Player] = entry.additionalData
@@ -104,8 +136,9 @@ end
 
 -- Checks if there is room on the leaderboard for a new entry
 local function HasRoomInSampleSet()
-    if (Leaderboards.HasLeaderboards()) then
-        for i, entry in ipairs(Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)) do
+    local leaderBoard = GetLeaderBoard()
+    if HasLeaderBoard(leaderBoard) then
+        for i, entry in ipairs(leaderBoard) do
             if i > BTC.FUNNEL_SAMPLE_SET then
                 return false
             end
@@ -147,6 +180,25 @@ local function SetPlayerStepComplete(Player, stepIndex)
     SavePlayerFunnelData(Player)
 end
 
+-- @param object - Player
+-- @param bool isNewPlayer -- true if new / false if currently has data or shouldn't be tracked
+-- #TODO A bit of a mess, requires clean up.
+local function SetPlayerTracking(Player, isNewPlayer)
+    if isNewPlayer and HasRoomInSampleSet() and not OldPlayerCheck(Player) then
+        SetNewPlayerData(Player)
+        SetPlayerStepsTracking(Player, FUNNEL_DATA.SHOULD_TRACK_TRUE)
+    elseif not isNewPlayer and playerLoginDate[Player] ~= nil and DATE_API.IsFirstLoginDay(playerLoginDate[Player]) then
+        SetPlayerStepsTracking(Player, FUNNEL_DATA.SHOULD_TRACK_TRUE)
+    elseif
+        not isNewPlayer and playerLoginDate[Player] ~= nil and DATE_API.HasBeenOneDaySinceLogin(playerLoginDate[Player])
+     then
+        SaveD1FunnelData(Player)
+        SetPlayerStepsTracking(Player, FUNNEL_DATA.SHOULD_TRACK_FALSE)
+    else
+        SetPlayerStepsTracking(Player, FUNNEL_DATA.SHOULD_TRACK_FALSE)
+    end
+end
+
 -- Called on playerJoinedEvent
 -- @param object - Player
 local function OnPlayerJoined(Player)
@@ -155,11 +207,7 @@ local function OnPlayerJoined(Player)
         Leaderboards.HasLeaderboards()
     until true
     local isNewPlayer = IsANewPlayer(Player)
-    if isNewPlayer and HasRoomInSampleSet() then
-        SetNewPlayerData(Player)
-    elseif not isNewPlayer and DATE_API.HasBeenOneDaySinceLogin(playerLoginDate[Player]) then
-        SaveD1FunnelData(Player)
-    end
+    SetPlayerTracking(Player, isNewPlayer)
 end
 
 -- Called on playerLeftedEvent
@@ -174,15 +222,21 @@ end
 -- Public Functions
 ------------------------------------------------------------------------------------------------------------------------
 function _G.Funnel.ReportStep(Player, stepIndex)
-    return ReportPlayerStep(Player, stepIndex)
+    if ShouldTrackPlayerSteps(Player) then
+        return ReportPlayerStep(Player, stepIndex)
+    end
 end
 
 function _G.Funnel.GetPlayerStepsTable(Player)
-    return playerSteps[Player]
+    if ShouldTrackPlayerSteps(Player) then
+        return playerSteps[Player]
+    end
 end
 
 function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
-    SetPlayerStepComplete(Player, stepIndex)
+    if ShouldTrackPlayerSteps(Player) then
+        SetPlayerStepComplete(Player, stepIndex)
+    end
 end
 ------------------------------------------------------------------------------------------------------------------------
 -- Listeners

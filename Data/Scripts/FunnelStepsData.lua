@@ -1,6 +1,6 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- FunnelStepsData
--- Author: Morticai - Team Meta
+-- Author: Morticai - Team Meta (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 -- Date: 10/15/2020
 -- Version 1.0
 ------------------------------------------------------------------------------------------------------------------------
@@ -14,127 +14,130 @@ local Api = {}
 ------------------------------------------------------------------------------------------------------------------------
 --Api.D0_ID = 1 Not used
 Api.D1_ID = 24
+Api.SHOULD_TRACK_RES_NAME = "ShouldTrackFunnel"
+Api.SHOULD_TRACK_TRUE = 1
+Api.SHOULD_TRACK_FALSE = 2
 ------------------------------------------------------------------------------------------------------------------------
 -- Steps Data
 ------------------------------------------------------------------------------------------------------------------------
 local tbl = {
     [1] = {
-        name = "See Tutorial UI",
+        name = "See Tutorial UI", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [2] = {
-        name = "Plant crop",
+        name = "Plant crop", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [3] = {
-        name = "See Switch Crop UI",
+        name = "See Switch Crop UI", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [4] = {
-        name = "Buy plot",
+        name = "Buy plot", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [5] = {
-        name = "Collect crop",
+        name = "Collect crop", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [6] = {
-        name = "Sell crops", 
+        name = "Sell crops", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [7] = {
-        name = "See Barn Storage UI",
+        name = "See Barn Storage UI", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [8] = {
-        name = "Expand Storage",
+        name = "Expand Storage", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [9] = {
-        name = "Collect Achievement",
+        name = "Collect Achievement", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [10] = {
-        name = "See shovel upgrade UI",
+        name = "See shovel upgrade UI", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [11] = {
-        name = "Upgrade shovel",
+        name = "Upgrade shovel", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [12] = {
-        name = "Equip metal detector",
+        name = "Equip metal detector", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [13] = {
-        name = "Equip fishing rod",
+        name = "Equip fishing rod", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [14] = {
-        name = "See Collectibles UI",
+        name = "See Collectibles UI", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [15] = {
-        name = "Find junk",
+        name = "Find junk", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [16] = {
-        name = "Sell junk",
+        name = "Sell junk", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [17] = {
-        name = "Use fishing rod in water",
+        name = "Use fishing rod in water", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [18] = {
-        name = "Fishing mini-game begins",
+        name = "Fishing mini-game begins", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [19] = {
-        name = "Fail to catch fish (or caught junk)",
+        name = "Fail to catch fish (or caught junk)", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [20] = {
-        name = "Catch fish",
+        name = "Catch fish", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [21] = {
-        name = "Sell fish",
+        name = "Sell fish", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [22] = {
-        name = "Upgrade metal detector",
+        name = "Upgrade metal detector", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [23] = {
-        name = "Upgrade fishing rod",
+        name = "Upgrade fishing rod", --done
         desc = "Some Information About Step",
         value = 1 
     },
     [24] = {
-        name = "D1 - Player returns",
+        name = "D1 - Player returns", --done
         desc = "Some Information About Step",
         value = 1 
     }

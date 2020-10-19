@@ -83,7 +83,7 @@
           Overrides {
             Name: "cs:FunnelLeaderBoard"
             NetReference {
-              Key: "492E48C5E424615C"
+              Key: "BA11778A1BADCB6A"
               Type {
                 Value: "mc:enetreferencetype:leaderboard"
               }
@@ -197,6 +197,7 @@
         ChildIds: 8628443189099257921
         ChildIds: 11995365597314098700
         ChildIds: 16207525358804978118
+        ChildIds: 16359094089760588863
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"
         }
@@ -998,7 +999,7 @@
             }
           }
           Text {
-            Label: "3"
+            Label: "0"
             Color {
               R: 1
               G: 1
@@ -1511,7 +1512,7 @@
             }
           }
           Text {
-            Label: "3"
+            Label: "0"
             Color {
               R: 1
               G: 1
@@ -1598,6 +1599,63 @@
         }
       }
       Objects {
+        Id: 16359094089760588863
+        Name: "NoData"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 16978777325827056456
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        Control {
+          Width: 417
+          Height: 81
+          RenderTransformPivot {
+            Anchor {
+              Value: "mc:euianchor:middlecenter"
+            }
+          }
+          Text {
+            Label: "No Data In Funnel"
+            Color {
+              R: 1
+              G: 1
+              B: 1
+              A: 1
+            }
+            Size: 35
+            Justification {
+              Value: "mc:etextjustify:center"
+            }
+            AutoWrapText: true
+          }
+          AnchorLayout {
+            SelfAnchor {
+              Anchor {
+                Value: "mc:euianchor:middlecenter"
+              }
+            }
+            TargetAnchor {
+              Anchor {
+                Value: "mc:euianchor:middlecenter"
+              }
+            }
+          }
+        }
+      }
+      Objects {
         Id: 9113516402886429506
         Name: "FunnelModuleClient"
         Transform {
@@ -1616,7 +1674,7 @@
           Overrides {
             Name: "cs:FunnelLeaderBoard"
             NetReference {
-              Key: "492E48C5E424615C"
+              Key: "BA11778A1BADCB6A"
               Type {
                 Value: "mc:enetreferencetype:leaderboard"
               }
@@ -1727,6 +1785,12 @@
             Name: "cs:D1Retention"
             ObjectReference {
               SubObjectId: 11995365597314098700
+            }
+          }
+          Overrides {
+            Name: "cs:NoData"
+            ObjectReference {
+              SubObjectId: 16359094089760588863
             }
           }
         }
