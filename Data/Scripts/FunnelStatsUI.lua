@@ -78,6 +78,7 @@ end
 local function BuildPlayerStatsPanel()
     local panelCount = 1
     local playerTable = _G.Funnel.GetAllPlayerStepsString()
+    local sessionTable = _G.Funnel.GetSessionTimeTable()
     if playerTable ~= nil then
         NoDataText.visibility = Visibility.FORCE_OFF
         for entry, stepString in pairs(playerTable) do
@@ -94,6 +95,10 @@ local function BuildPlayerStatsPanel()
                     events[#events + 1] = child.hoveredEvent:Connect(OnStepHover)
                     events[#events + 1] = child.unhoveredEvent:Connect(OnStepUnhover)
                     child.clientUserData.panel = spawnedPlayersPanel[panelCount]
+                elseif child.name == "Session Time" and sessionTable[entry.id] ~= nil and sessionTable[entry.id] ~= "" then
+                    local minutes = math.floor(tonumber(sessionTable[entry.id])) // 60 % 60
+                    local seconds = math.floor(tonumber(sessionTable[entry.id])) % 60
+                    child.text = string.format("%02d:%02d", minutes, seconds)
                 end
             end
             panelCount = panelCount + 1
@@ -218,8 +223,8 @@ local function ToggleUI(bool)
     UI.SetCursorLockedToViewport(bool)
     if bool then
         LocalPlayer:GetActiveCamera().isDistanceAdjustable = false
-        BuildPanels()
         ParentPanel.visibility = Visibility.FORCE_ON
+        BuildPanels()
     else
         LocalPlayer:GetActiveCamera().isDistanceAdjustable = true
         ParentPanel.visibility = Visibility.FORCE_OFF

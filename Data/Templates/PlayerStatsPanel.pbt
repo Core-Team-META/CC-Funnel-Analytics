@@ -21,6 +21,7 @@
         ChildIds: 17809686375373641709
         ChildIds: 14936889352495794929
         ChildIds: 13916476112729996744
+        ChildIds: 16452666360760051764
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"
         }
@@ -321,9 +322,9 @@
           Value: "mc:evisibilitysetting:inheritfromparent"
         }
         Control {
-          Width: 524
+          Width: 464
           Height: 33
-          UIX: 32.0528297
+          UIX: 217.930878
           UIY: 3
           RenderTransformPivot {
             Anchor {
@@ -331,7 +332,65 @@
             }
           }
           Text {
-            Label: "0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0"
+            Label: "0   0   0   0   0   0   0   0   0   0   0   0   0 "
+            Color {
+              R: 1
+              G: 1
+              B: 1
+              A: 1
+            }
+            Size: 15
+            Justification {
+              Value: "mc:etextjustify:left"
+            }
+            AutoWrapText: true
+          }
+          AnchorLayout {
+            SelfAnchor {
+              Anchor {
+                Value: "mc:euianchor:topleft"
+              }
+            }
+            TargetAnchor {
+              Anchor {
+                Value: "mc:euianchor:topleft"
+              }
+            }
+          }
+        }
+      }
+      Objects {
+        Id: 16452666360760051764
+        Name: "Session Time"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 118262102447358940
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        Control {
+          Width: 130
+          Height: 33
+          UIX: 11.415556
+          UIY: 3
+          RenderTransformPivot {
+            Anchor {
+              Value: "mc:euianchor:middlecenter"
+            }
+          }
+          Text {
             Color {
               R: 1
               G: 1

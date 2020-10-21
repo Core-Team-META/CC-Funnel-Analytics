@@ -24,6 +24,7 @@ local FunnelLeaderBoard = script:GetCustomProperty("FunnelLeaderBoard")
 ------------------------------------------------------------------------------------------------------------------------
 local playerSteps = {}
 local playerLoginDate = {}
+local playerSessionLength = {}
 ------------------------------------------------------------------------------------------------------------------------
 -- Local Functions
 ------------------------------------------------------------------------------------------------------------------------
@@ -37,13 +38,19 @@ end
 -- @param object Player
 -- Returns false if Player hasn't played prior to analytics being installed. Used to filter old Players that can scew tracking.
 local function OldPlayerCheck(Player)
-    return false
-    --return Player:GetResource("MoneyAccumulated") ~= 0
+    return Player:GetResource("MoneyAccumulated") ~= 0
+end
+
+-- @param object Player
+-- Sets the intial Player sessions
+local function SetIntialSession(Player)
+    playerLoginDate[Player] = DATE_API.GetInitialLoginDate()
+    playerSessionLength[Player] = os.time()
 end
 
 -- @param object Player
 -- @param int int -- Found in FunnelStepsData SHOULD_TRACK_TRUE = 1 / SHOULD_TRACK_FALSE = 2
--- Uses resources, so the client side can access it without extra broadcasting.
+-- Uses resources, so the client side can access it without extra broadcasting. Using 2 as false, incase a game saves all resources to presistance.
 local function SetPlayerStepsTracking(Player, int)
     Player:SetResource(FUNNEL_DATA.SHOULD_TRACK_RES_NAME, int)
 end
@@ -56,7 +63,7 @@ end
 -- @param object LeaderBoard
 -- @return true if has Leaderboards and FunnelLeaderboard not nil
 local function HasLeaderBoard(LeaderBoard)
-  return (Leaderboards.HasLeaderboards()) and LeaderBoard ~= nil
+    return (Leaderboards.HasLeaderboards()) and LeaderBoard ~= nil
 end
 
 -- @param object Player
@@ -64,15 +71,26 @@ end
 local function SavePlayerFunnelData(Player)
     if playerSteps[Player] and playerLoginDate[Player] ~= nil and DATE_API.IsFirstLoginDay(playerLoginDate[Player]) then
         local bin = BTC.ConvertBinaryToStr(Player, playerSteps)
+        local currentSession
+        print(playerSessionLength[Player])
         if bin then
-            print(BTC.ConvertBinaryToNumber(bin))
+            local score = BTC.ConvertBinaryToNumber(bin)
+            if score == 0 then
+                score = 0.1 -- Leaderboard doesn't save unless there is a score > 0, this will be rounded back to 0 on load.
+            end
+            if tonumber(playerSessionLength[Player]) < 1000 then
+                currentSession = playerSessionLength[Player]
+            else
+                currentSession = DATE_API.SetSessionTime(Player, playerSessionLength)
+            end
+            print(currentSession)
+            print(playerLoginDate[Player])
             if (Leaderboards.HasLeaderboards()) then
                 Leaderboards.SubmitPlayerScore(
                     FunnelLeaderBoard,
                     Player,
-                    BTC.ConvertBinaryToNumber(bin),
-                    playerLoginDate[Player]
-                )
+                    score,
+                    playerLoginDate[Player] .. currentSession)
             end
         end
     end
@@ -98,7 +116,7 @@ local function SaveD1FunnelData(Player)
                 FunnelLeaderBoard,
                 Player,
                 BTC.ConvertBinaryToNumber(bin),
-                playerLoginDate[Player]
+                playerLoginDate[Player]..playerSessionLength[Player]
             )
         end
     end
@@ -112,9 +130,9 @@ local function SetNewPlayerData(Player)
         tempTable[i] = 0
     end
     playerSteps[Player] = tempTable
-    playerLoginDate[Player] = DATE_API.GetInitialLoginDate()
+    SetIntialSession(Player)
     if (Leaderboards.HasLeaderboards()) then
-        Leaderboards.SubmitPlayerScore(FunnelLeaderBoard, Player, 0, DATE_API.GetInitialLoginDate())
+        Leaderboards.SubmitPlayerScore(FunnelLeaderBoard, Player, 0, "")
     end
 end
 
@@ -126,7 +144,8 @@ local function IsANewPlayer(Player)
         for i, entry in ipairs(leaderBoard) do
             if entry.id == Player.id then
                 playerSteps[Player] = BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))
-                playerLoginDate[Player] = entry.additionalData
+                playerLoginDate[Player] = entry.additionalData:sub(1, 5)
+                playerSessionLength[Player] = DATE_API.GetSavedSessionTime(entry.additionalData)
                 return false
             end
         end
@@ -166,7 +185,7 @@ end
 
 -- Update a Players step status in the funnel
 -- @param object - Player
--- @param in - stepIndex -- index ID of step in FunnelStepsData
+-- @param int - stepIndex -- index ID of step in FunnelStepsData
 local function SetPlayerStepComplete(Player, stepIndex)
     local tempTbl = {}
     for i, step in ipairs(playerSteps[Player]) do
@@ -216,6 +235,7 @@ local function OnPlayerLeft(Player)
     SavePlayerFunnelData(Player)
     playerSteps[Player] = nil
     playerLoginDate[Player] = nil
+    playerSessionLength[Player] = nil
 end
 
 ------------------------------------------------------------------------------------------------------------------------

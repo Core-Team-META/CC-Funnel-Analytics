@@ -3790,69 +3790,9 @@ Objects {
   ParentId: 5449336923968810949
   UnregisteredParameters {
     Overrides {
-      Name: "cs:StepsPanel"
-      AssetReference {
-        Id: 12819303860420725639
-      }
-    }
-    Overrides {
-      Name: "cs:StatsScrollPanel"
+      Name: "cs:D1Retention"
       ObjectReference {
-        SelfId: 6892284121875506899
-      }
-    }
-    Overrides {
-      Name: "cs:ParentPanel"
-      ObjectReference {
-        SelfId: 657069009353609797
-      }
-    }
-    Overrides {
-      Name: "cs:FunnelStatTracker"
-      ObjectReference {
-        SelfId: 7635290731719913224
-      }
-    }
-    Overrides {
-      Name: "cs:SampleSetSize"
-      ObjectReference {
-        SelfId: 17127925237252612174
-      }
-    }
-    Overrides {
-      Name: "cs:PlayerStats"
-      ObjectReference {
-        SelfId: 8778314991074709647
-      }
-    }
-    Overrides {
-      Name: "cs:StepsStats"
-      ObjectReference {
-        SelfId: 1204271039809785737
-      }
-    }
-    Overrides {
-      Name: "cs:PlayerParentPanel"
-      ObjectReference {
-        SelfId: 10736792137249460556
-      }
-    }
-    Overrides {
-      Name: "cs:StepsParentPanel"
-      ObjectReference {
-        SelfId: 17711891347606523702
-      }
-    }
-    Overrides {
-      Name: "cs:PlayerStatsPanel"
-      AssetReference {
-        Id: 7980472937821446145
-      }
-    }
-    Overrides {
-      Name: "cs:PlayerScrollPanel"
-      ObjectReference {
-        SelfId: 3624500190131293460
+        SelfId: 4955865840605550337
       }
     }
     Overrides {
@@ -3862,15 +3802,75 @@ Objects {
       }
     }
     Overrides {
-      Name: "cs:D1Retention"
+      Name: "cs:FunnelStatTracker"
       ObjectReference {
-        SelfId: 4955865840605550337
+        SelfId: 7635290731719913224
       }
     }
     Overrides {
       Name: "cs:NoData"
       ObjectReference {
         SelfId: 124396185335051570
+      }
+    }
+    Overrides {
+      Name: "cs:ParentPanel"
+      ObjectReference {
+        SelfId: 657069009353609797
+      }
+    }
+    Overrides {
+      Name: "cs:PlayerParentPanel"
+      ObjectReference {
+        SelfId: 10736792137249460556
+      }
+    }
+    Overrides {
+      Name: "cs:PlayerScrollPanel"
+      ObjectReference {
+        SelfId: 3624500190131293460
+      }
+    }
+    Overrides {
+      Name: "cs:PlayerStats"
+      ObjectReference {
+        SelfId: 8778314991074709647
+      }
+    }
+    Overrides {
+      Name: "cs:PlayerStatsPanel"
+      AssetReference {
+        Id: 7980472937821446145
+      }
+    }
+    Overrides {
+      Name: "cs:SampleSetSize"
+      ObjectReference {
+        SelfId: 17127925237252612174
+      }
+    }
+    Overrides {
+      Name: "cs:StatsScrollPanel"
+      ObjectReference {
+        SelfId: 6892284121875506899
+      }
+    }
+    Overrides {
+      Name: "cs:StepsPanel"
+      AssetReference {
+        Id: 12819303860420725639
+      }
+    }
+    Overrides {
+      Name: "cs:StepsParentPanel"
+      ObjectReference {
+        SelfId: 17711891347606523702
+      }
+    }
+    Overrides {
+      Name: "cs:StepsStats"
+      ObjectReference {
+        SelfId: 1204271039809785737
       }
     }
   }
@@ -3911,7 +3911,7 @@ Objects {
     Overrides {
       Name: "cs:FunnelLeaderBoard"
       NetReference {
-        Key: "492E48C5E424615C"
+        Key: "A4358C053637964E"
         Type {
           Value: "mc:enetreferencetype:leaderboard"
         }
@@ -4448,6 +4448,7 @@ Objects {
   ChildIds: 54245804976187423
   ChildIds: 14499509230060195143
   ChildIds: 15674889649354730439
+  ChildIds: 15526654923420247078
   Collidable_v2 {
     Value: "mc:ecollisionsetting:inheritfromparent"
   }
@@ -4481,6 +4482,70 @@ Objects {
   InstanceHistory {
     SelfId: 17652011940360458660
     SubobjectId: 1605066630657990825
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 15526654923420247078
+  Name: "Steps"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17652011940360458660
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 63
+    Height: 60
+    UIX: -65.7148285
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "Session"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 15
+      Justification {
+        Value: "mc:etextjustify:left"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 15674889649354730439
+    SubobjectId: 4266802047869524682
     InstanceId: 7282444901910764749
     TemplateId: 8554280015600724223
   }
@@ -5675,7 +5740,7 @@ Objects {
     Overrides {
       Name: "cs:FunnelLeaderBoard"
       NetReference {
-        Key: "492E48C5E424615C"
+        Key: "A4358C053637964E"
         Type {
           Value: "mc:enetreferencetype:leaderboard"
         }

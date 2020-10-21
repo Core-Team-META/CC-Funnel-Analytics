@@ -17,6 +17,12 @@
         }
       }
       Overrides {
+        Name: "cs:DateTimeTrackingModule"
+        AssetReference {
+          Id: 8918425803086747742
+        }
+      }
+      Overrides {
         Name: "cs:FunnelLeaderBoard"
         NetReference {
           Key: "7E9797714C8723AE"

@@ -14,6 +14,7 @@ _G.Funnel = {}
 ------------------------------------------------------------------------------------------------------------------------
 local FUNNEL_DATA = require(script:GetCustomProperty("FunnelStepsData"))
 local BTC = require(script:GetCustomProperty("BinaryTableConverter"))
+local DATE_API = require(script:GetCustomProperty("DateTimeTrackingModule"))
 ------------------------------------------------------------------------------------------------------------------------
 -- Script Custom Properties
 ------------------------------------------------------------------------------------------------------------------------
@@ -37,7 +38,7 @@ end
 -- @param object LeaderBoard
 -- @return true if has Leaderboards and FunnelLeaderboard not nil
 local function HasLeaderBoard(LeaderBoard)
-  return (Leaderboards.HasLeaderboards()) and LeaderBoard ~= nil
+    return (Leaderboards.HasLeaderboards()) and LeaderBoard ~= nil
 end
 
 -- @param object Player
@@ -48,15 +49,19 @@ end
 
 -- @return a table of all steps as the index, and the total number of Players that complted the step as the value.
 local function GetAmountStepCompletedTable()
-    local leaderBoard = Leaderboards.GetLeaderboard(FunnelLeaderBoard, LeaderboardType.GLOBAL)
-    print(leaderBoard)
-    if Leaderboards.HasLeaderboards() and leaderBoard ~= nil then
+    local leaderBoard = GetLeaderBoard()
+    if HasLeaderBoard(leaderBoard) then
         local tempTbl = {}
         for i, step in ipairs(FUNNEL_DATA.GetTbl()) do
             -- Step 1
             tempTbl[i] = 0
+            local waitCount = 0
             for entryIndex, entry in ipairs(leaderBoard) do
-                --Loop through entries
+                waitCount = waitCount + 1
+                if waitCount == 100 then
+                    Task.Wait()
+                    waitCount = 0
+                end
                 for stepIndex, step in ipairs(BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))) do
                     if stepIndex == (BTC.BIT_LIMIT + 1) - i then
                         tempTbl[i] = tempTbl[i] + step
@@ -68,10 +73,22 @@ local function GetAmountStepCompletedTable()
     end
 end
 
+local function GetSessionTimeTable()
+    local leaderBoard = GetLeaderBoard()
+    if HasLeaderBoard(leaderBoard) then
+        local tempTbl = {}
+
+        for entryIndex, entry in ipairs(leaderBoard) do
+            tempTbl[entry.id] = DATE_API.GetSavedSessionTime(entry.additionalData)
+        end
+
+        return tempTbl
+    end
+end
+
 -- @return a table with Player as the index and a string with the steps status for the Player as the value.
 local function GetAllPlayerStepsString()
     local leaderBoard = GetLeaderBoard()
-    print(leaderBoard)
     if HasLeaderBoard(leaderBoard) then
         local tempTbl = {}
         for entryIndex, entry in ipairs(leaderBoard) do
@@ -93,7 +110,6 @@ end
 -- Update Player Steps Table Locally used for a spam prevent of events
 local function UpdatePlayerStepsTable()
     local leaderBoard = GetLeaderBoard()
-    print(leaderBoard)
     if HasLeaderBoard(leaderBoard) then
         local count = BTC.BIT_LIMIT
         for entryIndex, entry in ipairs(leaderBoard) do
@@ -110,7 +126,6 @@ end
 -- @return current D1 retention %
 local function GetD1RetentionCount()
     local leaderBoard = GetLeaderBoard()
-    print(leaderBoard)
     if HasLeaderBoard(leaderBoard) then
         local retentionCount = 0
         local D1ID = FUNNEL_DATA.D1_ID
@@ -125,24 +140,6 @@ local function GetD1RetentionCount()
             end
         end
         return retentionCount * 100
-    end
-end
-
--- @return table of each step as the index and total completed as the value.
-local function GetTotalCompletedEachStepTable()
-    local leaderBoard = GetLeaderBoard()
-    if HasLeaderBoard(leaderBoard) then
-        local tempTbl = {}
-        for i, entry in ipairs(leaderBoard) do
-            local stepsCompleted = 0
-            tempTbl[i] = {}
-            tempTbl[i]["Entry"] = entry
-            for _, step in ipairs(BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))) do
-                stepsCompleted = stepsCompleted + step
-            end
-            tempTbl[i]["Stats"] = stepsCompleted
-        end
-        return tempTbl
     end
 end
 
@@ -194,15 +191,19 @@ function _G.Funnel.GetLastPlayedDate(Player)
     return GetLastPlayedDate(Player)
 end
 
+function _G.Funnel.GetSessionTimeTable()
+    return GetSessionTimeTable()
+end
+
 -- Used to allow client side scripts to send step complete calls.
 function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
     if ShouldTrackPlayerSteps(Player) then
         UpdatePlayerStepsTable()
         if isPlayerValid(Player) and stepIndex ~= nil and playerSteps[stepIndex] == 0 then
             repeat
-                Events.BroadcastToServer(NAMESPACE .. "SetPlayerStepComplete", stepIndex)
+                local result, message = Events.BroadcastToServer(NAMESPACE .. "SetPlayerStepComplete", stepIndex)
                 Task.Wait(0.2)
-            until "BroadcastEventResultCode.SUCCESS"
+            until result == BroadcastEventResultCode.SUCCESS
         end
     end
 end

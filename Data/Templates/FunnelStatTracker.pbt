@@ -20,7 +20,7 @@
         ChildIds: 12187078975419637448
         UnregisteredParameters {
           Overrides {
-            Name: "cs:PanelToggleKeybind"
+            Name: "cs:AnalyticsPanelKeybind"
             String: "ability_extra_58"
           }
           Overrides {
@@ -54,6 +54,7 @@
         }
         ParentId: 10036514464941940229
         ChildIds: 17703760559394907019
+        ChildIds: 9687127438890389144
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"
         }
@@ -83,7 +84,7 @@
           Overrides {
             Name: "cs:FunnelLeaderBoard"
             NetReference {
-              Key: "BA11778A1BADCB6A"
+              Key: "254DD412BF83B87B"
               Type {
                 Value: "mc:enetreferencetype:leaderboard"
               }
@@ -99,6 +100,33 @@
         Script {
           ScriptAsset {
             Id: 466305906894321401
+          }
+        }
+      }
+      Objects {
+        Id: 9687127438890389144
+        Name: "AnalyticsFacade"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 14470988510846793688
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        Script {
+          ScriptAsset {
+            Id: 4025086976004318623
           }
         }
       }
@@ -120,6 +148,7 @@
         ChildIds: 5044379864106425612
         ChildIds: 9113516402886429506
         ChildIds: 12242735505066068916
+        ChildIds: 3078566161686471662
         Collidable_v2 {
           Value: "mc:ecollisionsetting:forceoff"
         }
@@ -1151,6 +1180,7 @@
         ChildIds: 16320592638492891410
         ChildIds: 3136271293061282890
         ChildIds: 4266802047869524682
+        ChildIds: 3875099741236286763
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"
         }
@@ -1330,6 +1360,64 @@
           }
           Text {
             Label: "Steps"
+            Color {
+              R: 1
+              G: 1
+              B: 1
+              A: 1
+            }
+            Size: 15
+            Justification {
+              Value: "mc:etextjustify:left"
+            }
+            AutoWrapText: true
+          }
+          AnchorLayout {
+            SelfAnchor {
+              Anchor {
+                Value: "mc:euianchor:topright"
+              }
+            }
+            TargetAnchor {
+              Anchor {
+                Value: "mc:euianchor:topright"
+              }
+            }
+          }
+        }
+      }
+      Objects {
+        Id: 3875099741236286763
+        Name: "Steps"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 1605066630657990825
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        Control {
+          Width: 63
+          Height: 60
+          UIX: -65.7148285
+          RenderTransformPivot {
+            Anchor {
+              Value: "mc:euianchor:middlecenter"
+            }
+          }
+          Text {
+            Label: "Session"
             Color {
               R: 1
               G: 1
@@ -1674,7 +1762,7 @@
           Overrides {
             Name: "cs:FunnelLeaderBoard"
             NetReference {
-              Key: "BA11778A1BADCB6A"
+              Key: "254DD412BF83B87B"
               Type {
                 Value: "mc:enetreferencetype:leaderboard"
               }
@@ -1710,69 +1798,9 @@
         ParentId: 12187078975419637448
         UnregisteredParameters {
           Overrides {
-            Name: "cs:StepsPanel"
-            AssetReference {
-              Id: 12819303860420725639
-            }
-          }
-          Overrides {
-            Name: "cs:StatsScrollPanel"
+            Name: "cs:D1Retention"
             ObjectReference {
-              SubObjectId: 13625802477757798366
-            }
-          }
-          Overrides {
-            Name: "cs:ParentPanel"
-            ObjectReference {
-              SubObjectId: 16978777325827056456
-            }
-          }
-          Overrides {
-            Name: "cs:FunnelStatTracker"
-            ObjectReference {
-              SubObjectId: 10036514464941940229
-            }
-          }
-          Overrides {
-            Name: "cs:SampleSetSize"
-            ObjectReference {
-              SubObjectId: 1084313680192180547
-            }
-          }
-          Overrides {
-            Name: "cs:PlayerStats"
-            ObjectReference {
-              SubObjectId: 11199337595919065474
-            }
-          }
-          Overrides {
-            Name: "cs:StepsStats"
-            ObjectReference {
-              SubObjectId: 17440386284483214980
-            }
-          }
-          Overrides {
-            Name: "cs:PlayerParentPanel"
-            ObjectReference {
-              SubObjectId: 8628443189099257921
-            }
-          }
-          Overrides {
-            Name: "cs:StepsParentPanel"
-            ObjectReference {
-              SubObjectId: 1689865378160098875
-            }
-          }
-          Overrides {
-            Name: "cs:PlayerStatsPanel"
-            AssetReference {
-              Id: 7980472937821446145
-            }
-          }
-          Overrides {
-            Name: "cs:PlayerScrollPanel"
-            ObjectReference {
-              SubObjectId: 15056117898895227929
+              SubObjectId: 11995365597314098700
             }
           }
           Overrides {
@@ -1782,15 +1810,75 @@
             }
           }
           Overrides {
-            Name: "cs:D1Retention"
+            Name: "cs:FunnelStatTracker"
             ObjectReference {
-              SubObjectId: 11995365597314098700
+              SubObjectId: 10036514464941940229
             }
           }
           Overrides {
             Name: "cs:NoData"
             ObjectReference {
               SubObjectId: 16359094089760588863
+            }
+          }
+          Overrides {
+            Name: "cs:ParentPanel"
+            ObjectReference {
+              SubObjectId: 16978777325827056456
+            }
+          }
+          Overrides {
+            Name: "cs:PlayerParentPanel"
+            ObjectReference {
+              SubObjectId: 8628443189099257921
+            }
+          }
+          Overrides {
+            Name: "cs:PlayerScrollPanel"
+            ObjectReference {
+              SubObjectId: 15056117898895227929
+            }
+          }
+          Overrides {
+            Name: "cs:PlayerStats"
+            ObjectReference {
+              SubObjectId: 11199337595919065474
+            }
+          }
+          Overrides {
+            Name: "cs:PlayerStatsPanel"
+            AssetReference {
+              Id: 7980472937821446145
+            }
+          }
+          Overrides {
+            Name: "cs:SampleSetSize"
+            ObjectReference {
+              SubObjectId: 1084313680192180547
+            }
+          }
+          Overrides {
+            Name: "cs:StatsScrollPanel"
+            ObjectReference {
+              SubObjectId: 13625802477757798366
+            }
+          }
+          Overrides {
+            Name: "cs:StepsPanel"
+            AssetReference {
+              Id: 12819303860420725639
+            }
+          }
+          Overrides {
+            Name: "cs:StepsParentPanel"
+            ObjectReference {
+              SubObjectId: 1689865378160098875
+            }
+          }
+          Overrides {
+            Name: "cs:StepsStats"
+            ObjectReference {
+              SubObjectId: 17440386284483214980
             }
           }
         }
@@ -1803,6 +1891,33 @@
         Script {
           ScriptAsset {
             Id: 11745817180160931527
+          }
+        }
+      }
+      Objects {
+        Id: 3078566161686471662
+        Name: "AnalyticsFacadeClient"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 12187078975419637448
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        Script {
+          ScriptAsset {
+            Id: 7738987483859234283
           }
         }
       }

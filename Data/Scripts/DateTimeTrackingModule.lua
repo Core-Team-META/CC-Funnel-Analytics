@@ -5,6 +5,7 @@
 -- Version 1.0
 ------------------------------------------------------------------------------------------------------------------------
 -- Compresses dates to 6 characters EX => 20.292 = October 18th 2020
+-- Code will break in 80 years with current timestamping methods.
 ------------------------------------------------------------------------------------------------------------------------
 local Api = {}
 ------------------------------------------------------------------------------------------------------------------------
@@ -14,13 +15,13 @@ local Api = {}
 --#TODO Currently using 1 extra char by adding . inbetween year and yearDay, can be compressed EX=> 20290
 local function GetDateStr(year, yearDay)
     local year = year - 2000
-    return string.format("%s.%s", year, yearDay)
+    return string.format("%s%s", year, yearDay)
 end
 
 local function ConvertDateStrToDate(dateStr)
-    local year = dateStr:match("(%d+)")
+    local year = dateStr:sub(1, 2)
     year = year + 2000
-    local yearDay = dateStr:match(".(%d+)$")
+    local yearDay = dateStr:sub(3, 5)
     return year, yearDay
 end
 
@@ -35,11 +36,13 @@ local function GetDateStrFromTimestamp(timestamp)
 end
 
 local function ConvertDateData(date)
-    local _, _, currentYear, currentDay = GetDateDataFromTimestamp(os.time())
-    local currentDate = ((currentYear - 2000) + (currentDay / 1000))
-    local loginYear, loginDay = tonumber(date:match("(%d+)")), tonumber(date:match(".(%d+)$"))
-    local loginDate = (loginYear + (loginDay / 1000))
-    return currentYear, currentDate, loginYear, loginDate
+    if date ~= nil and date ~= "" then
+        local _, _, currentYear, currentDay = GetDateDataFromTimestamp(os.time())
+        local currentDate = ((currentYear - 2000) + (currentDay / 1000))
+        local loginYear, loginDay = tonumber(date:sub(1, 2)), tonumber(date:sub(3, 5))
+        local loginDate = (loginYear + (loginDay / 1000))
+        return currentYear, currentDate, loginYear, loginDate
+    end
 end
 
 local function HasBeenOneDaySinceInitalLogin(date)
@@ -64,6 +67,31 @@ local function IsFirstLoginDay(date)
     return false
 end
 
+local function GetSavedSessionTime(dateStr)
+    return dateStr:sub(6, 8)
+end
+
+-- @param object Player
+-- @return int - Player session time in seconds
+local function SetSessionTime(Player, tbl)
+    if tbl[Player] ~= nil then
+        local tempTime = os.time() - tonumber(tbl[Player])
+        local sessionTime = 0
+        if tempTime < 10 then
+            sessionTime = "00" .. tostring(tempTime)
+        elseif tempTime > 9 and tempTime < 100 then
+            sessionTime = "0" .. tostring(tempTime)
+        elseif tempTime > 999 then
+            sessionTime = tostring(999)
+        else
+            sessionTime = tostring(tempTime)
+        end
+        return sessionTime
+    else
+        return "0"
+    end
+end
+
 ------------------------------------------------------------------------------------------------------------------------
 -- Global functions
 ------------------------------------------------------------------------------------------------------------------------
@@ -77,6 +105,14 @@ end
 
 function Api.IsFirstLoginDay(date)
     return IsFirstLoginDay(date)
+end
+
+function Api.SetSessionTime(Player, tbl)
+    return SetSessionTime(Player, tbl)
+end
+
+function Api.GetSavedSessionTime(dateStr)
+    return GetSavedSessionTime(dateStr)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
