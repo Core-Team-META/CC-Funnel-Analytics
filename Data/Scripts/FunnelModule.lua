@@ -38,7 +38,7 @@ end
 -- @param object Player
 -- Returns false if Player hasn't played prior to analytics being installed. Used to filter old Players that can scew tracking.
 local function OldPlayerCheck(Player)
-    return true--Player:GetResource("MoneyAccumulated") ~= 0
+    return false--Player:GetResource("MoneyAccumulated") ~= 0
 end
 
 -- @param object Player
