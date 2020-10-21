@@ -28,6 +28,7 @@ local NoDataText = script:GetCustomProperty("NoData"):WaitForObject()
 -- Custom Properties
 ------------------------------------------------------------------------------------------------------------------------
 local KEYBIND = ROOT:GetCustomProperty("AnalyticsPanelKeybind")
+local DEV_MODE = ROOT:GetCustomProperty("isDevMode")
 ------------------------------------------------------------------------------------------------------------------------
 -- Templates
 ------------------------------------------------------------------------------------------------------------------------
@@ -36,7 +37,6 @@ local PlayerStatsPanelTemp = script:GetCustomProperty("PlayerStatsPanel")
 ------------------------------------------------------------------------------------------------------------------------
 -- Constants
 ------------------------------------------------------------------------------------------------------------------------
-local DEV_MODE = true -- Setting to true allows everyone to access funnel UI, false only allows Players in ADMIN_TABLE
 local ADMIN_TABLE = {"b4c6e32137e54571814b5e8f27aa2fcd", "d1073dbcc404405cbef8ce728e53d380"}
 ------------------------------------------------------------------------------------------------------------------------
 -- Variables
