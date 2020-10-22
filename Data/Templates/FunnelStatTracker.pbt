@@ -1591,7 +1591,6 @@
         Control {
           Width: 114
           Height: 60
-          UIX: -100.344246
           UIY: 20
           RenderTransformPivot {
             Anchor {
@@ -1648,9 +1647,9 @@
           Value: "mc:evisibilitysetting:inheritfromparent"
         }
         Control {
-          Width: 35
+          Width: 115
           Height: 60
-          UIX: -181.511795
+          UIX: -119.330414
           UIY: 20
           RenderTransformPivot {
             Anchor {
@@ -1658,7 +1657,7 @@
             }
           }
           Text {
-            Label: "D1:"
+            Label: "Current D1:"
             Color {
               R: 1
               G: 1
@@ -1667,7 +1666,7 @@
             }
             Size: 20
             Justification {
-              Value: "mc:etextjustify:right"
+              Value: "mc:etextjustify:left"
             }
             AutoWrapText: true
           }

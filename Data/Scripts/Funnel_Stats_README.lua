@@ -3,8 +3,8 @@
 	v1.0 - 2020/10/18
 	by: Morticai
 	
-    This module tracks up to 24 different player actions, 
-    session time (Up to 999 seconds) and date of first time played.
+    This module tracks up to 23 different player actions, session time (Up to 999 seconds) and date of first time played.
+    Step 24 is saved for D1 retention, it's fired if a player rejoins the game the  next day.
 	
 	Usage
 	=====

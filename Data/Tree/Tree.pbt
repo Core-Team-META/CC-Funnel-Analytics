@@ -15,8 +15,8 @@ Objects {
     }
   }
   ChildIds: 3659718192974109388
-  ChildIds: 7282444901910764749
-  ChildIds: 14406677262763028907
+  ChildIds: 7635290731719913224
+  ChildIds: 2773240224045750010
   UnregisteredParameters {
   }
   Collidable_v2 {
@@ -29,12 +29,12 @@ Objects {
   }
 }
 Objects {
-  Id: 14406677262763028907
-  Name: "EXAMPLE STEP TRACKING"
+  Id: 2773240224045750010
+  Name: "ClientContext"
   Transform {
     Location {
-      X: -296.814178
-      Y: -716.738037
+      X: 175.92688
+      Y: -898.488159
     }
     Rotation {
     }
@@ -75,8 +75,7 @@ Objects {
   Visible_v2 {
     Value: "mc:evisibilitysetting:inheritfromparent"
   }
-  Folder {
-    IsGroup: true
+  NetworkContext {
   }
 }
 Objects {
@@ -84,8 +83,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: -1153.76733
-      Y: 727.000916
+      X: -1626.50842
+      Y: 908.751038
     }
     Rotation {
       Yaw: -179.999954
@@ -96,7 +95,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 11995643592136887678
   ChildIds: 4721021414319378289
   UnregisteredParameters {
@@ -230,8 +229,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: -912.605957
-      Y: 727.001
+      X: -1385.34705
+      Y: 908.751099
     }
     Rotation {
       Yaw: -179.999954
@@ -242,7 +241,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 10917462332128778896
   ChildIds: 14081912178510230708
   UnregisteredParameters {
@@ -376,8 +375,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: -685.998779
-      Y: 727.001099
+      X: -1158.73987
+      Y: 908.751221
     }
     Rotation {
       Yaw: -179.999954
@@ -388,7 +387,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 1298401565198979558
   ChildIds: 13582254750597656568
   UnregisteredParameters {
@@ -522,8 +521,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: -403.648712
-      Y: 727.001343
+      X: -876.389771
+      Y: 908.751465
     }
     Rotation {
       Yaw: -179.999954
@@ -534,7 +533,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 14168150988270839271
   ChildIds: 2171102769182436674
   UnregisteredParameters {
@@ -668,11 +667,11 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: -163.118927
-      Y: 727.000488
+      X: -635.86
+      Y: 908.75061
     }
     Rotation {
-      Yaw: -179.999985
+      Yaw: -179.999969
     }
     Scale {
       X: 1
@@ -680,7 +679,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 17480069908749731191
   ChildIds: 2055876154201698657
   UnregisteredParameters {
@@ -814,8 +813,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 31.7094421
-      Y: 727.00061
+      X: -441.031616
+      Y: 908.750732
     }
     Rotation {
       Yaw: -179.999954
@@ -826,7 +825,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 2551934758211466048
   ChildIds: 5606142196857365703
   UnregisteredParameters {
@@ -960,8 +959,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 221.346283
-      Y: 727.000732
+      X: -251.394775
+      Y: 908.750854
     }
     Rotation {
       Yaw: -179.999954
@@ -972,7 +971,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 7872180647047502201
   ChildIds: 16674774085093748074
   UnregisteredParameters {
@@ -1106,8 +1105,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 408.434784
-      Y: 727.00061
+      X: -64.3062744
+      Y: 908.750732
     }
     Rotation {
       Yaw: -179.999954
@@ -1118,7 +1117,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 12783873151271316361
   ChildIds: 9091563345790283707
   UnregisteredParameters {
@@ -1252,8 +1251,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 609.668457
-      Y: 727.000732
+      X: 136.927399
+      Y: 908.750854
     }
     Rotation {
       Yaw: -179.999954
@@ -1264,7 +1263,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 1192121482542780104
   ChildIds: 3683352354513668275
   UnregisteredParameters {
@@ -1398,8 +1397,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 821.004395
-      Y: 727.000916
+      X: 348.263306
+      Y: 908.751038
     }
     Rotation {
       Yaw: -179.999954
@@ -1410,7 +1409,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 2091817521198049446
   ChildIds: 12615470171945048824
   UnregisteredParameters {
@@ -1544,8 +1543,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 1058.70459
-      Y: 727.000916
+      X: 585.963501
+      Y: 908.751038
     }
     Rotation {
       Yaw: -179.999954
@@ -1556,7 +1555,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 13624930813810779139
   ChildIds: 1751431783257185382
   UnregisteredParameters {
@@ -1690,8 +1689,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 1299.86597
-      Y: 727.001
+      X: 827.124878
+      Y: 908.751099
     }
     Rotation {
       Yaw: -179.999954
@@ -1702,7 +1701,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 6264264607926327862
   ChildIds: 11309215826941748543
   UnregisteredParameters {
@@ -1836,8 +1835,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 1526.47314
-      Y: 727.001099
+      X: 1053.73206
+      Y: 908.751221
     }
     Rotation {
       Yaw: -179.999954
@@ -1848,7 +1847,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 10399123378141865514
   ChildIds: 6382093885994334716
   UnregisteredParameters {
@@ -1982,8 +1981,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 1808.82324
-      Y: 727.001343
+      X: 1336.08215
+      Y: 908.751465
     }
     Rotation {
       Yaw: -179.999954
@@ -1994,7 +1993,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 5185642626436350402
   ChildIds: 7260726493502649311
   UnregisteredParameters {
@@ -2128,8 +2127,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 1613.2998
-      Y: -1454.00146
+      X: 1140.55872
+      Y: -1272.25134
     }
     Rotation {
     }
@@ -2139,7 +2138,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 12607697235160219352
   ChildIds: 13107512420003688634
   UnregisteredParameters {
@@ -2273,8 +2272,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 1418.47131
-      Y: -1454.00146
+      X: 945.730225
+      Y: -1272.25134
     }
     Rotation {
     }
@@ -2284,7 +2283,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 2842831598491785051
   ChildIds: 7420269985050726381
   UnregisteredParameters {
@@ -2418,8 +2417,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 1228.83447
-      Y: -1454.00146
+      X: 756.093384
+      Y: -1272.25134
     }
     Rotation {
     }
@@ -2429,7 +2428,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 13765137825819419080
   ChildIds: 3828381311285922527
   UnregisteredParameters {
@@ -2563,8 +2562,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 1041.74609
-      Y: -1454.00146
+      X: 569.005
+      Y: -1272.25134
     }
     Rotation {
     }
@@ -2574,7 +2573,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 14966656735762784389
   ChildIds: 14337536625786067785
   UnregisteredParameters {
@@ -2708,8 +2707,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 840.512329
-      Y: -1454.00146
+      X: 367.77124
+      Y: -1272.25134
     }
     Rotation {
     }
@@ -2719,7 +2718,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 7350571993717478878
   ChildIds: 17340609671879919246
   UnregisteredParameters {
@@ -2853,8 +2852,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 629.176453
-      Y: -1454.00146
+      X: 156.435394
+      Y: -1272.25134
     }
     Rotation {
     }
@@ -2864,7 +2863,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 16132796147435122602
   ChildIds: 1272767818128744836
   UnregisteredParameters {
@@ -2998,8 +2997,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 391.476318
-      Y: -1454.00146
+      X: -81.26474
+      Y: -1272.25134
     }
     Rotation {
     }
@@ -3009,7 +3008,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 13293635565055614526
   ChildIds: 12702745875133659698
   UnregisteredParameters {
@@ -3143,8 +3142,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: 150.314514
-      Y: -1454.00146
+      X: -322.426544
+      Y: -1272.25134
     }
     Rotation {
     }
@@ -3154,7 +3153,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 2066489800873972286
   ChildIds: 16604410815321245468
   UnregisteredParameters {
@@ -3288,8 +3287,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: -76.2922058
-      Y: -1454.00146
+      X: -549.033264
+      Y: -1272.25134
     }
     Rotation {
     }
@@ -3299,7 +3298,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 9688536835770847111
   ChildIds: 11083311750544027825
   UnregisteredParameters {
@@ -3433,8 +3432,8 @@ Objects {
   Name: "Step Test Trigger"
   Transform {
     Location {
-      X: -358.642487
-      Y: -1454.00146
+      X: -831.383545
+      Y: -1272.25134
     }
     Rotation {
     }
@@ -3444,7 +3443,7 @@ Objects {
       Z: 1
     }
   }
-  ParentId: 14406677262763028907
+  ParentId: 2773240224045750010
   ChildIds: 14723745788558420087
   ChildIds: 6346840637622900573
   UnregisteredParameters {
@@ -3574,9 +3573,13 @@ Objects {
   }
 }
 Objects {
-  Id: 7282444901910764749
+  Id: 7635290731719913224
   Name: "FunnelStatTracker"
   Transform {
+    Location {
+    }
+    Rotation {
+    }
     Scale {
       X: 1
       Y: 1
@@ -3584,35 +3587,2091 @@ Objects {
     }
   }
   ParentId: 4781671109827199097
+  ChildIds: 11544755151040824206
+  ChildIds: 3057270885843486421
+  ChildIds: 5449336923968810949
+  UnregisteredParameters {
+    Overrides {
+      Name: "cs:AnalyticsPanelKeybind"
+      String: "ability_extra_58"
+    }
+    Overrides {
+      Name: "cs:isDevMode"
+      Bool: true
+    }
+  }
   Collidable_v2 {
     Value: "mc:ecollisionsetting:inheritfromparent"
   }
   Visible_v2 {
     Value: "mc:evisibilitysetting:inheritfromparent"
   }
-  TemplateInstance {
-    ParameterOverrideMap {
-      key: 10036514464941940229
-      value {
-        Overrides {
-          Name: "Name"
-          String: "FunnelStatTracker"
-        }
-        Overrides {
-          Name: "Position"
-          Vector {
-          }
-        }
-        Overrides {
-          Name: "Rotation"
-          Rotator {
-          }
+  Folder {
+    IsGroup: true
+  }
+  InstanceHistory {
+    SelfId: 7635290731719913224
+    SubobjectId: 10036514464941940229
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+    WasRoot: true
+  }
+}
+Objects {
+  Id: 5449336923968810949
+  Name: "ClientContext"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 7635290731719913224
+  ChildIds: 11871453502047923201
+  ChildIds: 11297114942218287695
+  ChildIds: 5429146383122102969
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:forceoff"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  NetworkContext {
+  }
+  InstanceHistory {
+    SelfId: 5449336923968810949
+    SubobjectId: 12187078975419637448
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 5429146383122102969
+  Name: "FunnelStatsUI"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 5449336923968810949
+  UnregisteredParameters {
+    Overrides {
+      Name: "cs:D1Retention"
+      ObjectReference {
+        SelfId: 4955865840605550337
+      }
+    }
+    Overrides {
+      Name: "cs:D1RetentionStatic"
+      ObjectReference {
+        SelfId: 167317890815801547
+      }
+    }
+    Overrides {
+      Name: "cs:FunnelStatTracker"
+      ObjectReference {
+        SelfId: 7635290731719913224
+      }
+    }
+    Overrides {
+      Name: "cs:NoData"
+      ObjectReference {
+        SelfId: 124396185335051570
+      }
+    }
+    Overrides {
+      Name: "cs:ParentPanel"
+      ObjectReference {
+        SelfId: 657069009353609797
+      }
+    }
+    Overrides {
+      Name: "cs:PlayerParentPanel"
+      ObjectReference {
+        SelfId: 10736792137249460556
+      }
+    }
+    Overrides {
+      Name: "cs:PlayerScrollPanel"
+      ObjectReference {
+        SelfId: 3624500190131293460
+      }
+    }
+    Overrides {
+      Name: "cs:PlayerStats"
+      ObjectReference {
+        SelfId: 8778314991074709647
+      }
+    }
+    Overrides {
+      Name: "cs:PlayerStatsPanel"
+      AssetReference {
+        Id: 7980472937821446145
+      }
+    }
+    Overrides {
+      Name: "cs:SampleSetSize"
+      ObjectReference {
+        SelfId: 17127925237252612174
+      }
+    }
+    Overrides {
+      Name: "cs:StatsScrollPanel"
+      ObjectReference {
+        SelfId: 6892284121875506899
+      }
+    }
+    Overrides {
+      Name: "cs:StepsPanel"
+      AssetReference {
+        Id: 12819303860420725639
+      }
+    }
+    Overrides {
+      Name: "cs:StepsParentPanel"
+      ObjectReference {
+        SelfId: 17711891347606523702
+      }
+    }
+    Overrides {
+      Name: "cs:StepsStats"
+      ObjectReference {
+        SelfId: 1204271039809785737
+      }
+    }
+  }
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Script {
+    ScriptAsset {
+      Id: 11745817180160931527
+    }
+  }
+  InstanceHistory {
+    SelfId: 5429146383122102969
+    SubobjectId: 12242735505066068916
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 11297114942218287695
+  Name: "FunnelModuleClient"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 5449336923968810949
+  UnregisteredParameters {
+    Overrides {
+      Name: "cs:FunnelLeaderBoard"
+      NetReference {
+        Key: "A4358C053637964E"
+        Type {
+          Value: "mc:enetreferencetype:leaderboard"
         }
       }
     }
-    TemplateAsset {
-      Id: 8554280015600724223
+  }
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Script {
+    ScriptAsset {
+      Id: 14552110569528995077
     }
+  }
+  InstanceHistory {
+    SelfId: 11297114942218287695
+    SubobjectId: 9113516402886429506
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 11871453502047923201
+  Name: "UI Container"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 5449336923968810949
+  ChildIds: 657069009353609797
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Canvas {
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topleft"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topleft"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 11871453502047923201
+    SubobjectId: 5044379864106425612
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 657069009353609797
+  Name: "ParentPanel"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 11871453502047923201
+  ChildIds: 5769381727790841369
+  ChildIds: 14960457592696819604
+  ChildIds: 3889097230880283548
+  ChildIds: 17711891347606523702
+  ChildIds: 17127925237252612174
+  ChildIds: 7818507648949441471
+  ChildIds: 10736792137249460556
+  ChildIds: 4955865840605550337
+  ChildIds: 167317890815801547
+  ChildIds: 124396185335051570
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:forceoff"
+  }
+  Control {
+    Width: 800
+    Height: 700
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Panel {
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:middlecenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:middlecenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 657069009353609797
+    SubobjectId: 16978777325827056456
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 124396185335051570
+  Name: "NoData"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 657069009353609797
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 417
+    Height: 81
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "Loading..."
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 35
+      Justification {
+        Value: "mc:etextjustify:center"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:middlecenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:middlecenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 124396185335051570
+    SubobjectId: 16359094089760588863
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 167317890815801547
+  Name: "D1RetentionStatic"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 657069009353609797
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 115
+    Height: 60
+    UIX: -119.330414
+    UIY: 20
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "Current D1:"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 20
+      Justification {
+        Value: "mc:etextjustify:left"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomcenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomcenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 167317890815801547
+    SubobjectId: 16207525358804978118
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 4955865840605550337
+  Name: "D1Retention"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 657069009353609797
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 114
+    Height: 60
+    UIY: 20
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "0"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 20
+      Justification {
+        Value: "mc:etextjustify:left"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomcenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomcenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 4955865840605550337
+    SubobjectId: 11995365597314098700
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 10736792137249460556
+  Name: "PlayerPanel"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 657069009353609797
+  ChildIds: 17652011940360458660
+  ChildIds: 3624500190131293460
+  ChildIds: 1204271039809785737
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:forceoff"
+  }
+  Control {
+    Width: 800
+    Height: 700
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Panel {
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:middlecenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:middlecenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 10736792137249460556
+    SubobjectId: 8628443189099257921
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 1204271039809785737
+  Name: "StepsStats"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 10736792137249460556
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 160
+    Height: 40
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Button {
+      Label: "Steps Breakdown"
+      FontColor {
+        A: 1
+      }
+      FontSize: 15
+      ButtonColor {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      HoveredColor {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      PressedColor {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      DisabledColor {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Brush {
+        Id: 14570474633607836217
+      }
+      IsButtonEnabled: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomright"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomright"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 1204271039809785737
+    SubobjectId: 17440386284483214980
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 3624500190131293460
+  Name: "PlayerScrollPanel"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 10736792137249460556
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 736
+    Height: 550
+    UIY: 92.9346313
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    ScrollPanel {
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topcenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topcenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 3624500190131293460
+    SubobjectId: 15056117898895227929
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 17652011940360458660
+  Name: "HeaderPanel"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 10736792137249460556
+  ChildIds: 54245804976187423
+  ChildIds: 14499509230060195143
+  ChildIds: 15674889649354730439
+  ChildIds: 15526654923420247078
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 736
+    Height: 40
+    UIY: 50
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Panel {
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topcenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topcenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 17652011940360458660
+    SubobjectId: 1605066630657990825
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 15526654923420247078
+  Name: "Steps"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17652011940360458660
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 63
+    Height: 60
+    UIX: -65.7148285
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "Session"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 15
+      Justification {
+        Value: "mc:etextjustify:left"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 15526654923420247078
+    SubobjectId: 3875099741236286763
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 15674889649354730439
+  Name: "Steps"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17652011940360458660
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 52
+    Height: 60
+    UIX: -335.895569
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "Steps"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 15
+      Justification {
+        Value: "mc:etextjustify:left"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 15674889649354730439
+    SubobjectId: 4266802047869524682
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 14499509230060195143
+  Name: "PlayerName"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17652011940360458660
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 235
+    Height: 60
+    UIX: 40
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "Player Name"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 15
+      Justification {
+        Value: "mc:etextjustify:left"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topleft"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topleft"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 14499509230060195143
+    SubobjectId: 3136271293061282890
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 54245804976187423
+  Name: "ID"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17652011940360458660
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 30
+    Height: 60
+    UIX: 5
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "ID"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 15
+      Justification {
+        Value: "mc:etextjustify:left"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topleft"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topleft"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 54245804976187423
+    SubobjectId: 16320592638492891410
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 7818507648949441471
+  Name: "SampleSetSizeStatic"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 657069009353609797
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 187
+    Height: 60
+    UIX: 79.025528
+    UIY: 20
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "Sample Size:"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 20
+      Justification {
+        Value: "mc:etextjustify:right"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomcenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomcenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 7818507648949441471
+    SubobjectId: 10249690847190590130
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 17127925237252612174
+  Name: "SampleSetSize"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 657069009353609797
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 46
+    Height: 60
+    UIX: 203.910019
+    UIY: 20
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "0"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 20
+      Justification {
+        Value: "mc:etextjustify:left"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomcenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomcenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 17127925237252612174
+    SubobjectId: 1084313680192180547
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 17711891347606523702
+  Name: "StepsPanel"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 657069009353609797
+  ChildIds: 17265737229188951563
+  ChildIds: 6892284121875506899
+  ChildIds: 8778314991074709647
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 800
+    Height: 700
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Panel {
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:middlecenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:middlecenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 17711891347606523702
+    SubobjectId: 1689865378160098875
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 8778314991074709647
+  Name: "PlayerStats"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17711891347606523702
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 160
+    Height: 40
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Button {
+      Label: "Player Breakdown"
+      FontColor {
+        A: 1
+      }
+      FontSize: 15
+      ButtonColor {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      HoveredColor {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      PressedColor {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      DisabledColor {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Brush {
+        Id: 14570474633607836217
+      }
+      IsButtonEnabled: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomright"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomright"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 8778314991074709647
+    SubobjectId: 11199337595919065474
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 6892284121875506899
+  Name: "StatsScrollPanel"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17711891347606523702
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 736
+    Height: 550
+    UIY: 100
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    ScrollPanel {
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topcenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topcenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 6892284121875506899
+    SubobjectId: 13625802477757798366
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 17265737229188951563
+  Name: "HeaderPanel"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17711891347606523702
+  ChildIds: 15114357167009706976
+  ChildIds: 16960643876303452319
+  ChildIds: 10581122962045345551
+  ChildIds: 6916520114945855572
+  ChildIds: 14285747878238234618
+  ChildIds: 3471487605128416023
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 736
+    Height: 40
+    UIY: 50
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Panel {
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topcenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topcenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 17265737229188951563
+    SubobjectId: 946569858283937542
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 3471487605128416023
+  Name: "Delta"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17265737229188951563
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 67
+    Height: 60
+    UIX: -25
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "% Delta"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 15
+      Justification {
+        Value: "mc:etextjustify:right"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 3471487605128416023
+    SubobjectId: 15173734734750136858
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 14285747878238234618
+  Name: "NotCompleted"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17265737229188951563
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 115
+    Height: 60
+    UIX: -340
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "Not Completed"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 15
+      Justification {
+        Value: "mc:etextjustify:right"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 14285747878238234618
+    SubobjectId: 2666114267488343799
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 6916520114945855572
+  Name: "TotalCompleted"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17265737229188951563
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 85
+    Height: 60
+    UIX: -225
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "Completed"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 15
+      Justification {
+        Value: "mc:etextjustify:right"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 6916520114945855572
+    SubobjectId: 13637663468531310937
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 10581122962045345551
+  Name: "Complete%"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17265737229188951563
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 120
+    Height: 60
+    UIX: -115
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "% Completed"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 15
+      Justification {
+        Value: "mc:etextjustify:right"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topright"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 10581122962045345551
+    SubobjectId: 8100128037667958274
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 16960643876303452319
+  Name: "StepName"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17265737229188951563
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 235
+    Height: 60
+    UIX: 40
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "Step Name"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 15
+      Justification {
+        Value: "mc:etextjustify:left"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topleft"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topleft"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 16960643876303452319
+    SubobjectId: 711167917158877586
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 15114357167009706976
+  Name: "ID"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 17265737229188951563
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 30
+    Height: 60
+    UIX: 5
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "ID"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 15
+      Justification {
+        Value: "mc:etextjustify:left"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topleft"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topleft"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 15114357167009706976
+    SubobjectId: 3710446088359920365
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 3889097230880283548
+  Name: "Version"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 657069009353609797
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 46
+    Height: 35
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "v1.0"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 15
+      Justification {
+        Value: "mc:etextjustify:center"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomleft"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:bottomleft"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 3889097230880283548
+    SubobjectId: 15512092143132043921
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 14960457592696819604
+  Name: "Title"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 657069009353609797
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 200
+    Height: 60
+    UIY: 3.55172729
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Text {
+      Label: "Funnel Stats"
+      Color {
+        R: 1
+        G: 1
+        B: 1
+        A: 1
+      }
+      Size: 20
+      Justification {
+        Value: "mc:etextjustify:center"
+      }
+      AutoWrapText: true
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topcenter"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topcenter"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 14960457592696819604
+    SubobjectId: 3251849790554455705
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 5769381727790841369
+  Name: "Background"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 657069009353609797
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Control {
+    Width: 800
+    Height: 700
+    RenderTransformPivot {
+      Anchor {
+        Value: "mc:euianchor:middlecenter"
+      }
+    }
+    Image {
+      Brush {
+      }
+      Color {
+        A: 1
+      }
+      TeamSettings {
+      }
+    }
+    AnchorLayout {
+      SelfAnchor {
+        Anchor {
+          Value: "mc:euianchor:topleft"
+        }
+      }
+      TargetAnchor {
+        Anchor {
+          Value: "mc:euianchor:topleft"
+        }
+      }
+    }
+  }
+  InstanceHistory {
+    SelfId: 5769381727790841369
+    SubobjectId: 12875275458874855188
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 3057270885843486421
+  Name: "ServerContext"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 7635290731719913224
+  ChildIds: 1661468323946009222
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  NetworkContext {
+    Type: Server
+  }
+  InstanceHistory {
+    SelfId: 3057270885843486421
+    SubobjectId: 14470988510846793688
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 1661468323946009222
+  Name: "FunnelModule"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 3057270885843486421
+  UnregisteredParameters {
+    Overrides {
+      Name: "cs:FunnelLeaderBoard"
+      NetReference {
+        Key: "A4358C053637964E"
+        Type {
+          Value: "mc:enetreferencetype:leaderboard"
+        }
+      }
+    }
+  }
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Script {
+    ScriptAsset {
+      Id: 466305906894321401
+    }
+  }
+  InstanceHistory {
+    SelfId: 1661468323946009222
+    SubobjectId: 17703760559394907019
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
+  }
+}
+Objects {
+  Id: 11544755151040824206
+  Name: "Funnel_Stats_README"
+  Transform {
+    Location {
+    }
+    Rotation {
+    }
+    Scale {
+      X: 1
+      Y: 1
+      Z: 1
+    }
+  }
+  ParentId: 7635290731719913224
+  Collidable_v2 {
+    Value: "mc:ecollisionsetting:inheritfromparent"
+  }
+  Visible_v2 {
+    Value: "mc:evisibilitysetting:inheritfromparent"
+  }
+  Script {
+    ScriptAsset {
+      Id: 14952318655850403290
+    }
+  }
+  InstanceHistory {
+    SelfId: 11544755151040824206
+    SubobjectId: 4794619918743384707
+    InstanceId: 7282444901910764749
+    TemplateId: 8554280015600724223
   }
 }
 Objects {

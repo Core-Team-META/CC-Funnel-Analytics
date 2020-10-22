@@ -37,7 +37,12 @@ local PlayerStatsPanelTemp = script:GetCustomProperty("PlayerStatsPanel")
 ------------------------------------------------------------------------------------------------------------------------
 -- Constants
 ------------------------------------------------------------------------------------------------------------------------
-local ADMIN_TABLE = {"b4c6e32137e54571814b5e8f27aa2fcd", "d1073dbcc404405cbef8ce728e53d380"}
+local ADMIN_TABLE = {
+    "b4c6e32137e54571814b5e8f27aa2fcd",
+    "d1073dbcc404405cbef8ce728e53d380",
+    "94d3fd50c4824f019421895ec8dbf099",
+    "901b7628983c4c8db4282f24afeda57a"
+}
 ------------------------------------------------------------------------------------------------------------------------
 -- Variables
 ------------------------------------------------------------------------------------------------------------------------
@@ -98,7 +103,11 @@ local function BuildPlayerStatsPanel()
                 elseif child.name == "Session Time" and sessionTable[entry.id] ~= nil and sessionTable[entry.id] ~= "" then
                     local minutes = math.floor(tonumber(sessionTable[entry.id])) // 60 % 60
                     local seconds = math.floor(tonumber(sessionTable[entry.id])) % 60
-                    child.text = string.format("%02d:%02d", minutes, seconds)
+                    if minutes ~= nil and seconds ~= nil then
+                        child.text = string.format("%02d:%02d", minutes, seconds)
+                    else
+                        child.text = "0:00"
+                    end
                 end
             end
             panelCount = panelCount + 1
@@ -173,13 +182,14 @@ local function BuildStepsPanel()
 end
 
 local function GetD1RetentionColor(dec)
-    if dec < 10 then
+    if dec < 5 then
         return Color.RED
-    elseif dec > 10 and dec < 15 then
+    elseif dec > 5 and dec < 15 then
         return Color.YELLOW
-    elseif dec > 20 then
+    elseif dec > 15 then
         return Color.GREEN
     end
+    return Color.WHITE
 end
 
 local function BuildPanels()
@@ -189,9 +199,15 @@ local function BuildPanels()
     local sampleSize = _G.Funnel.GetSampleSetCount()
     if sampleSize ~= nil then
         SampleSetSize.text = tostring(sampleSize)
-        local D1RetentionDec = CoreMath.Round(_G.Funnel.GetD1Retention() / sampleSize, 2)
-        D1Retention.text = tostring(D1RetentionDec) .. "%"
-        D1Retention:SetColor(GetD1RetentionColor(D1RetentionDec))
+        local D1RetentionDec =
+            CoreMath.Round(_G.Funnel.GetD1Retention() / _G.Funnel.GetTotalPlayersOverOneDayPlayed(), 2)
+        if D1RetentionDec > 0 and  D1RetentionDec <= 100 then
+            D1Retention.text = tostring(D1RetentionDec) .. "%"
+            D1Retention:SetColor(GetD1RetentionColor(D1RetentionDec))
+        else
+            D1Retention.text = "NA"
+            D1Retention:SetColor(Color.WHITE)
+        end
     end
     events[#events + 1] = PlayerStats.clickedEvent:Connect(OnPanelToggle)
     events[#events + 1] = StepsStats.clickedEvent:Connect(OnPanelToggle)

@@ -58,7 +58,7 @@ local function GetAmountStepCompletedTable()
             local waitCount = 0
             for entryIndex, entry in ipairs(leaderBoard) do
                 waitCount = waitCount + 1
-                if waitCount == 100 then
+                if waitCount == 50 then
                     Task.Wait()
                     waitCount = 0
                 end
@@ -77,9 +77,10 @@ local function GetSessionTimeTable()
     local leaderBoard = GetLeaderBoard()
     if HasLeaderBoard(leaderBoard) then
         local tempTbl = {}
-
         for entryIndex, entry in ipairs(leaderBoard) do
-            tempTbl[entry.id] = DATE_API.GetSavedSessionTime(entry.additionalData)
+            if entry.additionalData ~= "" or entry.additionalData ~= nil then
+                tempTbl[entry.id] = DATE_API.GetSavedSessionTime(entry.additionalData)
+            end
         end
 
         return tempTbl
@@ -91,7 +92,13 @@ local function GetAllPlayerStepsString()
     local leaderBoard = GetLeaderBoard()
     if HasLeaderBoard(leaderBoard) then
         local tempTbl = {}
+        local waitCount = 0
         for entryIndex, entry in ipairs(leaderBoard) do
+            waitCount = waitCount + 1
+            if waitCount == 50 then
+                Task.Wait()
+                waitCount = 0
+            end
             local playerStepsStr = ""
             for stepIndex, step in ipairs(BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))) do
                 if stepIndex <= BTC.BIT_LIMIT then
@@ -168,6 +175,20 @@ local function GetFunnelSize()
     end
 end
 
+-- Get the current test sample set size
+local function GetTotalPlayersOverOneDayPlayed()
+    local leaderBoard = GetLeaderBoard()
+    if HasLeaderBoard(leaderBoard) then
+        local count = 0
+        for i, entry in ipairs(leaderBoard) do
+            if not DATE_API.IsFirstLoginDay(entry.additionalData) then
+                count = count + 1
+            end
+        end
+        return count
+    end
+end
+
 ------------------------------------------------------------------------------------------------------------------------
 -- Public Functions
 ------------------------------------------------------------------------------------------------------------------------
@@ -193,6 +214,10 @@ end
 
 function _G.Funnel.GetSessionTimeTable()
     return GetSessionTimeTable()
+end
+
+function _G.Funnel.GetTotalPlayersOverOneDayPlayed()
+    return GetTotalPlayersOverOneDayPlayed()
 end
 
 -- Used to allow client side scripts to send step complete calls.
