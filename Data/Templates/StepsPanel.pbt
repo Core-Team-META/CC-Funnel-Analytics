@@ -188,7 +188,7 @@
           Value: "mc:evisibilitysetting:inheritfromparent"
         }
         Control {
-          Width: 120
+          Width: 95
           Height: 33
           UIX: -115
           UIY: 3
@@ -207,7 +207,7 @@
             }
             Size: 15
             Justification {
-              Value: "mc:etextjustify:right"
+              Value: "mc:etextjustify:center"
             }
             AutoWrapText: true
           }
@@ -326,7 +326,7 @@
         Control {
           Width: 85
           Height: 33
-          UIX: -225
+          UIX: -233.746613
           UIY: 3
           RenderTransformPivot {
             Anchor {
@@ -343,7 +343,7 @@
             }
             Size: 15
             Justification {
-              Value: "mc:etextjustify:right"
+              Value: "mc:etextjustify:center"
             }
             AutoWrapText: true
           }
@@ -444,7 +444,7 @@
         Control {
           Width: 85
           Height: 33
-          UIX: -340
+          UIX: -359.245728
           UIY: 3
           RenderTransformPivot {
             Anchor {
@@ -461,7 +461,7 @@
             }
             Size: 15
             Justification {
-              Value: "mc:etextjustify:right"
+              Value: "mc:etextjustify:center"
             }
             AutoWrapText: true
           }
@@ -501,9 +501,9 @@
           Value: "mc:evisibilitysetting:inheritfromparent"
         }
         Control {
-          Width: 120
+          Width: 66
           Height: 33
-          UIX: -25
+          UIX: -14.7048912
           UIY: 3
           RenderTransformPivot {
             Anchor {
@@ -520,7 +520,7 @@
             }
             Size: 15
             Justification {
-              Value: "mc:etextjustify:right"
+              Value: "mc:etextjustify:center"
             }
             AutoWrapText: true
           }

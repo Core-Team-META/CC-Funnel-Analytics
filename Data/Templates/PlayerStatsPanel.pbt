@@ -381,9 +381,9 @@
           Value: "mc:evisibilitysetting:inheritfromparent"
         }
         Control {
-          Width: 130
+          Width: 80
           Height: 33
-          UIX: 11.415556
+          UIX: -6.8423214
           UIY: 3
           RenderTransformPivot {
             Anchor {
@@ -391,6 +391,7 @@
             }
           }
           Text {
+            Label: "00:00:00"
             Color {
               R: 1
               G: 1
@@ -399,7 +400,7 @@
             }
             Size: 15
             Justification {
-              Value: "mc:etextjustify:left"
+              Value: "mc:etextjustify:center"
             }
             AutoWrapText: true
           }

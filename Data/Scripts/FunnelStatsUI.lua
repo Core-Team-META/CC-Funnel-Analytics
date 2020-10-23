@@ -131,7 +131,7 @@ local function BuildPlayerStatsPanel()
                     events[#events + 1] = child.unhoveredEvent:Connect(OnStepUnhover)
                     child.clientUserData.panel = spawnedPlayersPanel[panelCount]
                 elseif child.name == "Session Time" and sessionTable[entry.id] ~= nil and sessionTable[entry.id] ~= "" then
-                    local hours = math.floor(tonumber(sessionTable[entry.id])) // 60 % 60 % 60
+                    local hours = math.floor(tonumber(sessionTable[entry.id]) /3600)
                     local minutes = math.floor(tonumber(sessionTable[entry.id])) // 60 % 60
                     local seconds = math.floor(tonumber(sessionTable[entry.id])) % 60
                     if minutes ~= nil and seconds ~= nil and hours ~= nil then
@@ -241,9 +241,14 @@ local function SetBottomBarStats()
 end
 
 local function UpdateProgressBar()
-    local progress = _G.Funnel.GetTotalPlayersOverOneDayPlayed() / _G.Funnel.GetTestGroupSize()
-    TestProgress.progress = progress
-    TestProgressText.text = tostring(CoreMath.Round(progress * 100)) .. "%"
+    if _G.Funnel.GetTotalPlayersOverOneDayPlayed() ~= nil and _G.Funnel.GetTestGroupSize() ~= nil then
+        local progress = _G.Funnel.GetTotalPlayersOverOneDayPlayed() / _G.Funnel.GetTestGroupSize()
+        TestProgress.progress = progress
+        TestProgressText.text = tostring(CoreMath.Round(progress * 100)) .. "%"
+    else
+        TestProgress.progress = 0
+        TestProgressText.text = tostring("0%")
+    end
 end
 
 local function BuildPanels()
@@ -253,7 +258,6 @@ local function BuildPanels()
     SetBottomBarStats()
     UpdateProgressBar()
     local previousDayPlayed = _G.Funnel.GetPreviousDayNewPlayers()
-    warn(tostring(previousDayPlayed))
     if previousDayPlayed ~= nil and previousDayPlayed ~= 0 then
         TestCompleteDay.text = tostring(CoreMath.Round(_G.Funnel.GetTestGroupSize() / previousDayPlayed)) .. " Days"
     else

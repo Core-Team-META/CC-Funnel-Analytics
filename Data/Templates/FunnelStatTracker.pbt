@@ -512,7 +512,7 @@
         }
         Control {
           Width: 736
-          Height: 40
+          Height: 34
           UIY: 50
           RenderTransformPivot {
             Anchor {
@@ -733,7 +733,7 @@
         Control {
           Width: 85
           Height: 60
-          UIX: -225
+          UIX: -238.406647
           RenderTransformPivot {
             Anchor {
               Value: "mc:euianchor:middlecenter"
@@ -791,7 +791,7 @@
         Control {
           Width: 115
           Height: 60
-          UIX: -340
+          UIX: -350
           RenderTransformPivot {
             Anchor {
               Value: "mc:euianchor:middlecenter"
@@ -905,9 +905,10 @@
           Value: "mc:evisibilitysetting:inheritfromparent"
         }
         Control {
-          Width: 736
-          Height: 550
-          UIY: 100
+          Width: 770
+          Height: 565
+          UIX: 17
+          UIY: 85
           RenderTransformPivot {
             Anchor {
               Value: "mc:euianchor:middlecenter"
@@ -1400,7 +1401,7 @@
       }
       Objects {
         Id: 3875099741236286763
-        Name: "Steps"
+        Name: "Session"
         Transform {
           Location {
           }
@@ -1422,7 +1423,7 @@
         Control {
           Width: 63
           Height: 60
-          UIX: -65.7148285
+          UIX: -10.8862572
           RenderTransformPivot {
             Anchor {
               Value: "mc:euianchor:middlecenter"
@@ -1478,9 +1479,10 @@
           Value: "mc:evisibilitysetting:inheritfromparent"
         }
         Control {
-          Width: 736
-          Height: 550
-          UIY: 92.9346313
+          Width: 770
+          Height: 565
+          UIX: 17
+          UIY: 85
           RenderTransformPivot {
             Anchor {
               Value: "mc:euianchor:middlecenter"

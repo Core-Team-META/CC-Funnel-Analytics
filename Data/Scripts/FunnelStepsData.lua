@@ -12,7 +12,6 @@ local Api = {}
 ------------------------------------------------------------------------------------------------------------------------
 -- Constants
 ------------------------------------------------------------------------------------------------------------------------
---Api.D0_ID = 1 Not used
 Api.D1_ID = 24 -- Change this to the ID of your D1 retention step - fired if a player joins your game the next day.
 Api.SHOULD_TRACK_RES_NAME = "ShouldTrackFunnel"
 Api.SHOULD_TRACK_TRUE = 1

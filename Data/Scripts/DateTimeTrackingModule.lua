@@ -21,6 +21,12 @@ local function GetDateStr(year, yearDay)
 end
 
 --@param string dateStr
+--@return string Full year, yearDay string EX=> 0296
+local function GetDateString(dateStr)
+    return dateStr:sub(1, 4)
+end
+
+--@param string dateStr
 --@return string year int, currently compressed to 1 EX=> 2020 = 0, 2021 = 1
 local function GetYearStr(dateStr)
     return dateStr:sub(1, 1)

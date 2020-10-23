@@ -38,7 +38,8 @@ end
 -- @param object Player
 -- Returns false if Player hasn't played prior to analytics being installed. Used to filter old Players that can scew tracking.
 local function OldPlayerCheck(Player)
-    return false--Player:GetResource("MoneyAccumulated") ~= 0
+    return false
+ --Player:GetResource("MoneyAccumulated") ~= 0
 end
 
 -- @param object Player
@@ -87,14 +88,12 @@ local function IsPlayerInTestGroup(Player, groupId)
     end
 end
 
-
 -- @param object Player
 -- Saves Player Score from Binary
 local function SavePlayerFunnelData(Player)
     if playerSteps[Player] and playerLoginDate[Player] ~= nil and DATE_API.IsFirstLoginDay(playerLoginDate[Player]) then
         local bin = BTC.ConvertBinaryToStr(Player, playerSteps)
         local currentSession
-        print(playerSessionLength[Player])
         if bin then
             local score = BTC.ConvertBinaryToNumber(bin)
             if score == 0 then
@@ -105,14 +104,13 @@ local function SavePlayerFunnelData(Player)
             else
                 currentSession = DATE_API.SetSessionTime(Player, playerSessionLength)
             end
-            print(currentSession)
-            print(playerLoginDate[Player])
             if (Leaderboards.HasLeaderboards()) then
                 Leaderboards.SubmitPlayerScore(
                     FunnelLeaderBoard,
                     Player,
                     score,
-                    playerLoginDate[Player] .. currentSession)
+                    playerLoginDate[Player] .. currentSession
+                )
             end
         end
     end
@@ -132,13 +130,12 @@ local function SaveD1FunnelData(Player)
     playerSteps[Player] = tempTbl
     local bin = BTC.ConvertBinaryToStr(Player, playerSteps)
     if bin then
-        print(BTC.ConvertBinaryToNumber(bin))
         if (Leaderboards.HasLeaderboards()) then
             Leaderboards.SubmitPlayerScore(
                 FunnelLeaderBoard,
                 Player,
                 BTC.ConvertBinaryToNumber(bin),
-                playerLoginDate[Player]..playerSessionLength[Player]
+                playerLoginDate[Player] .. playerSessionLength[Player]
             )
         end
     end
