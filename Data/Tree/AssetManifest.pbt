@@ -35,6 +35,15 @@ Assets {
   }
 }
 Assets {
+  Id: 4985452899684248611
+  Name: "Frame Outline Thin 001"
+  PlatformAssetType: 9
+  PrimaryAsset {
+    AssetType: "PlatformBrushAssetRef"
+    AssetId: "FrameOutline_020"
+  }
+}
+Assets {
   Id: 3343350765121365940
   Name: "Sci-fi Console Screen 01"
   PlatformAssetType: 1

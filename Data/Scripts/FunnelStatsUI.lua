@@ -24,6 +24,13 @@ local StepsParentPanel = script:GetCustomProperty("StepsParentPanel"):WaitForObj
 local PlayerScrollPanel = script:GetCustomProperty("PlayerScrollPanel"):WaitForObject()
 local D1Retention = script:GetCustomProperty("D1Retention"):WaitForObject()
 local NoDataText = script:GetCustomProperty("NoData"):WaitForObject()
+local ATestGroup = script:GetCustomProperty("ATestGroup"):WaitForObject()
+local BTestGroup = script:GetCustomProperty("BTestGroup"):WaitForObject()
+local AllTestGroup = script:GetCustomProperty("AllTestGroup"):WaitForObject()
+local Title = script:GetCustomProperty("Title"):WaitForObject()
+local TestProgress = script:GetCustomProperty("TestProgress"):WaitForObject()
+local TestProgressText = script:GetCustomProperty("TestProgressText"):WaitForObject()
+local TestCompleteDay = script:GetCustomProperty("TestCompleteDay"):WaitForObject()
 ------------------------------------------------------------------------------------------------------------------------
 -- Custom Properties
 ------------------------------------------------------------------------------------------------------------------------
@@ -50,10 +57,23 @@ local isMenuOpen = false
 local spawnedStepsPanel = {}
 local spawnedPlayersPanel = {}
 local events = {}
+local testGroupId, spamPrevent
+local defaultTestButton = BTestGroup:GetButtonColor()
 ------------------------------------------------------------------------------------------------------------------------
 -- Local Functions
 ------------------------------------------------------------------------------------------------------------------------
+--Used for spam prevention
+--@return bool
+local function isAllowed()
+    local timeNow = os.clock()
+    if spamPrevent ~= nil and (timeNow - spamPrevent) < 1 then
+        return false
+    end
+    spamPrevent = timeNow
+    return true
+end
 
+--@params object button
 local function OnStepHover(button)
     for _, child in ipairs(button.clientUserData.panel:GetChildren()) do
         if child.name == "Background" then
@@ -62,6 +82,7 @@ local function OnStepHover(button)
     end
 end
 
+--@params object button
 local function OnStepUnhover(button)
     for _, child in ipairs(button.clientUserData.panel:GetChildren()) do
         if child.name == "Background" then
@@ -70,13 +91,22 @@ local function OnStepUnhover(button)
     end
 end
 
+--@params object button
 local function OnPanelToggle(button)
     if button.name == "StepsStats" then
         PlayerParentPanel.visibility = Visibility.FORCE_OFF
         StepsParentPanel.visibility = Visibility.FORCE_ON
+        AllTestGroup.isEnabled = true
+        ATestGroup.isEnabled = true
+        BTestGroup.isEnabled = true
+        Title.text = "All Step Stats"
     elseif button.name == "PlayerStats" then
         PlayerParentPanel.visibility = Visibility.FORCE_ON
         StepsParentPanel.visibility = Visibility.FORCE_OFF
+        AllTestGroup.isEnabled = false
+        ATestGroup.isEnabled = false
+        BTestGroup.isEnabled = false
+        Title.text = "Player Stats"
     end
 end
 
@@ -101,12 +131,13 @@ local function BuildPlayerStatsPanel()
                     events[#events + 1] = child.unhoveredEvent:Connect(OnStepUnhover)
                     child.clientUserData.panel = spawnedPlayersPanel[panelCount]
                 elseif child.name == "Session Time" and sessionTable[entry.id] ~= nil and sessionTable[entry.id] ~= "" then
+                    local hours = math.floor(tonumber(sessionTable[entry.id])) // 60 % 60 % 60
                     local minutes = math.floor(tonumber(sessionTable[entry.id])) // 60 % 60
                     local seconds = math.floor(tonumber(sessionTable[entry.id])) % 60
-                    if minutes ~= nil and seconds ~= nil then
-                        child.text = string.format("%02d:%02d", minutes, seconds)
+                    if minutes ~= nil and seconds ~= nil and hours ~= nil then
+                        child.text = string.format("%02d:%02d:%02d", hours, minutes, seconds)
                     else
-                        child.text = "0:00"
+                        child.text = "00:00:00"
                     end
                 end
             end
@@ -119,8 +150,8 @@ end
 local function BuildStepsPanel()
     local panelCount = 0
     local previousStep
-    local stepCompleteTbl = _G.Funnel.GetAmountStepCompletedTable()
-    local sampleSetSize = _G.Funnel.GetSampleSetCount()
+    local stepCompleteTbl = _G.Funnel.GetAmountStepCompletedTable(testGroupId)
+    local sampleSetSize = _G.Funnel.GetSampleSetCount(testGroupId)
     if stepCompleteTbl ~= nil and sampleSetSize ~= nil then
         NoDataText.visibility = Visibility.FORCE_OFF
         for index, step in ipairs(FunnelData.GetTbl()) do
@@ -181,10 +212,11 @@ local function BuildStepsPanel()
     end
 end
 
+--@params float dec
 local function GetD1RetentionColor(dec)
     if dec < 5 then
         return Color.RED
-    elseif dec > 5 and dec < 15 then
+    elseif dec >= 5 and dec < 15 then
         return Color.YELLOW
     elseif dec > 15 then
         return Color.GREEN
@@ -192,16 +224,13 @@ local function GetD1RetentionColor(dec)
     return Color.WHITE
 end
 
-local function BuildPanels()
-    NoDataText.visibility = Visibility.FORCE_ON
-    BuildStepsPanel()
-    BuildPlayerStatsPanel()
-    local sampleSize = _G.Funnel.GetSampleSetCount()
+local function SetBottomBarStats()
+    local sampleSize = _G.Funnel.GetSampleSetCount(testGroupId)
     if sampleSize ~= nil then
         SampleSetSize.text = tostring(sampleSize)
         local D1RetentionDec =
             CoreMath.Round(_G.Funnel.GetD1Retention() / _G.Funnel.GetTotalPlayersOverOneDayPlayed(), 2)
-        if D1RetentionDec > 0 and  D1RetentionDec <= 100 then
+        if D1RetentionDec > 0 and D1RetentionDec <= 100 then
             D1Retention.text = tostring(D1RetentionDec) .. "%"
             D1Retention:SetColor(GetD1RetentionColor(D1RetentionDec))
         else
@@ -209,27 +238,65 @@ local function BuildPanels()
             D1Retention:SetColor(Color.WHITE)
         end
     end
-    events[#events + 1] = PlayerStats.clickedEvent:Connect(OnPanelToggle)
-    events[#events + 1] = StepsStats.clickedEvent:Connect(OnPanelToggle)
 end
 
-local function DestroyPanels()
+local function UpdateProgressBar()
+    local progress = _G.Funnel.GetTotalPlayersOverOneDayPlayed() / _G.Funnel.GetTestGroupSize()
+    TestProgress.progress = progress
+    TestProgressText.text = tostring(CoreMath.Round(progress * 100)) .. "%"
+end
+
+local function BuildPanels()
+    NoDataText.visibility = Visibility.FORCE_ON
+    BuildStepsPanel()
+    BuildPlayerStatsPanel()
+    SetBottomBarStats()
+    UpdateProgressBar()
+    local previousDayPlayed = _G.Funnel.GetPreviousDayNewPlayers()
+    warn(tostring(previousDayPlayed))
+    if previousDayPlayed ~= nil and previousDayPlayed ~= 0 then
+        TestCompleteDay.text = tostring(CoreMath.Round(_G.Funnel.GetTestGroupSize() / previousDayPlayed)) .. " Days"
+    else
+        TestCompleteDay.text = "N/A"
+    end
+    events[#events + 1] = PlayerStats.clickedEvent:Connect(OnPanelToggle)
+    events[#events + 1] = StepsStats.clickedEvent:Connect(OnPanelToggle)
+    events[#events + 1] = ATestGroup.clickedEvent:Connect(OnTestgroupToggle)
+    events[#events + 1] = BTestGroup.clickedEvent:Connect(OnTestgroupToggle)
+    events[#events + 1] = AllTestGroup.clickedEvent:Connect(OnTestgroupToggle)
+end
+
+local function DestroyStepsPanels()
     for _, panel in ipairs(spawnedStepsPanel) do
         if Object.IsValid(panel) then
             panel:Destroy()
         end
     end
+    spawnedStepsPanel = {}
+end
+
+local function DestroyPlayerPanels()
     for _, panel in ipairs(spawnedPlayersPanel) do
         if Object.IsValid(panel) then
             panel:Destroy()
         end
     end
+    spawnedPlayersPanel = {}
+end
+
+local function DestroyEventListeners()
     for _, Event in pairs(events) do
         if Object.IsValid(Event) then
             Event:Disconnect()
         end
     end
-    spawnedStepsPanel, spawnedPlayersPanel, events = {}, {}, {}
+    events = {}
+end
+
+local function DestroyPanels()
+    DestroyStepsPanels()
+    DestroyPlayerPanels()
+    DestroyEventListeners()
 end
 
 local function ToggleUI(bool)
@@ -247,9 +314,38 @@ local function ToggleUI(bool)
         DestroyPanels()
     end
 end
+
+local function ResetTestGroupButtonColors()
+    AllTestGroup:SetButtonColor(defaultTestButton)
+    ATestGroup:SetButtonColor(defaultTestButton)
+    BTestGroup:SetButtonColor(defaultTestButton)
+end
+
 ------------------------------------------------------------------------------------------------------------------------
 -- Global Functions
 ------------------------------------------------------------------------------------------------------------------------
+function OnTestgroupToggle(button)
+    if isAllowed() then
+        DestroyStepsPanels()
+        ResetTestGroupButtonColors()
+        if button.name == "A-TestGroup" then
+            testGroupId = 1
+            Title.text = "A Group Step Stats"
+            ATestGroup:SetButtonColor(Color.YELLOW)
+        elseif button.name == "B-TestGroup" then
+            testGroupId = 2
+            Title.text = "B Group Step Stats"
+            BTestGroup:SetButtonColor(Color.YELLOW)
+        elseif button.name == "All-TestGroup" then
+            testGroupId = nil
+            Title.text = "All Step Stats"
+            AllTestGroup:SetButtonColor(Color.YELLOW)
+        end
+        SetBottomBarStats()
+        BuildStepsPanel()
+    end
+end
+
 function Int()
     repeat
         Leaderboards.HasLeaderboards()

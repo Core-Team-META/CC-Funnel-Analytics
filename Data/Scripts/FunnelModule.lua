@@ -34,7 +34,7 @@ local function ShouldTrackPlayerSteps(Player)
     return Player:GetResource(FUNNEL_DATA.SHOULD_TRACK_RES_NAME) == FUNNEL_DATA.SHOULD_TRACK_TRUE
 end
 
--- CHANGE: Dependant on game. Only works on games where the creator has previously used presistant storage.
+--#TODO CHANGE: Dependant on game. Only works on games where the creator has previously used presistant storage.
 -- @param object Player
 -- Returns false if Player hasn't played prior to analytics being installed. Used to filter old Players that can scew tracking.
 local function OldPlayerCheck(Player)
@@ -65,6 +65,28 @@ end
 local function HasLeaderBoard(LeaderBoard)
     return (Leaderboards.HasLeaderboards()) and LeaderBoard ~= nil
 end
+
+-- @param object Player
+-- Returns which test group the Player is in.
+local function GetPlayerTestGroup(Player)
+    if (tonumber(string.byte(Player.id)) % 2 == 0) then
+        return 1
+    else
+        return 2
+    end
+end
+
+-- @param object Player
+-- @param int groupId (Optional) defaults to 1 if nothing passed.
+-- Returns true / false if a Player is in a test group.
+local function IsPlayerInTestGroup(Player, groupId)
+    if (tonumber(string.byte(Player.id)) % 2 == 0) then
+        return 1 == groupId
+    else
+        return 2 == groupId
+    end
+end
+
 
 -- @param object Player
 -- Saves Player Score from Binary
@@ -144,7 +166,7 @@ local function IsANewPlayer(Player)
         for i, entry in ipairs(leaderBoard) do
             if entry.id == Player.id then
                 playerSteps[Player] = BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))
-                playerLoginDate[Player] = entry.additionalData:sub(1, 5)
+                playerLoginDate[Player] = entry.additionalData:sub(1, 4)
                 playerSessionLength[Player] = DATE_API.GetSavedSessionTime(entry.additionalData)
                 return false
             end
@@ -257,6 +279,14 @@ function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
     if ShouldTrackPlayerSteps(Player) then
         SetPlayerStepComplete(Player, stepIndex)
     end
+end
+
+function _G.Funnel.GetPlayerTestGroup(Player)
+    return GetPlayerTestGroup(Player)
+end
+
+function _G.Funnel.GetPlayerTestGroup(Player, groupId)
+    return IsPlayerInTestGroup(Player, groupId)
 end
 ------------------------------------------------------------------------------------------------------------------------
 -- Listeners
