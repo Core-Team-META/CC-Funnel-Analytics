@@ -1,6 +1,6 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Funnel Module Client
--- Author Morticai - Team Meta (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
+-- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 -- Date: 10/15/2020
 -- Version 1.0
 ------------------------------------------------------------------------------------------------------------------------
@@ -19,6 +19,8 @@ local DATE_API = require(script:GetCustomProperty("DateTimeTrackingModule"))
 -- Script Custom Properties
 ------------------------------------------------------------------------------------------------------------------------
 local FunnelLeaderBoard = script:GetCustomProperty("FunnelLeaderBoard")
+local ROOT = script:GetCustomProperty("ROOT"):WaitForObject()
+local FunnelSampleSize = ROOT:GetCustomProperty("FunnelSampleSize")
 ------------------------------------------------------------------------------------------------------------------------
 -- Local Variables
 ------------------------------------------------------------------------------------------------------------------------
@@ -180,7 +182,7 @@ local function GetD1RetentionCount()
         local retentionCount = 0
         for entryIndex, entry in ipairs(leaderBoard) do
             for stepIndex, step in ipairs(BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))) do
-                if BTC.BIT_LIMIT - FUNNEL_DATA.D1_ID + 1 == stepIndex then
+                if BTC.BIT_LIMIT - FUNNEL_DATA.D1_ID + 1 == stepIndex and DATE_API.HasDayOneTestCompleted(entry.additionalData) then
                     if step == nil then
                         step = 0
                     end
@@ -230,7 +232,22 @@ local function GetTotalPlayersOverOneDayPlayed()
     if HasLeaderBoard(leaderBoard) then
         local count = 0
         for i, entry in ipairs(leaderBoard) do
-            if not DATE_API.IsFirstLoginDay(entry.additionalData) then
+            if DATE_API.HasBeenOverOneDaySinceInitalLogin(entry.additionalData) then
+                count = count + 1
+            end
+        end
+        return count
+    end
+end
+
+-- Get the current test sample set size
+--@return int count -- Get count of total players in sample set that orginal session was over 24 hours
+local function GetTotalPlayersDayOneTestComplete()
+    local leaderBoard = GetLeaderBoard()
+    if HasLeaderBoard(leaderBoard) then
+        local count = 0
+        for i, entry in ipairs(leaderBoard) do
+            if DATE_API.HasDayOneTestCompleted(entry.additionalData) then
                 count = count + 1
             end
         end
@@ -293,13 +310,16 @@ function _G.Funnel.GetPlayerTestGroup(Player, groupId)
 end
 
 function _G.Funnel.GetTestGroupSize()
-    return BTC.FUNNEL_SAMPLE_SET
+    return FunnelSampleSize
 end
 
 function _G.Funnel.GetPreviousDayNewPlayers()
     return GetPreviousDayNewPlayers()
 end
 
+function _G.Funnel.GetTotalPlayersDayOneTestComplete()
+    return GetTotalPlayersDayOneTestComplete()
+end
 
 -- Used to allow client side scripts to send step complete calls.
 function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
@@ -313,3 +333,5 @@ function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
         end
     end
 end
+
+------------------------------------------------------------------------------------------------------------------------

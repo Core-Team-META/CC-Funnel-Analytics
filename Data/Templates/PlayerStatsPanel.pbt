@@ -126,9 +126,9 @@
           Value: "mc:evisibilitysetting:inheritfromparent"
         }
         Control {
-          Width: 190
+          Width: 163
           Height: 34
-          UIX: 40
+          UIX: 45.1075058
           UIY: 3
           RenderTransformPivot {
             Anchor {
@@ -263,9 +263,9 @@
           Value: "mc:evisibilitysetting:inheritfromparent"
         }
         Control {
-          Width: 30
+          Width: 36
           Height: 34
-          UIX: 6
+          UIX: 1
           UIY: 3
           RenderTransformPivot {
             Anchor {
@@ -273,7 +273,7 @@
             }
           }
           Text {
-            Label: "14)"
+            Label: "200)"
             Color {
               R: 1
               G: 1

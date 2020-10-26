@@ -1,20 +1,25 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Date & Time Module
--- Author Morticai - Team Meta (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
+-- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 -- Date: 10/15/2020
 -- Version 1.0
 ------------------------------------------------------------------------------------------------------------------------
--- Compresses dates to 6 characters EX => 20.292 = October 18th 2020
--- Code will break in 80 years with current timestamping methods.
+-- Compresses dates to 6 characters EX => 0292 = October 18th 2020
+-- Code will break in 10 years with current timestamping methods.
 ------------------------------------------------------------------------------------------------------------------------
 local Api = {}
 local yearSubtract = 2020
+
+------------------------------------------------------------------------------------------------------------------------
+-- Constants
+------------------------------------------------------------------------------------------------------------------------
+Api.SESSION = 9999
 ------------------------------------------------------------------------------------------------------------------------
 -- Local Functions
 ------------------------------------------------------------------------------------------------------------------------
 
 --@param int year, yearDay
---@return string year, yearDay EX => 0296 = October 22 2020 
+--@return string year, yearDay EX => 0296 = October 22 2020
 local function GetDateStr(year, yearDay)
     local year = year - yearSubtract
     return string.format("%s%s", year, yearDay)
@@ -42,6 +47,19 @@ end
 --@return string EX=> 0060 1min session, currently tracks up to 9999 seconds or 2 hours 45 mins.
 local function GetSavedSessionTime(dateStr)
     return dateStr:sub(5, 8)
+end
+
+--@param int loginYear
+--@param int currentYear
+--@return int amount to add, to check next day.
+local function CorrectForLeapYear(loginYear, currentYear)
+    if loginYear ~= nil and math.tointeger((loginYear) / 4) and currentYear > loginYear then
+        return 0.734
+    elseif loginYear ~= nil and currentYear > loginYear then
+        return 0.735
+    else
+        return 0.001
+    end
 end
 
 --@param string dateStr
@@ -74,7 +92,8 @@ local function ConvertDateData(date)
         local _, _, currentYear, currentDay = GetDateDataFromTimestamp(os.time())
         local currentDate = ((currentYear - yearSubtract) + (currentDay / 1000))
         local loginYear, loginDay = tonumber(GetYearStr(date)), tonumber(GetYearDayStr(date))
-        local loginDate = (loginYear + (loginDay / 1000))
+        local loginDate = loginYear + (loginDay / 1000)
+        local currentYear = currentYear - yearSubtract
         return currentYear, currentDate, loginYear, loginDate
     end
 end
@@ -82,15 +101,30 @@ end
 --Used to check if it's been one day since player last logged in, accounts for leap years.
 --@param table date - Uses os.date()
 --@return bool
-local function HasBeenOneDaySinceInitalLogin(date)
+local function HasBeenOverOneDaySinceInitalLogin(date)
     local currentYear, currentDate, loginYear, loginDate = ConvertDateData(date)
-    if math.tointeger((loginYear) / 4) and (currentYear - yearSubtract) > loginYear then
-        if tostring(loginDate + 0.734) == tostring(currentDate) then
-            return true
-        end
-    elseif currentYear > loginYear and tostring(loginDate + 0.735) == tostring(currentDate) then
+    if loginDate ~= nil and loginDate < currentDate then
         return true
-    elseif tostring(loginDate + 0.001) == tostring(currentDate) then
+    end
+    return false
+end
+
+--Used to check if it's been one day since player last logged in, accounts for leap years.
+--@param table date - Uses os.date()
+--@return bool
+local function HasDayOneTestCompleted(date)
+    local currentYear, currentDate, loginYear, loginDate = ConvertDateData(date)
+    if loginDate ~= nil and loginDate + CorrectForLeapYear(loginYear, currentYear) < currentDate then
+        return true
+    end
+    return false
+end
+
+--@param table date - Uses os.date()
+--@return bool
+local function PreviousDayNewPlayers(date)
+    local currentYear, currentDate, loginYear, loginDate = ConvertDateData(date)
+    if currentDate ~= nil and tostring(loginDate + CorrectForLeapYear(loginYear, currentYear)) == tostring(currentDate) then
         return true
     end
     return false
@@ -106,18 +140,8 @@ local function IsFirstLoginDay(date)
     return false
 end
 
---@param table date - Uses os.date()
---@return bool
-local function PreviousDayNewPlayers(date)
-    local _, currentDate, _, loginDate = ConvertDateData(date)
-    if currentDate ~= nil and tostring(loginDate + 0.001) == tostring(currentDate) then
-        return true
-    end
-    return false
-end
-
 -- @param object Player
--- @return int - Player session time in seconds
+-- @return string - Player session time in seconds
 local function SetSessionTime(Player, tbl)
     if tbl[Player] ~= nil then
         local tempTime = os.time() - tonumber(tbl[Player])
@@ -146,8 +170,8 @@ function Api.GetInitialLoginDate()
     return GetDateStrFromTimestamp(os.time())
 end
 
-function Api.HasBeenOneDaySinceLogin(date)
-    return HasBeenOneDaySinceInitalLogin(date)
+function Api.HasBeenOverOneDaySinceInitalLogin(date)
+    return HasBeenOverOneDaySinceInitalLogin(date)
 end
 
 function Api.IsFirstLoginDay(date)
@@ -165,5 +189,10 @@ end
 function Api.PreviousDayNewPlayers(date)
     return PreviousDayNewPlayers(date)
 end
+
+function Api.HasDayOneTestCompleted(date)
+    return HasDayOneTestCompleted(date)
+end
 ------------------------------------------------------------------------------------------------------------------------
 return Api
+------------------------------------------------------------------------------------------------------------------------

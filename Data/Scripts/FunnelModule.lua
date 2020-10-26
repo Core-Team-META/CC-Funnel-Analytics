@@ -1,6 +1,6 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Funnel Module Server
--- Author Morticai - Team Meta (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
+-- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 -- Date: 10/15/2020
 -- Version 1.0
 ------------------------------------------------------------------------------------------------------------------------
@@ -18,6 +18,8 @@ local FUNNEL_DATA = require(script:GetCustomProperty("FunnelStepsData"))
 ------------------------------------------------------------------------------------------------------------------------
 -- Script Custom Properties
 ------------------------------------------------------------------------------------------------------------------------
+local ROOT = script:GetCustomProperty("ROOT"):WaitForObject()
+local FunnelSampleSize = ROOT:GetCustomProperty("FunnelSampleSize")
 local FunnelLeaderBoard = script:GetCustomProperty("FunnelLeaderBoard")
 ------------------------------------------------------------------------------------------------------------------------
 -- Local Variables
@@ -39,7 +41,6 @@ end
 -- Returns false if Player hasn't played prior to analytics being installed. Used to filter old Players that can scew tracking.
 local function OldPlayerCheck(Player)
     return false
- --Player:GetResource("MoneyAccumulated") ~= 0
 end
 
 -- @param object Player
@@ -99,7 +100,7 @@ local function SavePlayerFunnelData(Player)
             if score == 0 then
                 score = 0.1 -- Leaderboard doesn't save unless there is a score > 0, this will be rounded back to 0 on load.
             end
-            if tonumber(playerSessionLength[Player]) < 1000 then
+            if tonumber(playerSessionLength[Player]) <= DATE_API.SESSION then
                 currentSession = playerSessionLength[Player]
             else
                 currentSession = DATE_API.SetSessionTime(Player, playerSessionLength)
@@ -177,7 +178,7 @@ local function HasRoomInSampleSet()
     local leaderBoard = GetLeaderBoard()
     if HasLeaderBoard(leaderBoard) then
         for i, entry in ipairs(leaderBoard) do
-            if i > BTC.FUNNEL_SAMPLE_SET then
+            if i == FunnelSampleSize then
                 return false
             end
         end
@@ -228,7 +229,7 @@ local function SetPlayerTracking(Player, isNewPlayer)
     elseif not isNewPlayer and playerLoginDate[Player] ~= nil and DATE_API.IsFirstLoginDay(playerLoginDate[Player]) then
         SetPlayerStepsTracking(Player, FUNNEL_DATA.SHOULD_TRACK_TRUE)
     elseif
-        not isNewPlayer and playerLoginDate[Player] ~= nil and DATE_API.HasBeenOneDaySinceLogin(playerLoginDate[Player])
+        not isNewPlayer and playerLoginDate[Player] ~= nil and DATE_API.PreviousDayNewPlayers(playerLoginDate[Player])
      then
         SaveD1FunnelData(Player)
         SetPlayerStepsTracking(Player, FUNNEL_DATA.SHOULD_TRACK_FALSE)
@@ -244,8 +245,7 @@ local function OnPlayerJoined(Player)
     repeat
         Leaderboards.HasLeaderboards()
     until true
-    local isNewPlayer = IsANewPlayer(Player)
-    SetPlayerTracking(Player, isNewPlayer)
+    SetPlayerTracking(Player, IsANewPlayer(Player))
 end
 
 -- Called on playerLeftedEvent
@@ -294,3 +294,4 @@ Game.playerLeftEvent:Connect(OnPlayerLeft)
 -- Used to take care of client side events
 ------------------------------------------------------------------------------------------------------------------------
 Events.ConnectForPlayer(NAMESPACE .. "SetPlayerStepComplete", _G.Funnel.SetPlayerStepComplete, stepIndex)
+------------------------------------------------------------------------------------------------------------------------

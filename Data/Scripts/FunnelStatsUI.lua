@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------------------------------------------------
 -- FunnelStatsUI
--- Author Morticai - Team Meta (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
+-- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 -- Date: 10/15/2020
 -- Version 1.0
 ------------------------------------------------------------------------------------------------------------------------
@@ -131,7 +131,7 @@ local function BuildPlayerStatsPanel()
                     events[#events + 1] = child.unhoveredEvent:Connect(OnStepUnhover)
                     child.clientUserData.panel = spawnedPlayersPanel[panelCount]
                 elseif child.name == "Session Time" and sessionTable[entry.id] ~= nil and sessionTable[entry.id] ~= "" then
-                    local hours = math.floor(tonumber(sessionTable[entry.id]) /3600)
+                    local hours = math.floor(tonumber(sessionTable[entry.id]) / 3600)
                     local minutes = math.floor(tonumber(sessionTable[entry.id])) // 60 % 60
                     local seconds = math.floor(tonumber(sessionTable[entry.id])) % 60
                     if minutes ~= nil and seconds ~= nil and hours ~= nil then
@@ -170,7 +170,13 @@ local function BuildStepsPanel()
                 elseif child.name == "PrecentComplete" then
                     for i, step in ipairs(stepCompleteTbl) do
                         if index == i then
-                            child.text = tostring(CoreMath.Round(step / sampleSetSize, 2) * 100) .. "%"
+                            local stepComplete = CoreMath.Round(step / sampleSetSize, 2) * 100
+                            print(stepComplete)
+                            if stepComplete > 0 and stepComplete <= 999 or stepComplete < 0 and stepComplete >= -999 then
+                                child.text = tostring(stepComplete) .. "%"
+                            else
+                                child.text = "N/A"
+                            end
                         end
                     end
                 elseif child.name == "Delta" then
@@ -179,10 +185,10 @@ local function BuildStepsPanel()
                             if previousStep then
                                 local delta =
                                     CoreMath.Round((step / sampleSetSize * 100) - (previousStep / sampleSetSize) * 100)
-                                if delta > 0 and delta ~= math.huge then
+                                if delta > 0 and delta <= 100 and delta ~= math.huge then
                                     child.text = tostring(delta) .. "%"
                                     child:SetColor(Color.GREEN)
-                                elseif delta < 0 and delta ~= math.huge then
+                                elseif delta < 0 and delta >= -100 and delta ~= math.huge then
                                     child.text = tostring(delta) .. "%"
                                     child:SetColor(Color.RED)
                                 else
@@ -229,8 +235,8 @@ local function SetBottomBarStats()
     if sampleSize ~= nil then
         SampleSetSize.text = tostring(sampleSize)
         local D1RetentionDec =
-            CoreMath.Round(_G.Funnel.GetD1Retention() / _G.Funnel.GetTotalPlayersOverOneDayPlayed(), 2)
-        if D1RetentionDec > 0 and D1RetentionDec <= 100 then
+            CoreMath.Round(_G.Funnel.GetD1Retention() / _G.Funnel.GetTotalPlayersDayOneTestComplete(), 2)
+        if D1RetentionDec > 0.01 and D1RetentionDec <= 100 then
             D1Retention.text = tostring(D1RetentionDec) .. "%"
             D1Retention:SetColor(GetD1RetentionColor(D1RetentionDec))
         else
@@ -241,8 +247,8 @@ local function SetBottomBarStats()
 end
 
 local function UpdateProgressBar()
-    if _G.Funnel.GetTotalPlayersOverOneDayPlayed() ~= nil and _G.Funnel.GetTestGroupSize() ~= nil then
-        local progress = _G.Funnel.GetTotalPlayersOverOneDayPlayed() / _G.Funnel.GetTestGroupSize()
+    if _G.Funnel.GetTotalPlayersDayOneTestComplete() ~= nil and _G.Funnel.GetTestGroupSize() ~= nil then
+        local progress = _G.Funnel.GetTotalPlayersDayOneTestComplete() / _G.Funnel.GetTestGroupSize()
         TestProgress.progress = progress
         TestProgressText.text = tostring(CoreMath.Round(progress * 100)) .. "%"
     else
@@ -257,7 +263,7 @@ local function BuildPanels()
     BuildPlayerStatsPanel()
     SetBottomBarStats()
     UpdateProgressBar()
-    local previousDayPlayed = _G.Funnel.GetPreviousDayNewPlayers()
+    local previousDayPlayed = _G.Funnel.GetTotalPlayersDayOneTestComplete()
     if previousDayPlayed ~= nil and previousDayPlayed ~= 0 then
         TestCompleteDay.text = tostring(CoreMath.Round(_G.Funnel.GetTestGroupSize() / previousDayPlayed)) .. " Days"
     else
@@ -379,3 +385,4 @@ end
 -- Initialize
 ------------------------------------------------------------------------------------------------------------------------
 Int()
+------------------------------------------------------------------------------------------------------------------------

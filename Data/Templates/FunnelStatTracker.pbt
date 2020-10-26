@@ -28,6 +28,10 @@
             Name: "cs:isDevMode"
             Bool: true
           }
+          Overrides {
+            Name: "cs:FunnelSampleSize"
+            Int: 200
+          }
         }
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"

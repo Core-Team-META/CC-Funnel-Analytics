@@ -31,6 +31,12 @@
           }
         }
       }
+      Overrides {
+        Name: "cs:ROOT"
+        ObjectReference {
+          SelfId: 7635290731719913224
+        }
+      }
     }
   }
   SerializationVersion: 65
