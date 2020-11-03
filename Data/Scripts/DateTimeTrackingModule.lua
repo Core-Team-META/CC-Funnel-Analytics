@@ -1,15 +1,13 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Date & Time Module
 -- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
--- Date: 10/15/2020
--- Version 1.0
+-- Date: 11/02/2020
+-- Version 1.1
 ------------------------------------------------------------------------------------------------------------------------
--- Compresses dates to 6 characters EX => 0292 = October 18th 2020
--- Code will break in 10 years with current timestamping methods.
+-- Compresses dates to yearDay & hour EX => 30824
+-- Stores session times up to 9999 seconds => 2 hours 45 mins
 ------------------------------------------------------------------------------------------------------------------------
 local Api = {}
-local yearSubtract = 2020
-
 ------------------------------------------------------------------------------------------------------------------------
 -- Constants
 ------------------------------------------------------------------------------------------------------------------------
@@ -18,41 +16,46 @@ Api.SESSION = 9999
 -- Local Functions
 ------------------------------------------------------------------------------------------------------------------------
 
---@param int year, yearDay
---@return string year, yearDay EX => 0296 = October 22 2020
-local function GetDateStr(year, yearDay)
-    local year = year - yearSubtract
-    return string.format("%s%s", year, yearDay)
-end
-
---@param string dateStr
---@return string Full year, yearDay string EX=> 0296
-local function GetDateString(dateStr)
-    return dateStr:sub(1, 4)
-end
-
---@param string dateStr
---@return string year int, currently compressed to 1 EX=> 2020 = 0, 2021 = 1
-local function GetYearStr(dateStr)
-    return dateStr:sub(1, 1)
+--@param int yearDay, hour
+--@return string yearDay & hour = 35624
+local function GetDateStr(yearDay, hour)
+    local tempYearDay = tostring(yearDay)
+    if yearDay < 10 then
+        tempYearDay = "00" .. tempYearDay
+    elseif yearDay >= 10 and yearDay <= 99 then
+        tempYearDay = "0" .. tempYearDay
+    end
+    local tempHour = tostring(hour)
+    if hour < 10 then
+        tempHour = "0" .. tempHour
+    end
+    return tempYearDay..tempHour
 end
 
 --@param string dateStr
 --@return string YearDay EX => 296 October 22, 2020
 local function GetYearDayStr(dateStr)
-    return dateStr:sub(2, 4)
+    return dateStr:sub(1, 3)
+end
+
+--@param string dateStr
+--@return string hour => 01 - 24
+local function GetHourStr(dateStr)
+    return dateStr:sub(4, 5)
 end
 
 --@param string dateStr
 --@return string EX=> 0060 1min session, currently tracks up to 9999 seconds or 2 hours 45 mins.
 local function GetSavedSessionTime(dateStr)
-    return dateStr:sub(5, 8)
-end
+    return dateStr:sub(6, 9)
+end 
 
+
+--@param int timestamp - get this using os.time()
 --@param int loginYear
 --@param int currentYear
 --@return int amount to add, to check next day.
-local function CorrectForLeapYear(loginYear, currentYear)
+--[[local function CorrectForLeapYear(loginYear, currentYear)
     if loginYear ~= nil and math.tointeger((loginYear) / 4) and currentYear > loginYear then
         return 0.734
     elseif loginYear ~= nil and currentYear > loginYear then
@@ -60,41 +63,29 @@ local function CorrectForLeapYear(loginYear, currentYear)
     else
         return 0.001
     end
-end
+end]]
 
---@param string dateStr
---@return string year, yearDay
-local function ConvertDateStrToDate(dateStr)
-    local year = GetYearStr(dateStr)
-    year = year + 2000
-    local yearDay = GetYearDayStr(dateStr)
-    return year, yearDay
-end
-
---@param int timestamp - get this using os.time()
---@return int tbl.month, tbl.day, tbl.year, tbl.yday
+--@return int tbl.month, tbl.day, tbl.year, tbl.yday, tbl.hour
 local function GetDateDataFromTimestamp(timestamp)
     local tbl = os.date("!*t", tonumber(timestamp))
-    return tbl.month, tbl.day, tbl.year, tbl.yday
+    return tbl.yday, tbl.hour
 end
 
 --@param int timestamp - get this using os.time()
 --@return string year, yearDay
 local function GetDateStrFromTimestamp(timestamp)
-    local _, _, year, yearDay = GetDateDataFromTimestamp(timestamp)
-    return GetDateStr(year, yearDay)
+    local yearDay, hour = GetDateDataFromTimestamp(timestamp)
+    return GetDateStr(yearDay, hour)
 end
 
 --@param table date - Uses os.date()
 --@return int currentYear, currentDate, loginYear, loginDate
 local function ConvertDateData(date)
     if date ~= nil and date ~= "" then
-        local _, _, currentYear, currentDay = GetDateDataFromTimestamp(os.time())
-        local currentDate = ((currentYear - yearSubtract) + (currentDay / 1000))
-        local loginYear, loginDay = tonumber(GetYearStr(date)), tonumber(GetYearDayStr(date))
-        local loginDate = loginYear + (loginDay / 1000)
-        local currentYear = currentYear - yearSubtract
-        return currentYear, currentDate, loginYear, loginDate
+        local currentDay, currentHour = GetDateDataFromTimestamp(os.time())
+        --#TODO Get Day String & Hour String
+        local loginDay, loginHour = tonumber(GetYearDayStr(date)), tonumber(GetHourStr(date))
+        return currentDay, currentHour, loginDay, loginHour
     end
 end
 
@@ -102,8 +93,10 @@ end
 --@param table date - Uses os.date()
 --@return bool
 local function HasBeenOverOneDaySinceInitalLogin(date)
-    local currentYear, currentDate, loginYear, loginDate = ConvertDateData(date)
-    if loginDate ~= nil and loginDate < currentDate then
+    local currentDay, currentHour, loginDay, loginHour = ConvertDateData(date)
+    if currentDay == (loginDay + 1) and currentHour >= loginHour then
+        return true
+    elseif currentDay >= (loginDay + 2) then
         return true
     end
     return false
@@ -113,18 +106,26 @@ end
 --@param table date - Uses os.date()
 --@return bool
 local function HasDayOneTestCompleted(date)
-    local currentYear, currentDate, loginYear, loginDate = ConvertDateData(date)
-    if loginDate ~= nil and loginDate + CorrectForLeapYear(loginYear, currentYear) < currentDate then
+    local currentDay, currentHour, loginDay, loginHour = ConvertDateData(date)
+    if not currentDay or not currentHour or not loginDay or not loginHour then
+        return false
+    end
+    if currentDay == (loginDay + 1) and currentHour >= loginHour then -- 306 == 305+1 and 22 >= 21
+        return true
+    elseif currentDay >= (loginDay + 1) and (currentDay <= (loginDay + 2) and currentHour <= loginHour) then
         return true
     end
     return false
 end
 
+--Used to complete a player as D1 if they have joined between 24 - 48 hours after their first session.
 --@param table date - Uses os.date()
 --@return bool
 local function PreviousDayNewPlayers(date)
-    local currentYear, currentDate, loginYear, loginDate = ConvertDateData(date)
-    if currentDate ~= nil and tostring(loginDate + CorrectForLeapYear(loginYear, currentYear)) == tostring(currentDate) then
+    local currentDay, currentHour, loginDay, loginHour = ConvertDateData(date)
+    if currentDay == (loginDay + 1) and currentHour >= loginHour then
+        return true
+    elseif currentDay == (loginDay + 2) and currentHour <= loginHour then
         return true
     end
     return false
@@ -133,8 +134,10 @@ end
 --@param table date - Uses os.date()
 --@return bool
 local function IsFirstLoginDay(date)
-    local _, currentDate, _, loginDate = ConvertDateData(date)
-    if tostring(loginDate) == tostring(currentDate) then
+    local currentDay, currentHour, loginDay, loginHour = ConvertDateData(date)
+    if (currentDay == loginDay) then
+        return true
+    elseif (currentDay + 1) == loginDay and currentHour < loginHour then
         return true
     end
     return false
@@ -145,7 +148,7 @@ end
 local function SetSessionTime(Player, tbl)
     if tbl[Player] ~= nil then
         local tempTime = os.time() - tonumber(tbl[Player])
-        local sessionTime = 0
+        local sessionTime
         if tempTime < 10 then
             sessionTime = "000" .. tostring(tempTime)
         elseif tempTime >= 10 and tempTime <= 99 then
@@ -164,7 +167,7 @@ local function SetSessionTime(Player, tbl)
 end
 
 ------------------------------------------------------------------------------------------------------------------------
--- Global functions
+-- Public API
 ------------------------------------------------------------------------------------------------------------------------
 function Api.GetInitialLoginDate()
     return GetDateStrFromTimestamp(os.time())

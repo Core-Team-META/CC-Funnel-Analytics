@@ -1,8 +1,8 @@
 ------------------------------------------------------------------------------------------------------------------------
 -- FunnelStatsUI
 -- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
--- Date: 10/15/2020
--- Version 1.0
+-- Date: 11/02/2020
+-- Version 1.1
 ------------------------------------------------------------------------------------------------------------------------
 -- UI Manager for Funnel Stats
 ------------------------------------------------------------------------------------------------------------------------
@@ -45,10 +45,12 @@ local PlayerStatsPanelTemp = script:GetCustomProperty("PlayerStatsPanel")
 -- Constants
 ------------------------------------------------------------------------------------------------------------------------
 local ADMIN_TABLE = {
-    "b4c6e32137e54571814b5e8f27aa2fcd",
-    "d1073dbcc404405cbef8ce728e53d380",
-    "94d3fd50c4824f019421895ec8dbf099",
-    "901b7628983c4c8db4282f24afeda57a"
+    "b4c6e32137e54571814b5e8f27aa2fcd", --standardcombo
+    "d1073dbcc404405cbef8ce728e53d380", --Morticai
+    "901b7628983c4c8db4282f24afeda57a", --Buckmonster
+    "c078c42a742146bd99404099e4781e88", --Scav
+    "6d62c19885084f168ec78ce5f6111ac5", --blackdheart
+    "c14f61b74826471f974f06ff7e42d97b" --Basilisk
 }
 ------------------------------------------------------------------------------------------------------------------------
 -- Variables
@@ -265,9 +267,16 @@ local function BuildPanels()
     UpdateProgressBar()
     local previousDayPlayed = _G.Funnel.GetTotalPlayersDayOneTestComplete()
     if previousDayPlayed ~= nil and previousDayPlayed ~= 0 then
-        TestCompleteDay.text = tostring(CoreMath.Round(_G.Funnel.GetTestGroupSize() / previousDayPlayed)) .. " Days"
+        local daysUntilComplete =
+            (_G.Funnel.GetTestGroupSize() - _G.Funnel.GetTotalPlayersDayOneTestComplete()) / previousDayPlayed
+        if daysUntilComplete > 0 then
+            TestCompleteDay.text = "Estimated Test Complete: " .. tostring(CoreMath.Round(daysUntilComplete)) .. " Days"
+        else
+            TestCompleteDay.text = "Test Complete"
+            TestCompleteDay:SetColor(Color.GREEN)
+        end
     else
-        TestCompleteDay.text = "N/A"
+        TestCompleteDay.text = "Estimate N/A"
     end
     events[#events + 1] = PlayerStats.clickedEvent:Connect(OnPanelToggle)
     events[#events + 1] = StepsStats.clickedEvent:Connect(OnPanelToggle)

@@ -1,8 +1,8 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Funnel Module Server
 -- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
--- Date: 10/15/2020
--- Version 1.0
+-- Date: 11/02/2020
+-- Version 1.1
 ------------------------------------------------------------------------------------------------------------------------
 -- Component that registers itself to the _G table and can be accessed by: _G.Funnel
 ------------------------------------------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ local function SavePlayerFunnelData(Player)
                     FunnelLeaderBoard,
                     Player,
                     score,
-                    playerLoginDate[Player] .. currentSession
+                   playerLoginDate[Player] .. currentSession
                 )
             end
         end
@@ -156,15 +156,16 @@ local function SetNewPlayerData(Player)
     end
 end
 
+-- Checks if Player already exsists
 -- @param object - Player
--- Checks if Player already exsists or if there is room in the sample set
+-- @return bool
 local function IsANewPlayer(Player)
     local leaderBoard = GetLeaderBoard()
     if HasLeaderBoard(leaderBoard) then
-        for i, entry in ipairs(leaderBoard) do
+        for _, entry in ipairs(leaderBoard) do
             if entry.id == Player.id then
                 playerSteps[Player] = BTC.ConvertNumberToBinaryTable(CoreMath.Round(entry.score))
-                playerLoginDate[Player] = entry.additionalData:sub(1, 4)
+                playerLoginDate[Player] = entry.additionalData:sub(1, 5)
                 playerSessionLength[Player] = DATE_API.GetSavedSessionTime(entry.additionalData)
                 return false
             end
@@ -174,10 +175,11 @@ local function IsANewPlayer(Player)
 end
 
 -- Checks if there is room on the leaderboard for a new entry
+-- @return bool
 local function HasRoomInSampleSet()
     local leaderBoard = GetLeaderBoard()
     if HasLeaderBoard(leaderBoard) then
-        for i, entry in ipairs(leaderBoard) do
+        for i, _ in ipairs(leaderBoard) do
             if i == FunnelSampleSize then
                 return false
             end
