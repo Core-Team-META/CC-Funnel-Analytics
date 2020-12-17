@@ -1,8 +1,8 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Date & Time Module
 -- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
--- Date: 11/02/2020
--- Version 1.1
+-- Date: 2020/11/20
+-- Version 0.1.1
 ------------------------------------------------------------------------------------------------------------------------
 -- Compresses dates to yearDay & hour EX => 30824
 -- Stores session times up to 9999 seconds => 2 hours 45 mins
