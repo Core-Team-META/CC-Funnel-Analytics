@@ -1,8 +1,8 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
--- Funnel Module Client
+-- Funnel Module Client (Client)
 -- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
--- Date: 10/15/2020
--- Version 1.0
+-- Date: 2020/12/17
+-- Version 0.1.1
 ------------------------------------------------------------------------------------------------------------------------
 -- Component that registers itself to the _G table and can be accessed by: _G.Funnel on client side scripts
 ------------------------------------------------------------------------------------------------------------------------

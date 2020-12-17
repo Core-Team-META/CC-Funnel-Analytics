@@ -7,7 +7,7 @@
       Value: "mc:ecoresdkleaderboardformat:numeric"
     }
     Name: "FunnelStats"
-    Id: "F3E5B3F1954B9725"
+    Id: "F67B1B4613F290F0"
     EntryLimit: 10
   }
 }
