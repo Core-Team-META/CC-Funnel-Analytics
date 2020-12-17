@@ -221,6 +221,7 @@ local function BuildStepsPanel()
 end
 
 --@params float dec
+--@return color color
 local function GetD1RetentionColor(dec)
     if dec < 5 then
         return Color.RED
@@ -248,6 +249,7 @@ local function SetBottomBarStats()
     end
 end
 
+--#FIXME Progress bar goes backwards after test complete
 local function UpdateProgressBar()
     if _G.Funnel.GetTotalPlayersDayOneTestComplete() ~= nil and _G.Funnel.GetTestGroupSize() ~= nil then
         local progress = _G.Funnel.GetTotalPlayersDayOneTestComplete() / _G.Funnel.GetTestGroupSize()

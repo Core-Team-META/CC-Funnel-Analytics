@@ -18,9 +18,9 @@ local DATE_API = require(script:GetCustomProperty("DateTimeTrackingModule"))
 ------------------------------------------------------------------------------------------------------------------------
 -- Script Custom Properties
 ------------------------------------------------------------------------------------------------------------------------
-local FunnelLeaderBoard = script:GetCustomProperty("FunnelLeaderBoard")
 local ROOT = script:GetCustomProperty("ROOT"):WaitForObject()
 local FunnelSampleSize = ROOT:GetCustomProperty("FunnelSampleSize")
+local FunnelLeaderBoard = ROOT:GetCustomProperty("FunnelStats")
 ------------------------------------------------------------------------------------------------------------------------
 -- Local Variables
 ------------------------------------------------------------------------------------------------------------------------
@@ -271,7 +271,7 @@ local function GetPreviousDayNewPlayers()
 end
 
 ------------------------------------------------------------------------------------------------------------------------
--- Public Functions
+-- PUBLIC API
 ------------------------------------------------------------------------------------------------------------------------
 function _G.Funnel.GetSampleSetCount(testGroupId)
     return GetFunnelSize(testGroupId)

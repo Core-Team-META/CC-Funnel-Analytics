@@ -20,7 +20,7 @@ local FUNNEL_DATA = require(script:GetCustomProperty("FunnelStepsData"))
 ------------------------------------------------------------------------------------------------------------------------
 local ROOT = script:GetCustomProperty("ROOT"):WaitForObject()
 local FunnelSampleSize = ROOT:GetCustomProperty("FunnelSampleSize")
-local FunnelLeaderBoard = script:GetCustomProperty("FunnelLeaderBoard")
+local FunnelLeaderBoard = ROOT:GetCustomProperty("FunnelStats")
 ------------------------------------------------------------------------------------------------------------------------
 -- Local Variables
 ------------------------------------------------------------------------------------------------------------------------
@@ -262,28 +262,43 @@ end
 ------------------------------------------------------------------------------------------------------------------------
 -- Public Functions
 ------------------------------------------------------------------------------------------------------------------------
+
+--@param object Player
+--@param int stepIndex 
+--@return true/false if step has been completed by the Player
 function _G.Funnel.ReportStep(Player, stepIndex)
     if ShouldTrackPlayerSteps(Player) then
         return ReportPlayerStep(Player, stepIndex)
     end
 end
 
+
+--@param object Player
+--@return table playerSteps
 function _G.Funnel.GetPlayerStepsTable(Player)
     if ShouldTrackPlayerSteps(Player) then
         return playerSteps[Player]
     end
 end
 
+
+--@param object Player
+--@param int stepIndex
 function _G.Funnel.SetPlayerStepComplete(Player, stepIndex)
     if ShouldTrackPlayerSteps(Player) then
         SetPlayerStepComplete(Player, stepIndex)
     end
 end
 
+--@param object Player
+--@return int playerTestGroup => A = 1, B = 2
 function _G.Funnel.GetPlayerTestGroup(Player)
     return GetPlayerTestGroup(Player)
 end
 
+--@param object Player
+--@param int groupId
+--@return bool true/false if player is in testgroup
 function _G.Funnel.GetPlayerTestGroup(Player, groupId)
     return IsPlayerInTestGroup(Player, groupId)
 end
