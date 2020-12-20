@@ -1,8 +1,8 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Date & Time Module
 -- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
--- Date: 2020/11/20
--- Version 0.1.1
+-- Date: 2020/12/17
+-- Version 0.1.3
 ------------------------------------------------------------------------------------------------------------------------
 -- Compresses dates to yearDay & hour EX => 30824
 -- Stores session times up to 9999 seconds => 2 hours 45 mins
@@ -29,7 +29,7 @@ local function GetDateStr(yearDay, hour)
     if hour < 10 then
         tempHour = "0" .. tempHour
     end
-    return tempYearDay..tempHour
+    return tempYearDay .. tempHour
 end
 
 --@param string dateStr
@@ -48,8 +48,7 @@ end
 --@return string EX=> 0060 1min session, currently tracks up to 9999 seconds or 2 hours 45 mins.
 local function GetSavedSessionTime(dateStr)
     return dateStr:sub(6, 9)
-end 
-
+end
 
 --@param int timestamp - get this using os.time()
 --@param int loginYear
@@ -64,7 +63,6 @@ end
         return 0.001
     end
 end]]
-
 --@return int tbl.month, tbl.day, tbl.year, tbl.yday, tbl.hour
 local function GetDateDataFromTimestamp(timestamp)
     local tbl = os.date("!*t", tonumber(timestamp))
@@ -94,6 +92,12 @@ end
 --@return bool
 local function HasBeenOverOneDaySinceInitalLogin(date)
     local currentDay, currentHour, loginDay, loginHour = ConvertDateData(date)
+    if loginDay == 365 and currentDay == 1 and currentHour >= loginHour then
+        return true
+    end
+    if loginDay == 365 and currentDay == 2 and currentHour <= loginHour then
+        return true
+    end
     if currentDay == (loginDay + 1) and currentHour >= loginHour then
         return true
     elseif currentDay >= (loginDay + 2) then
@@ -110,9 +114,32 @@ local function HasDayOneTestCompleted(date)
     if not currentDay or not currentHour or not loginDay or not loginHour then
         return false
     end
+    if loginDay == 365 and currentDay == 1 and currentHour >= loginHour then
+        return true
+    end
+    if loginDay == 365 and currentDay == 2 and currentHour <= loginHour then
+        return true
+    end
     if currentDay == (loginDay + 1) and currentHour >= loginHour then -- 306 == 305+1 and 22 >= 21
         return true
     elseif currentDay >= (loginDay + 1) and (currentDay <= (loginDay + 2) and currentHour <= loginHour) then
+        return true
+    end
+    return false
+end
+
+--Used to check if it's been one day since player last logged in, accounts for leap years.
+--@param table date - Uses os.date()
+--@return bool
+local function HasCompletedTest(date)
+    local currentDay, currentHour, loginDay, loginHour = ConvertDateData(date)
+    if not currentDay or not currentHour or not loginDay or not loginHour then
+        return false
+    end
+    if loginDay == 365 and currentDay >= 2 and currentHour >= loginHour then
+        return true
+    end
+    if currentDay >= (loginDay + 2) and currentHour >= loginHour then -- 306 == 305+1 and 22 >= 21
         return true
     end
     return false
@@ -128,6 +155,12 @@ local function PreviousDayNewPlayers(date)
     elseif currentDay == (loginDay + 2) and currentHour <= loginHour then
         return true
     end
+    if loginDay == 365 and currentDay == 1 and currentHour >= loginHour then
+        return true
+    end
+    if loginDay == 365 and currentDay == 2 and currentHour <= loginHour then
+        return true
+    end
     return false
 end
 
@@ -138,6 +171,9 @@ local function IsFirstLoginDay(date)
     if (currentDay == loginDay) then
         return true
     elseif (currentDay + 1) == loginDay and currentHour < loginHour then
+        return true
+    end
+    if loginDay == 365 and currentDay == 2 and currentHour < loginHour then
         return true
     end
     return false
@@ -196,6 +232,11 @@ end
 function Api.HasDayOneTestCompleted(date)
     return HasDayOneTestCompleted(date)
 end
+
+function Api.HasCompletedTest(date)
+    return HasCompletedTest(date)
+end
+
 ------------------------------------------------------------------------------------------------------------------------
 return Api
 ------------------------------------------------------------------------------------------------------------------------

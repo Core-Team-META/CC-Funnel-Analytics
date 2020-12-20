@@ -6,8 +6,8 @@
     FormatType {
       Value: "mc:ecoresdkleaderboardformat:numeric"
     }
-    Name: "FunnelStats"
-    Id: "F67B1B4613F290F0"
+    Name: "LZ"
+    Id: "533A269C7B50452B"
     EntryLimit: 10
   }
 }

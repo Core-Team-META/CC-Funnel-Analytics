@@ -3603,15 +3603,6 @@ Objects {
       Name: "cs:FunnelSampleSize"
       Int: 10
     }
-    Overrides {
-      Name: "cs:FunnelStats"
-      NetReference {
-        Key: "F67B1B4613F290F0"
-        Type {
-          Value: "mc:enetreferencetype:leaderboard"
-        }
-      }
-    }
   }
   Collidable_v2 {
     Value: "mc:ecollisionsetting:inheritfromparent"
@@ -3840,6 +3831,15 @@ Objects {
   }
   ParentId: 5449336923968810949
   UnregisteredParameters {
+    Overrides {
+      Name: "cs:FunnelLeaderBoard"
+      NetReference {
+        Key: "533A269C7B50452B"
+        Type {
+          Value: "mc:enetreferencetype:leaderboard"
+        }
+      }
+    }
   }
   Collidable_v2 {
     Value: "mc:ecollisionsetting:inheritfromparent"
@@ -6444,6 +6444,15 @@ Objects {
   }
   ParentId: 3057270885843486421
   UnregisteredParameters {
+    Overrides {
+      Name: "cs:FunnelLeaderBoard"
+      NetReference {
+        Key: "533A269C7B50452B"
+        Type {
+          Value: "mc:enetreferencetype:leaderboard"
+        }
+      }
+    }
   }
   Collidable_v2 {
     Value: "mc:ecollisionsetting:inheritfromparent"
@@ -7092,8 +7101,7 @@ Objects {
   Name: "Spawn Point"
   Transform {
     Location {
-      Y: -937.402466
-      Z: 147.803925
+      Z: 299.200195
     }
     Rotation {
     }

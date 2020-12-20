@@ -1,8 +1,8 @@
 ------------------------------------------------------------------------------------------------------------------------
--- FunnelStatsUI (Client)
+-- FunnelStatsUI
 -- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 -- Date: 2020/12/17
--- Version 0.1.1
+-- Version 0.1.3
 ------------------------------------------------------------------------------------------------------------------------
 -- UI Manager for Funnel Stats
 ------------------------------------------------------------------------------------------------------------------------
@@ -221,7 +221,6 @@ local function BuildStepsPanel()
 end
 
 --@params float dec
---@return color color
 local function GetD1RetentionColor(dec)
     if dec < 5 then
         return Color.RED
@@ -249,7 +248,8 @@ local function SetBottomBarStats()
     end
 end
 
---#FIXME Progress bar goes backwards after test complete
+
+--##FIXME 
 local function UpdateProgressBar()
     if _G.Funnel.GetTotalPlayersDayOneTestComplete() ~= nil and _G.Funnel.GetTestGroupSize() ~= nil then
         local progress = _G.Funnel.GetTotalPlayersDayOneTestComplete() / _G.Funnel.GetTestGroupSize()
