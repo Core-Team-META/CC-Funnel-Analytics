@@ -3601,7 +3601,7 @@ Objects {
     }
     Overrides {
       Name: "cs:FunnelSampleSize"
-      Int: 4
+      Int: 10
     }
   }
   Collidable_v2 {
@@ -3834,7 +3834,7 @@ Objects {
     Overrides {
       Name: "cs:FunnelLeaderBoard"
       NetReference {
-        Key: "A4358C053637964E"
+        Key: "533A269C7B50452B"
         Type {
           Value: "mc:enetreferencetype:leaderboard"
         }
@@ -6447,7 +6447,7 @@ Objects {
     Overrides {
       Name: "cs:FunnelLeaderBoard"
       NetReference {
-        Key: "A4358C053637964E"
+        Key: "533A269C7B50452B"
         Type {
           Value: "mc:enetreferencetype:leaderboard"
         }
@@ -7090,6 +7090,9 @@ Objects {
       AppearanceChannelingTime: 2
       MountChannelingTime: 2
       FlipOnMultiJump: true
+      CanMoveUp: true
+      CanMoveDown: true
+      IsMountEnabled: true
     }
   }
 }
@@ -7149,6 +7152,27 @@ Objects {
       RagdollOnDeath: true
       ChatMode {
         Value: "mc:echatmode:teamandall"
+      }
+      ChatSettings {
+        ChatMode {
+        }
+        ChatPosition {
+          X: 40
+        }
+        ChatSize {
+          X: 450
+          Y: 400
+        }
+        ChatHorizontalAlignment {
+          Value: "mc:ecorehorizontalalign:left"
+        }
+        ChatVerticalAlignment {
+          Value: "mc:ecorehorizontalalign:center"
+        }
+      }
+      PhysicsSettings {
+        MinContactOffset: 2
+        MaxContactOffset: 8
       }
     }
   }

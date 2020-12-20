@@ -6,8 +6,9 @@
     FormatType {
       Value: "mc:ecoresdkleaderboardformat:numeric"
     }
-    Name: "Funnel"
-    Id: "A4358C053637964E"
-    EntryLimit: 200
+    Name: "LZ"
+    Id: "533A269C7B50452B"
+    EntryLimit: 10
   }
 }
+MaxPlayers: 8

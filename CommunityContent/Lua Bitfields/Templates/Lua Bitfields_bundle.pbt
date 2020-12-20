@@ -46,5 +46,5 @@
     Version: "1.2.0"
     Description: "A handly little library for creating bitfields in Lua.\r\n\r\nLets you efficiently pack arrays of boolean values into Lua tables.  Includes documentation and examples!"
   }
-  SerializationVersion: 65
+  SerializationVersion: 70
 }

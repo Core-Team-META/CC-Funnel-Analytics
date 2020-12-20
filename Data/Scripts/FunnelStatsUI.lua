@@ -1,8 +1,8 @@
 ------------------------------------------------------------------------------------------------------------------------
 -- FunnelStatsUI
 -- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
--- Date: 11/02/2020
--- Version 1.1
+-- Date: 2020/12/17
+-- Version 0.1.3
 ------------------------------------------------------------------------------------------------------------------------
 -- UI Manager for Funnel Stats
 ------------------------------------------------------------------------------------------------------------------------
@@ -248,6 +248,8 @@ local function SetBottomBarStats()
     end
 end
 
+
+--##FIXME 
 local function UpdateProgressBar()
     if _G.Funnel.GetTotalPlayersDayOneTestComplete() ~= nil and _G.Funnel.GetTestGroupSize() ~= nil then
         local progress = _G.Funnel.GetTotalPlayersDayOneTestComplete() / _G.Funnel.GetTestGroupSize()
