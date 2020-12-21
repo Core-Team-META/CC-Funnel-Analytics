@@ -21,7 +21,7 @@ Api.SHOULD_TRACK_FALSE = 2
 ------------------------------------------------------------------------------------------------------------------------
 local tbl = {
     [1] = {
-        name = "See Tutorial UI", --done
+        name = "Started First Quest", --done
         desc = "Some Information About Step",
         value = 1 
     },

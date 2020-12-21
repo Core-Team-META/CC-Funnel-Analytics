@@ -25,7 +25,7 @@
           }
           Overrides {
             Name: "cs:isDevMode"
-            Bool: true
+            Bool: false
           }
           Overrides {
             Name: "cs:AdminList"
@@ -33,16 +33,36 @@
           }
           Overrides {
             Name: "cs:FunnelSampleSize"
-            Int: 10
+            Int: 200
           }
           Overrides {
             Name: "cs:FunnelLeaderBoard"
             NetReference {
-              Key: "B6F248F771CFF5CC"
+              Key: "B9F77E78E61B3C16"
               Type {
                 Value: "mc:enetreferencetype:leaderboard"
               }
             }
+          }
+          Overrides {
+            Name: "cs:AnalyticsPanelKeybind:tooltip"
+            String: "Keybind to open the Funnel Analytics Dashboard in game."
+          }
+          Overrides {
+            Name: "cs:isDevMode:tooltip"
+            String: "If set to true, only players added to the AdminList will be able to access the dashboard. While testing locally it\'s best to set this to false."
+          }
+          Overrides {
+            Name: "cs:AdminList:tooltip"
+            String: "Add each player\'s ID to the admin list. With no spaces and separated by \"|\".   Ex => d1073dbcc404405cbef8ce728e53d380|d1073dbcc404405cbef8ce728e53d380    To only have one admin, simply paste your player ID. Make sure there are no spaces in this custom property."
+          }
+          Overrides {
+            Name: "cs:FunnelLeaderBoard:tooltip"
+            String: "Netrefrence to the leaderboard dedicated to the Funnel Analytics Module."
+          }
+          Overrides {
+            Name: "cs:FunnelSampleSize:tooltip"
+            String: "How many players should be tracked in your funnel. Be sure this matches how many entries are in the leaderboard dedicated to the Funnel."
           }
         }
         Collidable_v2 {
@@ -2661,4 +2681,5 @@
     }
   }
   SerializationVersion: 70
+  DirectlyPublished: true
 }

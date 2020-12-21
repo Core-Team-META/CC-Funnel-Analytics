@@ -305,10 +305,6 @@ function _G.Funnel.GetPlayerTestGroup(Player)
     return GetPlayerTestGroup(Player)
 end
 
-function _G.Funnel.GetPlayerTestGroup(Player, groupId)
-    return IsPlayerInTestGroup(Player, groupId)
-end
-
 function _G.Funnel.GetTestGroupSize()
     return FunnelSampleSize
 end
@@ -319,6 +315,10 @@ end
 
 function _G.Funnel.GetTotalPlayersDayOneTestComplete()
     return GetTotalPlayersDayOneTestComplete()
+end
+
+function _G.Funnel.GetPlayerTestGroup(Player, groupId)
+    return IsPlayerInTestGroup(Player, groupId)
 end
 
 -- Used to allow client side scripts to send step complete calls.

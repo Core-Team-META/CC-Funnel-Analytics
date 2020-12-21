@@ -6,8 +6,11 @@
     
     This package is a work in progress.
     
-           
-    Usage
+    
+    Disclaimer: D1 calculation is not guaranteed to be the same as Manticore stats.
+    
+
+    About
     =====
 
     1) This module tracks up to 24 different player actions, allowing creators to see how Players interact
@@ -83,12 +86,29 @@
 
     2. Based on the Players group, you'll want to have certain functionality only show to groupId 1, while for
     For example, the tutorial isn't shown to groupId 2.
-       
+    
 
+    Restarting A Test
+    =================
+       
+    Once a test is completed, it's best to screenshot your current test stats to retain older data.
+
+    1. Delete your current leaderboard used for the Funnel Analytics.
+
+    2. Create a new leaderboard with the appropriate amount of entries.
+
+    3. Set the new leaderboard as the custom property FunnelLeaderBoard under "FunnelStatTracker" group.
+
+    4. Make the appropriate changes to your code base to track the new steps and rename the step in 
+    FunnelStepsData.Lua
+
+    4. Republish your game to set the test live.
+    
+    
     Known Issues in This Version
     ============================
     -- Stats display can become quite slow, with over 200 entries.
-    -- Toggling between A / B split test panels to quickly can slow the stat loading down. Press F9 to toggle 
+    -- Toggling between A / B split test panels too quickly can slow the stat loading down. Press F9 to toggle 
     the stats to fix this.
     
     
