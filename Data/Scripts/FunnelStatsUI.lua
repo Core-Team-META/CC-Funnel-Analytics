@@ -36,6 +36,7 @@ local TestCompleteDay = script:GetCustomProperty("TestCompleteDay"):WaitForObjec
 ------------------------------------------------------------------------------------------------------------------------
 local KEYBIND = ROOT:GetCustomProperty("AnalyticsPanelKeybind")
 local DEV_MODE = ROOT:GetCustomProperty("isDevMode")
+local ADMIN_LIST = ROOT:GetCustomProperty("AdminList")
 ------------------------------------------------------------------------------------------------------------------------
 -- Templates
 ------------------------------------------------------------------------------------------------------------------------
@@ -44,14 +45,7 @@ local PlayerStatsPanelTemp = script:GetCustomProperty("PlayerStatsPanel")
 ------------------------------------------------------------------------------------------------------------------------
 -- Constants
 ------------------------------------------------------------------------------------------------------------------------
-local ADMIN_TABLE = {
-    "b4c6e32137e54571814b5e8f27aa2fcd", --standardcombo
-    "d1073dbcc404405cbef8ce728e53d380", --Morticai
-    "901b7628983c4c8db4282f24afeda57a", --Buckmonster
-    "c078c42a742146bd99404099e4781e88", --Scav
-    "6d62c19885084f168ec78ce5f6111ac5", --blackdheart
-    "c14f61b74826471f974f06ff7e42d97b" --Basilisk
-}
+local adminTable = {}
 ------------------------------------------------------------------------------------------------------------------------
 -- Variables
 ------------------------------------------------------------------------------------------------------------------------
@@ -73,6 +67,30 @@ local function isAllowed()
     end
     spamPrevent = timeNow
     return true
+end
+
+--@param string delimiter
+--@param string text
+--@return table tbl
+local function StringSplit(delimiter, text)
+    local tbl = {}
+    if delimiter == "" then -- this would result in endless loops
+        error("delimiter matches empty string!")
+    end
+    if text == "" then
+        error("Empty string!")
+    end
+    if string.find(text, delimiter) == nil then
+        tbl[1] = text
+        return tbl
+    end
+    local p = 1
+    local d = "[^" .. delimiter .. "]+"
+    for str in string.gmatch(text, d) do
+        tbl[p] = str
+        p = p + 1
+    end
+    return tbl
 end
 
 --@params object button
@@ -372,8 +390,9 @@ function Int()
         Leaderboards.HasLeaderboards()
         Task.Wait(0.1)
     until true
+    adminTable = StringSplit("|", ADMIN_LIST)
     if not DEV_MODE then
-        for _, id in ipairs(ADMIN_TABLE) do
+        for _, id in ipairs(adminTable) do
             if id == LocalPlayer.id then
                 LocalPlayer.bindingPressedEvent:Connect(OnBindingPressed)
             end

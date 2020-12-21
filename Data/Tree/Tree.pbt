@@ -3600,8 +3600,21 @@ Objects {
       Bool: true
     }
     Overrides {
+      Name: "cs:AdminList"
+      String: "d1073dbcc404405cbef8ce728e53d380|BOT_Bot1"
+    }
+    Overrides {
       Name: "cs:FunnelSampleSize"
       Int: 10
+    }
+    Overrides {
+      Name: "cs:FunnelLeaderBoard"
+      NetReference {
+        Key: "B6F248F771CFF5CC"
+        Type {
+          Value: "mc:enetreferencetype:leaderboard"
+        }
+      }
     }
   }
   Collidable_v2 {
@@ -3831,15 +3844,6 @@ Objects {
   }
   ParentId: 5449336923968810949
   UnregisteredParameters {
-    Overrides {
-      Name: "cs:FunnelLeaderBoard"
-      NetReference {
-        Key: "533A269C7B50452B"
-        Type {
-          Value: "mc:enetreferencetype:leaderboard"
-        }
-      }
-    }
   }
   Collidable_v2 {
     Value: "mc:ecollisionsetting:inheritfromparent"
@@ -6444,15 +6448,6 @@ Objects {
   }
   ParentId: 3057270885843486421
   UnregisteredParameters {
-    Overrides {
-      Name: "cs:FunnelLeaderBoard"
-      NetReference {
-        Key: "533A269C7B50452B"
-        Type {
-          Value: "mc:enetreferencetype:leaderboard"
-        }
-      }
-    }
   }
   Collidable_v2 {
     Value: "mc:ecollisionsetting:inheritfromparent"
