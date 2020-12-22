@@ -1,8 +1,8 @@
 ------------------------------------------------------------------------------------------------------------------------
 -- Funnel Module Server
 -- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
--- Date: 2020/12/17
--- Version 0.1.1
+-- Date: 2020/12/22
+-- Version 0.1.2
 ------------------------------------------------------------------------------------------------------------------------
 -- Component that registers itself to the _G table and can be accessed by: _G.Funnel
 ------------------------------------------------------------------------------------------------------------------------
@@ -223,7 +223,6 @@ end
 
 -- @param object - Player
 -- @param bool isNewPlayer -- true if new / false if currently has data or shouldn't be tracked
--- #TODO A bit of a mess, requires clean up.
 local function SetPlayerTracking(Player, isNewPlayer)
     if isNewPlayer and HasRoomInSampleSet() and not OldPlayerCheck(Player) then
         SetNewPlayerData(Player)

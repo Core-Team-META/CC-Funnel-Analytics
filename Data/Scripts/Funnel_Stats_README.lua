@@ -1,8 +1,9 @@
 ﻿--[[
     FUNNEL ANALYTICS - README
-    v0.1.1 - 2020/12/17
-    by: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
-    
+    v0.1.3 - 2020/12/22
+    by: 
+      Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
+      standardcombo (Manticore) (https://www.coregames.com/user/b4c6e32137e54571814b5e8f27aa2fcd)
     
     This package is a work in progress.
     
@@ -99,7 +100,7 @@
 
     3. Set the new leaderboard as the custom property FunnelLeaderBoard under "FunnelStatTracker" group.
 
-    4. Make the appropriate changes to your code base to track the new steps and rename the step in 
+    4. Make the appropriate changes to your codebase to track the new steps and rename the step in 
     FunnelStepsData.Lua
 
     4. Republish your game to set the test live.

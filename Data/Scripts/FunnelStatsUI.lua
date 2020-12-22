@@ -1,8 +1,8 @@
 ------------------------------------------------------------------------------------------------------------------------
 -- FunnelStatsUI
 -- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
--- Date: 2020/12/17
--- Version 0.1.3
+-- Date: 2020/12/22
+-- Version 0.1.4
 ------------------------------------------------------------------------------------------------------------------------
 -- UI Manager for Funnel Stats
 ------------------------------------------------------------------------------------------------------------------------
@@ -191,7 +191,6 @@ local function BuildStepsPanel()
                     for i, step in ipairs(stepCompleteTbl) do
                         if index == i then
                             local stepComplete = CoreMath.Round(step / sampleSetSize, 2) * 100
-                            print(stepComplete)
                             if stepComplete > 0 and stepComplete <= 999 or stepComplete < 0 and stepComplete >= -999 then
                                 child.text = tostring(stepComplete) .. "%"
                             else
@@ -391,7 +390,7 @@ function Int()
         Task.Wait(0.1)
     until true
     adminTable = StringSplit("|", ADMIN_LIST)
-    if not DEV_MODE then
+    if Environment.IsHostedGame() then
         for _, id in ipairs(adminTable) do
             if id == LocalPlayer.id then
                 LocalPlayer.bindingPressedEvent:Connect(OnBindingPressed)
