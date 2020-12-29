@@ -131,119 +131,123 @@ local function OnPanelToggle(button)
     end
 end
 
+-- Spawns and sets the data for rows in the panel that shows individual player steps
 local function BuildPlayerStatsPanel()
     local panelCount = 1
     local playerTable = _G.Funnel.GetAllPlayerStepsString()
     local sessionTable = _G.Funnel.GetSessionTimeTable()
-    if playerTable ~= nil then
-        NoDataText.visibility = Visibility.FORCE_OFF
-        PrintButton.isInteractable = true
-        for entry, stepString in pairs(playerTable) do
-            spawnedPlayersPanel[panelCount] = World.SpawnAsset(PlayerStatsPanelTemp, {parent = PlayerScrollPanel})
-            spawnedPlayersPanel[panelCount].y = 40 * (panelCount - 1)
-            for _, child in ipairs(spawnedPlayersPanel[panelCount]:GetChildren()) do
-                if child.name == "ID" then
-                    child.text = tostring(panelCount) .. ")"
-                elseif child.name == "PlayerName" then
-                    child.text = tostring(entry.name)
-                elseif child.name == "Steps" then
-                    child.text = stepString
-                elseif child.name == "Hover" then
-                    events[#events + 1] = child.hoveredEvent:Connect(OnStepHover)
-                    events[#events + 1] = child.unhoveredEvent:Connect(OnStepUnhover)
-                    child.clientUserData.panel = spawnedPlayersPanel[panelCount]
-                elseif child.name == "Session Time" and sessionTable[entry.id] ~= nil and sessionTable[entry.id] ~= "" then
-                    local hours = math.floor(tonumber(sessionTable[entry.id]) / 3600)
-                    local minutes = math.floor(tonumber(sessionTable[entry.id])) // 60 % 60
-                    local seconds = math.floor(tonumber(sessionTable[entry.id])) % 60
-                    if minutes ~= nil and seconds ~= nil and hours ~= nil then
-                        child.text = string.format("%02d:%02d:%02d", hours, minutes, seconds)
-                    else
-                        child.text = "00:00:00"
-                    end
+    
+    if playerTable == nil then return end
+    
+    NoDataText.visibility = Visibility.FORCE_OFF
+    PrintButton.isInteractable = true
+    
+    for entry, stepString in pairs(playerTable) do
+        spawnedPlayersPanel[panelCount] = World.SpawnAsset(PlayerStatsPanelTemp, {parent = PlayerScrollPanel})
+        spawnedPlayersPanel[panelCount].y = 40 * (panelCount - 1)
+        for _, child in ipairs(spawnedPlayersPanel[panelCount]:GetChildren()) do
+            if child.name == "ID" then
+                child.text = tostring(panelCount) .. ")"
+                
+            elseif child.name == "PlayerName" then
+                child.text = tostring(entry.name)
+                
+            elseif child.name == "Steps" then
+                child.text = stepString
+                
+            elseif child.name == "Hover" then
+                events[#events + 1] = child.hoveredEvent:Connect(OnStepHover)
+                events[#events + 1] = child.unhoveredEvent:Connect(OnStepUnhover)
+                child.clientUserData.panel = spawnedPlayersPanel[panelCount]
+                
+            elseif child.name == "Session Time" and sessionTable[entry.id] ~= nil and sessionTable[entry.id] ~= "" then
+                local hours = math.floor(tonumber(sessionTable[entry.id]) / 3600)
+                local minutes = math.floor(tonumber(sessionTable[entry.id])) // 60 % 60
+                local seconds = math.floor(tonumber(sessionTable[entry.id])) % 60
+                if minutes ~= nil and seconds ~= nil and hours ~= nil then
+                    child.text = string.format("%02d:%02d:%02d", hours, minutes, seconds)
+                else
+                    child.text = "00:00:00"
                 end
             end
-            panelCount = panelCount + 1
         end
+        panelCount = panelCount + 1
     end
 end
 
---#TODO Starting to be a massive function, needs a refactor
+-- Spawns and sets the data for rows in the panel that shows funnel step data
 local function BuildStepsPanel()
-    local panelCount = 0
-    local previousStep
-    local stepCompleteTbl = _G.Funnel.GetAmountStepCompletedTable(testGroupId)
-    local sampleSetSize = _G.Funnel.GetSampleSetCount(testGroupId)
-    if stepCompleteTbl ~= nil and sampleSetSize ~= nil then
-        NoDataText.visibility = Visibility.FORCE_OFF
-        PrintButton.isInteractable = true
-        for index, step in ipairs(FunnelData.GetTbl()) do
-            spawnedStepsPanel[index] = World.SpawnAsset(StepsPanelTemp, {parent = StatsScrollPanel})
-            spawnedStepsPanel[index].y = 40 * panelCount
-            panelCount = panelCount + 1
-            for _, child in ipairs(spawnedStepsPanel[index]:GetChildren()) do
-                if child.name == "ID" then
-                    child.text = tostring(index) .. ")"
-                elseif child.name == "StepName" then
-                    child.text = step.name
-                elseif child.name == "Hover" then
-                    events[#events + 1] = child.hoveredEvent:Connect(OnStepHover)
-                    events[#events + 1] = child.unhoveredEvent:Connect(OnStepUnhover)
-                    child.clientUserData.panel = spawnedStepsPanel[index]
-                elseif child.name == "PrecentComplete" then
-                    for i, step in ipairs(stepCompleteTbl) do
-                        if index == i then
-                            local stepComplete = CoreMath.Round(step / sampleSetSize, 2) * 100
-                            if stepComplete > 0 and stepComplete <= 999 or stepComplete < 0 and stepComplete >= -999 then
-                                child.text = tostring(stepComplete) .. "%"
-                            else
-                                child.text = "N/A"
-                            end
-                        end
-                    end
-                elseif child.name == "Delta" then
-                    for i, step in ipairs(stepCompleteTbl) do
-                        if index == i then
-                            if previousStep then
-                                local delta =
-                                    CoreMath.Round((step / sampleSetSize * 100) - (previousStep / sampleSetSize) * 100)
-                                if delta > 0 and delta <= 100 and delta ~= math.huge then
-                                    child.text = tostring(delta) .. "%"
-                                    child:SetColor(Color.GREEN)
-                                elseif delta < 0 and delta >= -100 and delta ~= math.huge then
-                                    child.text = tostring(delta) .. "%"
-                                    child:SetColor(Color.RED)
-                                else
-                                    child.text = ""
-                                end
-                            else
-                                child.text = ""
-                            end
-                            previousStep = step
-                        end
-                    end
-                elseif child.name == "NotCompleted" then
-                    for i, step in ipairs(stepCompleteTbl) do
-                        if index == i then
-                            child.text = tostring(sampleSetSize - step)
-                        end
-                    end
-                elseif child.name == "Total Completed" then
-                    for i, step in ipairs(stepCompleteTbl) do
-                        if index == i then
-                            child.text = tostring(step)
-                        end
-                    end
-                end
-            end
-        end
-    end
+	local panelCount = 0
+	local previousCompletedAmount
+	local stepCompleteTbl = _G.Funnel.GetAmountStepCompletedTable(testGroupId)
+	local sampleSetSize = _G.Funnel.GetSampleSetCount(testGroupId)
+	
+	if stepCompleteTbl == nil or sampleSetSize == nil then return end
+	
+	NoDataText.visibility = Visibility.FORCE_OFF
+	PrintButton.isInteractable = true
+	
+	for index, step in ipairs(FunnelData.GetTbl()) do
+		local completedAmount = stepCompleteTbl[index]
+		
+		spawnedStepsPanel[index] = World.SpawnAsset(StepsPanelTemp, {parent = StatsScrollPanel})
+		spawnedStepsPanel[index].y = 40 * panelCount
+		panelCount = panelCount + 1
+		
+		for _, child in ipairs(spawnedStepsPanel[index]:GetChildren()) do
+			if child.name == "ID" then
+				child.text = tostring(index) .. ")"
+			    
+			elseif child.name == "StepName" then
+				child.text = step.name
+			    
+			elseif child.name == "Hover" then
+				events[#events + 1] = child.hoveredEvent:Connect(OnStepHover)
+				events[#events + 1] = child.unhoveredEvent:Connect(OnStepUnhover)
+				child.clientUserData.panel = spawnedStepsPanel[index]
+			    
+			elseif child.name == "PrecentComplete" then
+				local stepComplete = CoreMath.Round(completedAmount / sampleSetSize, 2) * 100
+				if stepComplete > 0 and stepComplete <= 999 or stepComplete < 0 and stepComplete >= -999 then
+					child.text = tostring(stepComplete) .. "%"
+				else
+					child.text = "N/A"
+				end
+			    
+			elseif child.name == "Delta" then
+				if previousCompletedAmount then
+					local delta =
+						CoreMath.Round((completedAmount / sampleSetSize * 100) - (previousCompletedAmount / sampleSetSize) * 100)
+					if delta > 0 and delta <= 100 and delta ~= math.huge then
+						child.text = tostring(delta) .. "%"
+						child:SetColor(Color.GREEN)
+					elseif delta < 0 and delta >= -100 and delta ~= math.huge then
+						child.text = tostring(delta) .. "%"
+						child:SetColor(Color.RED)
+					else
+						child.text = ""
+					end
+				else
+					child.text = ""
+				end
+				previousCompletedAmount = completedAmount
+			
+			elseif child.name == "NotCompleted" then
+				child.text = tostring(sampleSetSize - completedAmount)
+				
+			elseif child.name == "Total Completed" then
+				child.text = tostring(completedAmount)
+			end
+		end
+	end
 end
 
+-- Section related to exporting the data
 local PRINT_HEADER = "[Funnel Data] Copy the following lines and paste them into Google Sheets / Excel ↓\n"
 local PRINT_FOOTER = "################################################### [END]"
 
 local function GenerateStepsDataForLog(S)
+	-- Header
 	local str =
 		"ID" ..S.. 
 		"StepName" ..S.. 
@@ -251,6 +255,7 @@ local function GenerateStepsDataForLog(S)
 		"A_Incomplete" ..S.. "A_Completed" ..S.. "A%" ..S.. "A_Delta" ..S.. 
 		"B_Incomplete" ..S.. "B_Completed" ..S.. "B%" ..S.. "B_Delta" .."\n"
 	
+	-- Get the data
     local stepCompleteTbl = _G.Funnel.GetAmountStepCompletedTable(nil) -- A+B
     local stepCompleteTbl_A = _G.Funnel.GetAmountStepCompletedTable(1) -- A
 	local stepCompleteTbl_B = _G.Funnel.GetAmountStepCompletedTable(2) -- B
@@ -326,18 +331,21 @@ local function GenerateStepsDataForLog(S)
 end
 
 local function GeneratePlayerDataForLogs(S)
+	-- Header, first part
 	local str =
 		"Player Steps" .. "\n" .. "Name" ..S.. "Session Length" ..S.. "Seconds"
 	
-	-- Step names header
+	-- Header, step names
 	for index, step in ipairs(FunnelData.GetTbl()) do
 		str = str ..S.. tostring(step.name)
 	end
 	str = str .."\n"
 	
+	-- Get the data
 	local playerTable = _G.Funnel.GetAllPlayerStepsString()
 	local sessionTable = _G.Funnel.GetSessionTimeTable()
 	
+	-- Build row
 	for playerEntry, stepString in pairs(playerTable) do
 		-- Player Name
 		str = str.. tostring(playerEntry.name)
@@ -387,6 +395,7 @@ local function OnPrintClicked(button)
 	UI.PrintToScreen("Printed to log file at: .../My Games/CORE/Saved/Logs/Platform.log")
 	UI.PrintToScreen("Search for [Funnel Data] in the log.")
 end
+-- End of section related to exporting the data
 
 --@params float dec
 local function GetD1RetentionColor(dec)
