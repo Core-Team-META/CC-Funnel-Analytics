@@ -323,9 +323,9 @@ local function DestroyPlayerPanels()
 end
 
 local function DestroyEventListeners()
-    for _, Event in pairs(events) do
-        if Object.IsValid(Event) then
-            Event:Disconnect()
+    for _, e in pairs(events) do
+        if e ~= nil and e.isConnected then
+            e:Disconnect()
         end
     end
     events = {}
