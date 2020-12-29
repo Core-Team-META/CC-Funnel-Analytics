@@ -1,4 +1,4 @@
-------------------------------------------------------------------------------------------------------------------------
+﻿------------------------------------------------------------------------------------------------------------------------
 -- FunnelStatsUI
 -- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 -- Date: 2020/12/22
@@ -23,7 +23,7 @@ local PlayerParentPanel = script:GetCustomProperty("PlayerParentPanel"):WaitForO
 local StepsParentPanel = script:GetCustomProperty("StepsParentPanel"):WaitForObject()
 local PlayerScrollPanel = script:GetCustomProperty("PlayerScrollPanel"):WaitForObject()
 local D1Retention = script:GetCustomProperty("D1Retention"):WaitForObject()
-local NoDataText = script:GetCustomProperty("NoData"):WaitForObject()
+local NoDataText = script:GetCustomProperty("NoData"):WaitForObject() --Loading label
 local ATestGroup = script:GetCustomProperty("ATestGroup"):WaitForObject()
 local BTestGroup = script:GetCustomProperty("BTestGroup"):WaitForObject()
 local AllTestGroup = script:GetCustomProperty("AllTestGroup"):WaitForObject()
@@ -31,6 +31,7 @@ local Title = script:GetCustomProperty("Title"):WaitForObject()
 local TestProgress = script:GetCustomProperty("TestProgress"):WaitForObject()
 local TestProgressText = script:GetCustomProperty("TestProgressText"):WaitForObject()
 local TestCompleteDay = script:GetCustomProperty("TestCompleteDay"):WaitForObject()
+local PrintButton = script:GetCustomProperty("PrintButton"):WaitForObject()
 ------------------------------------------------------------------------------------------------------------------------
 -- Custom Properties
 ------------------------------------------------------------------------------------------------------------------------
@@ -136,6 +137,7 @@ local function BuildPlayerStatsPanel()
     local sessionTable = _G.Funnel.GetSessionTimeTable()
     if playerTable ~= nil then
         NoDataText.visibility = Visibility.FORCE_OFF
+        PrintButton.isInteractable = true
         for entry, stepString in pairs(playerTable) do
             spawnedPlayersPanel[panelCount] = World.SpawnAsset(PlayerStatsPanelTemp, {parent = PlayerScrollPanel})
             spawnedPlayersPanel[panelCount].y = 40 * (panelCount - 1)
@@ -174,6 +176,7 @@ local function BuildStepsPanel()
     local sampleSetSize = _G.Funnel.GetSampleSetCount(testGroupId)
     if stepCompleteTbl ~= nil and sampleSetSize ~= nil then
         NoDataText.visibility = Visibility.FORCE_OFF
+        PrintButton.isInteractable = true
         for index, step in ipairs(FunnelData.GetTbl()) do
             spawnedStepsPanel[index] = World.SpawnAsset(StepsPanelTemp, {parent = StatsScrollPanel})
             spawnedStepsPanel[index].y = 40 * panelCount
@@ -237,6 +240,154 @@ local function BuildStepsPanel()
     end
 end
 
+local PRINT_HEADER = "[Funnel Data] Copy the following lines and paste them into Google Sheets / Excel ↓\n"
+local PRINT_FOOTER = "################################################### [END]"
+
+local function GenerateStepsDataForLog(S)
+	local str =
+		"ID" ..S.. 
+		"StepName" ..S.. 
+		"Incomplete" ..S.. "Completed" ..S.. "Player%" ..S.. "Delta" ..S.. 
+		"A_Incomplete" ..S.. "A_Completed" ..S.. "A%" ..S.. "A_Delta" ..S.. 
+		"B_Incomplete" ..S.. "B_Completed" ..S.. "B%" ..S.. "B_Delta" .."\n"
+	
+    local stepCompleteTbl = _G.Funnel.GetAmountStepCompletedTable(nil) -- A+B
+    local stepCompleteTbl_A = _G.Funnel.GetAmountStepCompletedTable(1) -- A
+	local stepCompleteTbl_B = _G.Funnel.GetAmountStepCompletedTable(2) -- B
+    local sampleSetSize = _G.Funnel.GetSampleSetCount(nil) -- A+B
+    local sampleSetSize_A = _G.Funnel.GetSampleSetCount(1) -- A
+    local sampleSetSize_B = _G.Funnel.GetSampleSetCount(2) -- B
+    local lastPercentNumber = nil
+    local lastPercentNumber_A = nil
+    local lastPercentNumber_B = nil
+    
+	for index, step in ipairs(FunnelData.GetTbl()) do
+		-- A+B
+		local completedNumber = stepCompleteTbl[index]
+		local percentNumber = 0
+		if sampleSetSize > 0 then
+			percentNumber = completedNumber / sampleSetSize
+		end
+		local deltaNumber = 0
+		if lastPercentNumber ~= nil then
+			deltaNumber = percentNumber - lastPercentNumber
+		end
+		lastPercentNumber = percentNumber
+		
+		-- A
+		local completedNumber_A = stepCompleteTbl_A[index]
+		local percentNumber_A = 0
+		if sampleSetSize_A > 0 then
+			percentNumber_A = completedNumber_A / sampleSetSize_A
+		end
+		local deltaNumber_A = 0
+		if lastPercentNumber_A ~= nil then
+			deltaNumber_A = percentNumber_A - lastPercentNumber_A
+		end
+		lastPercentNumber_A = percentNumber_A
+		
+		-- B
+		local completedNumber_B = stepCompleteTbl_B[index]
+		local percentNumber_B = 0
+		if sampleSetSize_B > 0 then
+			percentNumber_B = completedNumber_B / sampleSetSize_B
+		end
+		local deltaNumber_B = 0
+		if lastPercentNumber_B ~= nil then
+			deltaNumber_B = percentNumber_B - lastPercentNumber_B
+		end
+		lastPercentNumber_B = percentNumber_B
+		
+		-- Convert all to string
+		local id = tostring(index)
+		local stepName = tostring(step.name)
+		local completed = tostring(completedNumber)
+		local notCompleted = tostring(sampleSetSize - completedNumber)
+		local percent = tostring(percentNumber)
+		local delta = tostring(deltaNumber)
+		local completed_A = tostring(completedNumber_A)
+		local notCompleted_A = tostring(sampleSetSize_A - completedNumber_A)
+		local percent_A = tostring(percentNumber_A)
+		local delta_A = tostring(deltaNumber_A)
+		local completed_B = tostring(completedNumber_B)
+		local notCompleted_B = tostring(sampleSetSize_B - completedNumber_B)
+		local percent_B = tostring(percentNumber_B)
+		local delta_B = tostring(deltaNumber_B)
+		
+		-- Build row
+		str = str.. 
+			id ..S.. 
+			stepName ..S.. 
+			notCompleted ..S.. completed ..S.. percent ..S.. delta ..S.. 
+			notCompleted_A ..S.. completed_A ..S.. percent_A ..S.. delta_A ..S..
+			notCompleted_B ..S.. completed_B ..S.. percent_B ..S.. delta_B .."\n"
+	end
+	return str
+end
+
+local function GeneratePlayerDataForLogs(S)
+	local str =
+		"Player Steps" .. "\n" .. "Name" ..S.. "Session Length" ..S.. "Seconds"
+	
+	-- Step names header
+	for index, step in ipairs(FunnelData.GetTbl()) do
+		str = str ..S.. tostring(step.name)
+	end
+	str = str .."\n"
+	
+	local playerTable = _G.Funnel.GetAllPlayerStepsString()
+	local sessionTable = _G.Funnel.GetSessionTimeTable()
+	
+	for playerEntry, stepString in pairs(playerTable) do
+		-- Player Name
+		str = str.. tostring(playerEntry.name)
+		
+		-- Session Length
+		local sessionLengthString = "00:00:00"
+		local sessionSecondsString = "0"
+		local playerSessionInfo = sessionTable[playerEntry.id]
+		if playerSessionInfo ~= nil and playerSessionInfo ~= "" then
+			local sessionInfoNumber = tonumber(playerSessionInfo)
+			local hours = math.floor(sessionInfoNumber / 3600)
+			local minutes = math.floor(sessionInfoNumber) // 60 % 60
+			local seconds = math.floor(sessionInfoNumber) % 60
+			if minutes ~= nil and seconds ~= nil and hours ~= nil then
+				sessionLengthString = string.format("%02d:%02d:%02d", hours, minutes, seconds)
+			end
+			sessionSecondsString = tostring(sessionInfoNumber)
+		end
+		str = str ..S.. sessionLengthString ..S.. sessionSecondsString
+		
+		-- Steps
+		str = str ..S.. string.gsub(stepString, " ", S)
+		
+		str = str .."\n"
+	end	
+	return str
+end
+
+local function PrintToLog(delimiter)
+	local stepData = GenerateStepsDataForLog(delimiter)
+	local playerData = GeneratePlayerDataForLogs(delimiter)
+	local body = stepData .. "\n" .. playerData
+	
+	print(PRINT_HEADER .. body .. PRINT_FOOTER)
+end
+
+local function PrintToLogForSheets()
+	PrintToLog("	")
+end
+
+local function PrintToLogForCSV()
+	PrintToLog(",")
+end
+
+local function OnPrintClicked(button)
+	PrintToLogForSheets()
+	UI.PrintToScreen("Printed to log file at: .../My Games/CORE/Saved/Logs/Platform.log")
+	UI.PrintToScreen("Search for [Funnel Data] in the log.")
+end
+
 --@params float dec
 local function GetD1RetentionColor(dec)
     if dec < 5 then
@@ -280,6 +431,7 @@ end
 
 local function BuildPanels()
     NoDataText.visibility = Visibility.FORCE_ON
+    PrintButton.isInteractable = false
     BuildStepsPanel()
     BuildPlayerStatsPanel()
     SetBottomBarStats()
@@ -302,6 +454,7 @@ local function BuildPanels()
     events[#events + 1] = ATestGroup.clickedEvent:Connect(OnTestgroupToggle)
     events[#events + 1] = BTestGroup.clickedEvent:Connect(OnTestgroupToggle)
     events[#events + 1] = AllTestGroup.clickedEvent:Connect(OnTestgroupToggle)
+    events[#events + 1] = PrintButton.clickedEvent:Connect(OnPrintClicked)
 end
 
 local function DestroyStepsPanels()

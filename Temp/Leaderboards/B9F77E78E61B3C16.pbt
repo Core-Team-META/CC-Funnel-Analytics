@@ -5,6 +5,12 @@
   AdditionalData: "356180016"
   DateTime: "2020-12-21T18:36:53.153Z"
 }
+GlobalEntries {
+  Id: "b4c6e32137e54571814b5e8f27aa2fcd"
+  Name: "standardcombo"
+  ScoreFormatted: "0.0"
+  DateTime: "2020-12-29T05:33:42.186Z"
+}
 Config {
   SortType {
     Value: "mc:ecoresdkleaderboardsorting:higherisbetter"

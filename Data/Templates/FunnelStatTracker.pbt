@@ -241,6 +241,7 @@
         ChildIds: 3651870487929976576
         ChildIds: 4815854495355356288
         ChildIds: 3735612209653411896
+        ChildIds: 1258143500508553720
         Collidable_v2 {
           Value: "mc:ecollisionsetting:inheritfromparent"
         }
@@ -1669,7 +1670,7 @@
           Value: "mc:evisibilitysetting:inheritfromparent"
         }
         Control {
-          Width: 85
+          Width: 90
           Height: 30
           UIX: -130.234055
           UIY: -9
@@ -2432,7 +2433,7 @@
         Control {
           Width: 322
           Height: 39
-          UIY: 9
+          UIY: 8
           RenderTransformPivot {
             Anchor {
               Value: "mc:euianchor:middlecenter"
@@ -2448,7 +2449,7 @@
             }
             Size: 15
             Justification {
-              Value: "mc:etextjustify:center"
+              Value: "mc:etextjustify:right"
             }
             AutoWrapText: true
           }
@@ -2461,6 +2462,86 @@
             TargetAnchor {
               Anchor {
                 Value: "mc:euianchor:topcenter"
+              }
+            }
+          }
+        }
+      }
+      Objects {
+        Id: 1258143500508553720
+        Name: "PrintButton"
+        Transform {
+          Location {
+          }
+          Rotation {
+          }
+          Scale {
+            X: 1
+            Y: 1
+            Z: 1
+          }
+        }
+        ParentId: 469776242054237698
+        Collidable_v2 {
+          Value: "mc:ecollisionsetting:inheritfromparent"
+        }
+        Visible_v2 {
+          Value: "mc:evisibilitysetting:inheritfromparent"
+        }
+        Control {
+          Width: 160
+          Height: 40
+          UIX: -405
+          UIY: -655
+          RenderTransformPivot {
+            Anchor {
+              Value: "mc:euianchor:middlecenter"
+            }
+          }
+          Button {
+            Label: "Print to Log"
+            FontColor {
+              A: 1
+            }
+            FontSize: 15
+            ButtonColor {
+              R: 1
+              G: 1
+              B: 1
+              A: 1
+            }
+            HoveredColor {
+              R: 1
+              G: 1
+              B: 1
+              A: 1
+            }
+            PressedColor {
+              R: 1
+              G: 1
+              B: 1
+              A: 1
+            }
+            DisabledColor {
+              R: 1
+              G: 1
+              B: 1
+              A: 1
+            }
+            Brush {
+              Id: 14570474633607836217
+            }
+            IsButtonEnabled: true
+          }
+          AnchorLayout {
+            SelfAnchor {
+              Anchor {
+                Value: "mc:euianchor:bottomright"
+              }
+            }
+            TargetAnchor {
+              Anchor {
+                Value: "mc:euianchor:bottomright"
               }
             }
           }
@@ -2641,6 +2722,12 @@
             Name: "cs:TestCompleteDay"
             ObjectReference {
               SubObjectId: 3735612209653411896
+            }
+          }
+          Overrides {
+            Name: "cs:PrintButton"
+            ObjectReference {
+              SubObjectId: 1258143500508553720
             }
           }
         }
