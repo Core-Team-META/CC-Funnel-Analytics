@@ -335,7 +335,7 @@ end
 local function GeneratePlayerDataForLogs(S)
 	-- Header, first part
 	local str =
-		"Player Steps" .. "\n" .. "Name" ..S.. "Session Length" ..S.. "Seconds"
+		"Player Steps" .. "\n" .. "ID" ..S.. "Name" ..S.. "Group" ..S.. "Session Length" ..S.. "Seconds"
 	
 	-- Header, step names
 	for index, step in ipairs(FunnelData.GetTbl()) do
@@ -348,9 +348,22 @@ local function GeneratePlayerDataForLogs(S)
 	local sessionTable = _G.Funnel.GetSessionTimeTable()
 	
 	-- Build row
+	local index = 0
 	for playerEntry, stepString in pairs(playerTable) do
+		-- Player Number / ID
+		index = index + 1
+		str = str.. tostring(index)
+		
 		-- Player Name
-		str = str.. tostring(playerEntry.name)
+		str = str ..S.. tostring(playerEntry.name)
+		
+		-- Test Group A or B
+		local testGroup = _G.Funnel.GetPlayerTestGroup(playerEntry)
+		if testGroup == 1 then
+			str = str ..S.. "A"
+		else
+			str = str ..S.. "B"
+		end
 		
 		-- Session Length
 		local sessionLengthString = "00:00:00"
