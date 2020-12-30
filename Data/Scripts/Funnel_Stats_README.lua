@@ -1,6 +1,6 @@
 ﻿--[[
     FUNNEL ANALYTICS - README
-    v0.1.3 - 2020/12/22
+    v0.2.0 - 2020/12/29
     by: 
       Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
       standardcombo (Manticore) (https://www.coregames.com/user/b4c6e32137e54571814b5e8f27aa2fcd)
@@ -104,6 +104,20 @@
     FunnelStepsData.Lua
 
     4. Republish your game to set the test live.
+    
+    
+    Exporting Data to a Spreadsheet
+    ===============================
+    
+    In the top of the UI you will see a button saying "Print to Log". Pressing it will generate appropriately
+    formated text that can be copy/pasted into a spreadsheet program such as Google Sheets or Excel. You must
+    locate the log file on your disk, probably at:
+    
+    .../My Games/CORE/Saved/Logs/Platform.log
+    
+    After opening the file, search for the "[Funnel Data]" section. Copy the data and paste it into your
+    spreadsheet. Because the Funnel UI is a client script it's able to print to your client Log, on your local
+    machine even though the game is published--No need to grab the server log.
     
     
     Known Issues in This Version
