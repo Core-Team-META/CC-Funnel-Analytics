@@ -23,15 +23,6 @@
         }
       }
       Overrides {
-        Name: "cs:FunnelLeaderBoard"
-        NetReference {
-          Key: "7E9797714C8723AE"
-          Type {
-            Value: "mc:enetreferencetype:leaderboard"
-          }
-        }
-      }
-      Overrides {
         Name: "cs:ROOT"
         ObjectReference {
           SelfId: 7635290731719913224

@@ -1,8 +1,10 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Funnel Module Client
--- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
--- Date: 2020/12/17
--- Version 0.1.3
+-- Authors: 
+--     Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
+--     standardcombo (Manticore) (https://www.coregames.com/user/b4c6e32137e54571814b5e8f27aa2fcd)
+-- Date: 2020/12/22
+-- Version 0.1.4
 ------------------------------------------------------------------------------------------------------------------------
 -- Component that registers itself to the _G table and can be accessed by: _G.Funnel on client side scripts
 ------------------------------------------------------------------------------------------------------------------------
@@ -18,9 +20,9 @@ local DATE_API = require(script:GetCustomProperty("DateTimeTrackingModule"))
 ------------------------------------------------------------------------------------------------------------------------
 -- Script Custom Properties
 ------------------------------------------------------------------------------------------------------------------------
-local FunnelLeaderBoard = script:GetCustomProperty("FunnelLeaderBoard")
 local ROOT = script:GetCustomProperty("ROOT"):WaitForObject()
 local FunnelSampleSize = ROOT:GetCustomProperty("FunnelSampleSize")
+local FunnelLeaderBoard = ROOT:GetCustomProperty("FunnelLeaderBoard")
 ------------------------------------------------------------------------------------------------------------------------
 -- Local Variables
 ------------------------------------------------------------------------------------------------------------------------
@@ -305,10 +307,6 @@ function _G.Funnel.GetPlayerTestGroup(Player)
     return GetPlayerTestGroup(Player)
 end
 
-function _G.Funnel.GetPlayerTestGroup(Player, groupId)
-    return IsPlayerInTestGroup(Player, groupId)
-end
-
 function _G.Funnel.GetTestGroupSize()
     return FunnelSampleSize
 end
@@ -319,6 +317,10 @@ end
 
 function _G.Funnel.GetTotalPlayersDayOneTestComplete()
     return GetTotalPlayersDayOneTestComplete()
+end
+
+function _G.Funnel.GetPlayerTestGroup(Player, groupId)
+    return IsPlayerInTestGroup(Player, groupId)
 end
 
 -- Used to allow client side scripts to send step complete calls.

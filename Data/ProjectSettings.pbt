@@ -6,9 +6,9 @@
     FormatType {
       Value: "mc:ecoresdkleaderboardformat:numeric"
     }
-    Name: "LZ"
-    Id: "533A269C7B50452B"
-    EntryLimit: 10
+    Name: "FunnelTest2"
+    Id: "B9F77E78E61B3C16"
+    EntryLimit: 200
   }
 }
 MaxPlayers: 8

@@ -1,8 +1,8 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Date & Time Module
 -- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
--- Date: 2020/12/17
--- Version 0.1.3
+-- Date: 2020/12/22
+-- Version 0.1.4
 ------------------------------------------------------------------------------------------------------------------------
 -- Compresses dates to yearDay & hour EX => 30824
 -- Stores session times up to 9999 seconds => 2 hours 45 mins
@@ -50,7 +50,6 @@ local function GetSavedSessionTime(dateStr)
     return dateStr:sub(6, 9)
 end
 
-
 --@param int timestamp - get this using os.time()
 --@param int loginYear
 --@param int currentYear
@@ -82,7 +81,6 @@ end
 local function ConvertDateData(date)
     if date ~= nil and date ~= "" then
         local currentDay, currentHour = GetDateDataFromTimestamp(os.time())
-        --#TODO Get Day String & Hour String
         local loginDay, loginHour = tonumber(GetYearDayStr(date)), tonumber(GetHourStr(date))
         return currentDay, currentHour, loginDay, loginHour
     end
@@ -107,7 +105,7 @@ local function HasBeenOverOneDaySinceInitalLogin(date)
     return false
 end
 
---Used to check if it's been one day since player last logged in, accounts for leap years.
+--Used to check if it's been one day since player last logged in. #TODO Does not account for leap years currently.
 --@param table date - Uses os.date()
 --@return bool
 local function HasDayOneTestCompleted(date)
@@ -129,7 +127,7 @@ local function HasDayOneTestCompleted(date)
     return false
 end
 
---Used to check if it's been one day since player last logged in, accounts for leap years.
+--Used to check if it's been one day since player last logged in. #TODO Does not account for leap years currently.
 --@param table date - Uses os.date()
 --@return bool
 local function HasCompletedTest(date)
@@ -137,10 +135,7 @@ local function HasCompletedTest(date)
     if not currentDay or not currentHour or not loginDay or not loginHour then
         return false
     end
-    if loginDay == 365 and currentDay == 1 and currentHour >= loginHour then
-        return true
-    end
-    if loginDay == 365 and currentDay >= 2 then
+    if loginDay == 365 and currentDay >= 2 and currentHour >= loginHour then
         return true
     end
     if currentDay >= (loginDay + 2) and currentHour >= loginHour then -- 306 == 305+1 and 22 >= 21
@@ -159,6 +154,12 @@ local function PreviousDayNewPlayers(date)
     elseif currentDay == (loginDay + 2) and currentHour <= loginHour then
         return true
     end
+    if loginDay == 365 and currentDay == 1 and currentHour >= loginHour then
+        return true
+    end
+    if loginDay == 365 and currentDay == 2 and currentHour <= loginHour then
+        return true
+    end
     return false
 end
 
@@ -169,6 +170,9 @@ local function IsFirstLoginDay(date)
     if (currentDay == loginDay) then
         return true
     elseif (currentDay + 1) == loginDay and currentHour < loginHour then
+        return true
+    end
+    if loginDay == 365 and currentDay == 2 and currentHour < loginHour then
         return true
     end
     return false
