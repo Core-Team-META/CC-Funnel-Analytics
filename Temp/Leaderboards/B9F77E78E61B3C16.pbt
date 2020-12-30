@@ -6,6 +6,27 @@
   DateTime: "2020-12-21T18:36:53.153Z"
 }
 GlobalEntries {
+  Id: "BOT_Bot3"
+  Name: "Bot3"
+  ScoreFormatted: "0.1"
+  AdditionalData: "365060032"
+  DateTime: "2020-12-30T06:23:48.686Z"
+}
+GlobalEntries {
+  Id: "BOT_Bot4"
+  Name: "Bot4"
+  ScoreFormatted: "0.1"
+  AdditionalData: "365060026"
+  DateTime: "2020-12-30T06:23:48.687Z"
+}
+GlobalEntries {
+  Id: "BOT_Bot2"
+  Name: "Bot2"
+  ScoreFormatted: "0.1"
+  AdditionalData: "365060032"
+  DateTime: "2020-12-30T06:23:48.687Z"
+}
+GlobalEntries {
   Id: "b4c6e32137e54571814b5e8f27aa2fcd"
   Name: "standardcombo"
   ScoreFormatted: "0.0"

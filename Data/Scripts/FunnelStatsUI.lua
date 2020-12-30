@@ -545,11 +545,11 @@ function OnTestgroupToggle(button)
         ResetTestGroupButtonColors()
         if button.name == "A-TestGroup" then
             testGroupId = 1
-            Title.text = "A Group Step Stats"
+            Title.text = "A Step Stats"
             ATestGroup:SetButtonColor(Color.YELLOW)
         elseif button.name == "B-TestGroup" then
             testGroupId = 2
-            Title.text = "B Group Step Stats"
+            Title.text = "B Step Stats"
             BTestGroup:SetButtonColor(Color.YELLOW)
         elseif button.name == "All-TestGroup" then
             testGroupId = nil
