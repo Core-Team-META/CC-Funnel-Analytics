@@ -1,12 +1,12 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
--- Funnel Module Client
+-- Funnel Module - Client
+-- Date: 2020/12/29
+-- Version 0.2.0
 -- Authors: 
 --     Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 --     standardcombo (Manticore) (https://www.coregames.com/user/b4c6e32137e54571814b5e8f27aa2fcd)
--- Date: 2020/12/22
--- Version 0.1.4
 ------------------------------------------------------------------------------------------------------------------------
--- Component that registers itself to the _G table and can be accessed by: _G.Funnel on client side scripts
+-- Component that registers itself to the _G table and can be accessed by: _G.Funnel on client scripts.
 ------------------------------------------------------------------------------------------------------------------------
 local NAMESPACE = "FunnelModule."
 ------------------------------------------------------------------------------------------------------------------------
@@ -319,7 +319,7 @@ function _G.Funnel.GetTotalPlayersDayOneTestComplete()
     return GetTotalPlayersDayOneTestComplete()
 end
 
-function _G.Funnel.GetPlayerTestGroup(Player, groupId)
+function _G.Funnel.IsPlayerInTestGroup(Player, groupId)
     return IsPlayerInTestGroup(Player, groupId)
 end
 

@@ -1,11 +1,12 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
--- FunnelStatsUI
+-- Funnel Stats UI
 -- Date: 2020/12/29
 -- Version 0.2.0
--- Authors: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
---          standardcombo
+-- Authors:
+--     Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
+--     standardcombo (Manticore) (https://www.coregames.com/user/b4c6e32137e54571814b5e8f27aa2fcd)
 ------------------------------------------------------------------------------------------------------------------------
--- UI Manager for Funnel Stats
+-- User Interface controller for Funnel Stats.
 ------------------------------------------------------------------------------------------------------------------------
 -- Require
 ------------------------------------------------------------------------------------------------------------------------
