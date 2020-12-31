@@ -1,7 +1,7 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Funnel Module - Client
--- Date: 2020/12/29
--- Version 0.2.0
+-- Date: 2020/12/30
+-- Version 0.2.1
 -- Authors: 
 --     Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 --     standardcombo (Manticore) (https://www.coregames.com/user/b4c6e32137e54571814b5e8f27aa2fcd)

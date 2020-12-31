@@ -1,8 +1,10 @@
 ------------------------------------------------------------------------------------------------------------------------
--- Funnel Module Server
--- Author: Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
--- Date: 2020/12/22
--- Version 0.1.2
+-- Funnel Module - Server
+-- Date: 2020/12/30
+-- Version 0.2.1
+-- Authors: 
+--     Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
+--     standardcombo (Manticore) (https://www.coregames.com/user/b4c6e32137e54571814b5e8f27aa2fcd)
 ------------------------------------------------------------------------------------------------------------------------
 -- Component that registers itself to the _G table and can be accessed by: _G.Funnel
 ------------------------------------------------------------------------------------------------------------------------
