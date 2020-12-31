@@ -69,24 +69,18 @@ local function HasLeaderBoard(LeaderBoard)
 end
 
 -- @param object Player
--- Returns which test group the Player is in.
+-- @return which test group the Player is in. Value will be either 1 or 2.
 local function GetPlayerTestGroup(Player)
-    if (tonumber(string.byte(Player.id)) % 2 == 0) then
-        return 1
-    else
-        return 2
-    end
+	local id = Player.id
+	local firstByte = string.byte(id)
+	local lastByte = string.byte(id, string.len(id))
+	return (tonumber(firstByte) + tonumber(lastByte)) % 2 + 1
 end
 
 -- @param object Player
--- @param int groupId (Optional) defaults to 1 if nothing passed.
--- Returns true / false if a Player is in a test group.
+-- @return true / false if a Player is in a test group.
 local function IsPlayerInTestGroup(Player, groupId)
-    if (tonumber(string.byte(Player.id)) % 2 == 0) then
-        return 1 == groupId
-    else
-        return 2 == groupId
-    end
+	return GetPlayerTestGroup(Player) == groupId
 end
 
 -- @param object Player
