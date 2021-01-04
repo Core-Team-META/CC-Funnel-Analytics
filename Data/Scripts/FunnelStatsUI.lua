@@ -1,7 +1,7 @@
 ﻿------------------------------------------------------------------------------------------------------------------------
 -- Funnel Stats UI
--- Date: 2020/12/29
--- Version 0.2.0
+-- Date: 2021/01/04
+-- Version 0.2.1
 -- Authors:
 --     Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
 --     standardcombo (Manticore) (https://www.coregames.com/user/b4c6e32137e54571814b5e8f27aa2fcd)
@@ -209,7 +209,7 @@ local function BuildStepsPanel()
 				child.clientUserData.panel = spawnedStepsPanel[index]
 			    
 			elseif child.name == "PrecentComplete" then
-				local stepComplete = CoreMath.Round(completedAmount / sampleSetSize, 2) * 100
+				local stepComplete = CoreMath.Round(completedAmount / sampleSetSize, 4) * 100
 				if stepComplete > 0 and stepComplete <= 999 or stepComplete < 0 and stepComplete >= -999 then
 					child.text = tostring(stepComplete) .. "%"
 				else
@@ -219,7 +219,7 @@ local function BuildStepsPanel()
 			elseif child.name == "Delta" then
 				if previousCompletedAmount then
 					local delta =
-						CoreMath.Round((completedAmount / sampleSetSize * 100) - (previousCompletedAmount / sampleSetSize) * 100)
+						CoreMath.Round((completedAmount / sampleSetSize * 100) - (previousCompletedAmount / sampleSetSize) * 100, 2)
 					if delta > 0 and delta <= 100 and delta ~= math.huge then
 						child.text = tostring(delta) .. "%"
 						child:SetColor(Color.GREEN)
@@ -446,7 +446,7 @@ local function UpdateProgressBar()
     if _G.Funnel.GetTotalPlayersDayOneTestComplete() ~= nil and _G.Funnel.GetTestGroupSize() ~= nil then
         local progress = _G.Funnel.GetTotalPlayersDayOneTestComplete() / _G.Funnel.GetTestGroupSize()
         TestProgress.progress = progress
-        TestProgressText.text = tostring(CoreMath.Round(progress * 100)) .. "%"
+        TestProgressText.text = tostring(CoreMath.Round(progress * 100), 4) .. "%"
     else
         TestProgress.progress = 0
         TestProgressText.text = tostring("0%")
