@@ -5,6 +5,10 @@
       Morticai (META) (https://www.coregames.com/user/d1073dbcc404405cbef8ce728e53d380)
       standardcombo (Manticore) (https://www.coregames.com/user/b4c6e32137e54571814b5e8f27aa2fcd)
     
+
+    Video Tutorial: https://www.youtube.com/watch?v=cPXP4s_l1zI
+
+    
     This package is a work in progress.
     
     
